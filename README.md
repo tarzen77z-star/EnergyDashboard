@@ -42,14 +42,31 @@ A Bloomberg-style dark-theme energy market dashboard built as a single HTML file
 
 ### 2. Add Your Keys
 
-Open `energy-dashboard.html` in any text editor and find these two lines near the top of the `<script>` section:
+Open `energy-dashboard.html` in any text editor (Notepad, VS Code, TextEdit) and find these two lines near the top of the `<script>` section:
 
 ```javascript
-const EIA_KEY = 'your_eia_key_here';
-const FH_KEY  = 'your_finnhub_key_here';
+const EIA_KEY = 'YOUR_EIA_KEY';     // Register free at eia.gov/opendata
+const FH_KEY  = 'YOUR_FINNHUB_KEY'; // Register free at finnhub.io
 ```
 
-Replace the placeholder values with your actual keys and save.
+Replace the placeholder values with your actual keys and save:
+
+```javascript
+const EIA_KEY = 'abc123youreiakeyhere';
+const FH_KEY  = 'xyz789yourfinnhubkeyhere';
+```
+
+**Tip:** Use `Ctrl+F` (Windows) or `Cmd+F` (Mac) to search for `YOUR_EIA_KEY` and jump straight to it.
+
+### 3. Verify Your Keys Are Working
+
+Open `energy-dashboard.html` in your browser. You should see:
+
+- **EIA key working** — the Commodity Prices tab loads with live WTI, Brent, and Natural Gas prices within a few seconds. The ticker bar at the top shows real prices.
+- **Finnhub key working** — go to the Energy Stocks tab. Stock prices for XOM, CVX, NEE etc. load within a few seconds. The `FINNHUB ●` pill in the top-right header turns green.
+- **Local API working** — start `start_api.bat` first, then the `LOCAL ●` pill turns green and the Natural Gas Production, Storage, and Imports/Exports panels load data from your SQLite database.
+
+If prices show `--` or `No data`, double-check that your key was pasted correctly with no extra spaces and is inside the single quotes.
 
 ### 3. Open in Browser
 
