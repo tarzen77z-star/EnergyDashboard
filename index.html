@@ -328,7 +328,7 @@
 
 <script>
 const EIA_KEY = 'VlkU0aQxAyGJsscCNPl0q2hjaJLGgKUBxcZFaIah';
-const FH_KEY = 'd8dq509r01qhm4agkbt0d8dq509r01qhm4agkbtg';
+const FH_KEY = 'd8dqf11r01qhm4agm4ugd8dqf11r01qhm4agm4v0';
 
 // Clock
 function updateClock(){
@@ -582,7 +582,7 @@ const ENERGY_TICKERS = [
 
 async function loadStocks(){
   stocksLoaded = true;
-  if(FH_KEY === 'd8dq509r01qhm4agkbt0d8dq509r01qhm4agkbtg'){
+  if(FH_KEY === 'YOUR_FINNHUB_KEY'){
     document.getElementById('company-list').innerHTML = `
       <div style="padding:20px;color:var(--amber);font-size:12px;font-family:var(--mono);border:1px solid var(--border);border-radius:8px">
         ⚠ Add your Finnhub API key to the code (line 3: const FH_KEY = '...') to enable live stock data.
@@ -706,7 +706,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.getElemen
 
 // CVX ticker via Finnhub
 async function loadTickerStock(sym, priceId, chgId){
-  if(FH_KEY==='d8dq509r01qhm4agkbt0d8dq509r01qhm4agkbtg') return;
+  if(FH_KEY==='YOUR_FINNHUB_KEY') return;
   try{
     const d = await fetch(`https://finnhub.io/api/v1/quote?symbol=${sym}&token=${FH_KEY}`).then(r=>r.json());
     const el = document.getElementById(priceId);
