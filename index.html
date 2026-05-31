@@ -476,7 +476,7 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
     <div class="cgrid" id="earn-cal-summary"></div>
     <div class="cwide" style="margin-top:4px">
       <div class="pt" style="margin-bottom:12px">Upcoming Earnings Dates</div>
-      <div class="twrap"><table class="dtbl"><thead><tr><th>Company</th><th>Symbol</th><th>Date</th><th>Est. EPS</th><th>Prior EPS</th><th>Timing</th></tr></thead><tbody id="earn-cal-tbody"><tr><td colspan="6" style="color:var(--text3)">Loading...</td></tr></tbody></table></div>
+      <div class="twrap"><table class="dtbl"><thead><tr><th>Symbol</th><th>Name</th><th>Period</th><th>Actual EPS</th><th>Est. EPS</th><th>Surprise</th></tr></thead><tbody id="earn-cal-tbody"><tr><td colspan="6" style="color:var(--text3)">Loading...</td></tr></tbody></table></div>
     </div>
   </div>
 
@@ -1139,23 +1139,38 @@ async function loadEarnCalendar(){
   const tbody=document.getElementById('earn-cal-tbody');
   const summary=document.getElementById('earn-cal-summary');
   if(fhRequired(tbody)) return;
-  const syms=['XOM','CVX','COP','SLB','EOG','PSX','MPC','NEE','OXY','DVN','HAL','BKR'];
-  const from=new Date().toISOString().split('T')[0];
-  const to=new Date(Date.now()+90*86400000).toISOString().split('T')[0];
-  const data=await fhGet(`/calendar/earnings?from=${from}&to=${to}`);
-  const earnings=(data?.earningsCalendar||[]).filter(e=>syms.includes(e.symbol)).sort((a,b)=>a.date.localeCompare(b.date));
-  // Summary cards
+  const syms=['XOM','CVX','COP','SLB','EOG','NEE','OXY','DVN','HAL','BKR'];
+  // Use free per-ticker earnings endpoint instead of calendar (calendar requires paid)
+  const results=await Promise.all(syms.map(s=>fhGet(`/stock/earnings?symbol=${s}&limit=4`).then(d=>({s,d})).catch(()=>({s,d:[]}))));
   summary.innerHTML='';
-  summary.appendChild(mkCard('Upcoming Reports',earnings.length+'','fl','next 90 days','',null));
-  const next=earnings[0];
-  if(next) summary.appendChild(mkCard('Next Report',next.symbol,'fl',next.date,'',null));
-  // Table
-  tbody.innerHTML=earnings.length?earnings.map(e=>`<tr>
-    <td>${e.symbol}</td><td>${e.company||e.symbol}</td><td>${e.date}</td>
-    <td class="${e.epsEstimate>0?'up':'fl'}">${e.epsEstimate!=null?'$'+f2(e.epsEstimate):'--'}</td>
-    <td>${e.epsPriorYear!=null?'$'+f2(e.epsPriorYear):'--'}</td>
-    <td style="color:var(--text3)">${e.hour==='bmo'?'Before Open':e.hour==='amc'?'After Close':'During Market'}</td>
-  </tr>`).join(''):'<tr><td colspan="6" style="color:var(--text3)">No upcoming earnings found for tracked energy companies</td></tr>';
+  let beats=0,total=0;
+  const rows=[];
+  results.forEach(({s,d})=>{
+    if(!d||!d.length) return;
+    const latest=d[0];
+    if(latest.actual!=null&&latest.estimate!=null){
+      total++;
+      if(latest.actual>latest.estimate) beats++;
+    }
+    // Most recent actual + prior quarter
+    rows.push({sym:s, period:latest.period, actual:latest.actual, estimate:latest.estimate,
+      surprise:latest.surprise, surprisePct:latest.surprisePercent, prior:d[1]?.actual});
+  });
+  summary.appendChild(mkCard('Companies Reporting',rows.length+'','fl','recent quarter','',null));
+  summary.appendChild(mkCard('Beat Rate',total?(beats/total*100).toFixed(0)+'%':'--',beats/total>0.5?'up':'dn',beats+' of '+total+' beat est.','',null));
+  const avgSurp=rows.filter(r=>r.surprisePct!=null).reduce((a,r)=>a+r.surprisePct,0)/(rows.filter(r=>r.surprisePct!=null).length||1);
+  summary.appendChild(mkCard('Avg EPS Surprise',(avgSurp>0?'+':'')+f2(avgSurp)+'%',avgSurp>0?'up':'dn','vs consensus','',null));
+  tbody.innerHTML=rows.map(r=>{
+    const cls=r.surprise>0?'up':r.surprise<0?'dn':'fl';
+    return `<tr>
+      <td style="color:var(--accent);font-family:var(--mono)">${r.sym}</td>
+      <td>${r.sym}</td>
+      <td style="color:var(--text3)">${r.period||'--'}</td>
+      <td class="${r.actual>0?'up':'dn'}">${r.actual!=null?'$'+f2(r.actual):'--'}</td>
+      <td>${r.estimate!=null?'$'+f2(r.estimate):'--'}</td>
+      <td class="${cls}">${r.surprise!=null?(r.surprise>0?'+':'')+f2(r.surprise):'--'}</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="6" style="color:var(--text3)">No earnings data available</td></tr>';
 }
 
 async function loadSurprises(sym,btn){
@@ -1182,6 +1197,16 @@ async function loadSurprises(sym,btn){
 }
 
 async function loadRevenueEst(sym,btn){
+  document.querySelectorAll('#panel-earn-estimates .rbtn').forEach(b=>b.classList.remove('sel'));
+  btn?.classList.add('sel');
+  const el=document.getElementById('rev-est-tbody');
+  document.getElementById('rev-est-chart').parentElement.innerHTML='<div style="padding:20px;color:var(--amber);font-size:12px;font-family:var(--mono);border:1px solid var(--border);border-radius:8px">⚠ Revenue Estimates require Finnhub paid plan. Use Earnings Surprises (free) for historical EPS data instead.</div>';
+  el.innerHTML='<tr><td colspan="5" style="color:var(--amber)">Revenue estimates require Finnhub paid plan.</td></tr>';
+  return;
+  // Original code below kept for future paid tier upgrade:
+  _loadRevenueEst_orig(sym,btn);
+}
+async function _loadRevenueEst_orig(sym,btn){
   document.querySelectorAll('#panel-earn-estimates .rbtn').forEach(b=>b.classList.remove('sel'));
   btn?.classList.add('sel');
   const el=document.getElementById('rev-est-tbody');
