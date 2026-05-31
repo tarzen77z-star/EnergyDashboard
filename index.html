@@ -39,9 +39,9 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .tt:hover{color:var(--text2)}
 .tt.active{color:var(--accent);border-bottom-color:var(--accent)}
 /* LAYOUT */
-.layout{display:flex;margin-top:calc(var(--hh) + var(--nh));min-height:calc(100vh - var(--hh) - var(--nh))}
+.layout{display:flex;margin-top:calc(var(--hh) + var(--nh));min-height:calc(100vh - var(--hh) - var(--nh));position:relative}
 /* SIDEBAR */
-.sb{width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:calc(var(--hh)+var(--nh));bottom:0;left:0;overflow-y:auto;z-index:100;transition:transform .25s}
+.sb{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--bg2);border-right:1px solid var(--border);position:fixed;top:calc(var(--hh) + var(--nh));bottom:0;left:0;overflow-y:auto;z-index:100;transition:transform .25s;flex-shrink:0}
 .sb::-webkit-scrollbar{width:4px}
 .sb::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 .sb-sec{padding:14px 0 6px}
@@ -137,6 +137,28 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 /* SKEL */
 .skel{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:sh 1.4s infinite;border-radius:6px}
 @keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* NEWS CARDS */
+.news-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:8px;cursor:pointer;transition:border-color .15s;display:flex;gap:14px}
+.news-card:hover{border-color:var(--border2)}
+.news-img{width:80px;height:60px;border-radius:6px;object-fit:cover;flex-shrink:0;background:var(--bg3)}
+.news-body{flex:1;min-width:0}
+.news-src{font-size:10px;color:var(--accent2);font-family:var(--mono);margin-bottom:4px}
+.news-headline{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1.4}
+.news-summary{font-size:11px;color:var(--text3);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.news-date{font-size:10px;color:var(--text3);font-family:var(--mono);margin-top:6px}
+/* SIGNAL */
+.signal-row{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:12px 16px;display:grid;grid-template-columns:52px 1fr repeat(4,80px);align-items:center;gap:10px;margin-bottom:8px;font-size:12px}
+.sig-bull{color:var(--green);font-family:var(--mono);font-weight:600}
+.sig-bear{color:var(--red);font-family:var(--mono);font-weight:600}
+.sig-neut{color:var(--text3);font-family:var(--mono)}
+.sig-badge{font-size:11px;font-family:var(--mono);padding:3px 8px;border-radius:4px;font-weight:600;text-align:center}
+.sig-buy{background:#0a2a1a;color:var(--green);border:1px solid #1a4a2a}
+.sig-sell{background:#2a0a0a;color:var(--red);border:1px solid #4a1a1a}
+.sig-hold{background:#1e242d;color:var(--amber);border:1px solid #3a4255}
+/* STORY */
+#story-text p{margin-bottom:10px}
+#story-text strong{color:var(--text)}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--bg)}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
@@ -174,6 +196,10 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="tt" onclick="switchTab('production',this)">Energy Production</div>
   <div class="tt" onclick="switchTab('stocks',this)">Energy Stocks</div>
   <div class="tt" onclick="switchTab('reports',this)">Research Reports</div>
+  <div class="tt" onclick="switchTab('news',this)">Energy News</div>
+  <div class="tt" onclick="switchTab('earnings',this)">Earnings & Guidance</div>
+  <div class="tt" onclick="switchTab('insider',this)">Insider & Congress</div>
+  <div class="tt" onclick="switchTab('intel',this)">Market Intelligence</div>
 </nav>
 
 <div class="layout">
@@ -228,6 +254,43 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
     <div class="sb-item" onclick="showPanel('rep-annual',this)" data-tab="reports"><div class="sb-dot" style="background:#a78bfa"></div>Annual Outlooks</div>
   </div>
 
+  <div class="sb-sec" data-tab="news" style="display:none">
+    <div class="sb-lbl">News Feed</div>
+    <div class="sb-item active" onclick="showPanel('news-all',this)" data-tab="news"><div class="sb-dot" style="background:#00d4aa"></div>All Energy News</div>
+    <div class="sb-item" onclick="showPanel('news-company',this)" data-tab="news"><div class="sb-dot" style="background:#00c87a"></div>By Company</div>
+    <div class="sb-item" onclick="showPanel('news-market',this)" data-tab="news"><div class="sb-dot" style="background:#0096ff"></div>Market News</div>
+    <div class="sb-div"></div>
+    <div class="sb-lbl">Sentiment</div>
+    <div class="sb-item" onclick="showPanel('news-sentiment',this)" data-tab="news"><div class="sb-dot" style="background:#a78bfa"></div>News Sentiment</div>
+  </div>
+
+  <div class="sb-sec" data-tab="earnings" style="display:none">
+    <div class="sb-lbl">Calendar</div>
+    <div class="sb-item active" onclick="showPanel('earn-calendar',this)" data-tab="earnings"><div class="sb-dot" style="background:#00d4aa"></div>Earnings Calendar</div>
+    <div class="sb-item" onclick="showPanel('earn-surprises',this)" data-tab="earnings"><div class="sb-dot" style="background:#00c87a"></div>Earnings Surprises</div>
+    <div class="sb-div"></div>
+    <div class="sb-lbl">Estimates</div>
+    <div class="sb-item" onclick="showPanel('earn-estimates',this)" data-tab="earnings"><div class="sb-dot" style="background:#ffb020"></div>Revenue Estimates</div>
+    <div class="sb-item" onclick="showPanel('earn-eps',this)" data-tab="earnings"><div class="sb-dot" style="background:#ff6b6b"></div>EPS Estimates</div>
+  </div>
+
+  <div class="sb-sec" data-tab="insider" style="display:none">
+    <div class="sb-lbl">Insider Activity</div>
+    <div class="sb-item active" onclick="showPanel('ins-sentiment',this)" data-tab="insider"><div class="sb-dot" style="background:#00d4aa"></div>Insider Sentiment</div>
+    <div class="sb-item" onclick="showPanel('ins-transactions',this)" data-tab="insider"><div class="sb-dot" style="background:#00c87a"></div>Insider Transactions</div>
+    <div class="sb-div"></div>
+    <div class="sb-lbl">Government</div>
+    <div class="sb-item" onclick="showPanel('ins-congress',this)" data-tab="insider"><div class="sb-dot" style="background:#a78bfa"></div>Congressional Trades</div>
+    <div class="sb-item" onclick="showPanel('ins-esg',this)" data-tab="insider"><div class="sb-dot" style="background:#00c87a"></div>ESG Scores</div>
+  </div>
+
+  <div class="sb-sec" data-tab="intel" style="display:none">
+    <div class="sb-lbl">Story Builder</div>
+    <div class="sb-item active" onclick="showPanel('intel-story',this)" data-tab="intel"><div class="sb-dot" style="background:#00d4aa"></div>AI Story Builder</div>
+    <div class="sb-item" onclick="showPanel('intel-signals',this)" data-tab="intel"><div class="sb-dot" style="background:#ffb020"></div>Signal Dashboard</div>
+    <div class="sb-item" onclick="showPanel('intel-watchlist',this)" data-tab="intel"><div class="sb-dot" style="background:#0096ff"></div>Watchlist Summary</div>
+  </div>
+
 </aside>
 
 <main class="main">
@@ -262,7 +325,10 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
     <div class="cwide"><div class="pt" style="margin-bottom:10px">Retail Gasoline — U.S. Average ($/gal)</div><div class="cwrap"><canvas id="gas-chart" role="img" aria-label="Retail gasoline price">Loading...</canvas></div></div>
   </div>
 
-  <div class="panel" id="panel-lng"><div class="cs"><div style="font-size:32px">🚢</div><h3>LNG & Export Data</h3><p>U.S. LNG exports by destination country, terminal utilization, and volumes. Coming next — sourced from EIA NG export series.</p></div></div>
+  <div class="panel" id="panel-lng">
+  <div class="ph"><div><div class="pt">LNG &amp; Exports</div><div class="ps">U.S. LNG export volumes — EIA</div></div><button class="rbtn" onclick="lngLoaded=false;loadLng()">↻ Refresh</button></div>
+  <div class="cgrid" id="lng-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+  <div class="cwide"><div class="pt" style="margin-bottom:10px">U.S. LNG Exports — Monthly (Bcf)</div><div class="cwrap"><canvas id="lng-chart" role="img" aria-label="LNG exports chart">Loading...</canvas></div></div>
 
   <div class="panel" id="panel-ng-price">
     <div class="ph"><div><div class="pt">Natural Gas Prices</div><div class="ps">Henry Hub spot — EIA</div></div><button class="rbtn" onclick="ngPriceLoaded=false;loadNgPrice()">↻ Refresh</button></div>
@@ -270,9 +336,24 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
     <div class="cwide"><div class="pt" style="margin-bottom:10px">Henry Hub — 5 Year History ($/MMBtu)</div><div class="cwrap"><canvas id="ng-chart" role="img" aria-label="Henry Hub natural gas price">Loading...</canvas></div></div>
   </div>
 
-  <div class="panel" id="panel-ng-regional"><div class="cs"><div style="font-size:32px">🗺️</div><h3>Regional Natural Gas Prices</h3><p>Citygate and wellhead prices by U.S. region and state. Planned as a choropleth map.</p></div></div>
-  <div class="panel" id="panel-coal-p"><div class="cs"><div style="font-size:32px">⚫</div><h3>Coal Prices</h3><p>Appalachian, Powder River Basin, and Illinois Basin spot prices. Being wired from EIA coal series.</p></div></div>
-  <div class="panel" id="panel-elec-p"><div class="cs"><div style="font-size:32px">⚡</div><h3>Electricity Prices by State</h3><p>Residential, commercial, and industrial retail prices by state. Planned as a U.S. state map with sector toggle.</p></div></div>
+  <div class="panel" id="panel-ng-regional">
+  <div class="ph"><div><div class="pt">Regional Natural Gas Prices</div><div class="ps">Citygate &amp; wellhead prices by region — EIA</div></div><button class="rbtn" onclick="ngRegLoaded=false;loadNgRegional()">↻ Refresh</button></div>
+  <div class="cgrid" id="ngreg-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+  <div class="cwide"><div class="pt" style="margin-bottom:10px">Residential Nat Gas Prices by Region ($/Mcf)</div><div class="cwrap"><canvas id="ngreg-chart" role="img" aria-label="Regional natural gas prices">Loading...</canvas></div></div>
+  <div class="cwide" style="margin-top:14px"><div class="pt" style="margin-bottom:10px">Price Comparison — Latest Month ($/Mcf)</div><div class="twrap"><table class="dtbl"><thead><tr><th>Region</th><th>Residential</th><th>Commercial</th><th>Industrial</th></tr></thead><tbody id="ngreg-tbody"><tr><td colspan="4" style="color:var(--text3)">Loading...</td></tr></tbody></table></div></div>
+</div>
+  <div class="panel" id="panel-coal-p">
+  <div class="ph"><div><div class="pt">Coal Prices</div><div class="ps">U.S. coal spot prices by region — EIA</div></div><button class="rbtn" onclick="coalPLoaded=false;loadCoalPrices()">↻ Refresh</button></div>
+  <div class="cgrid" id="coalp-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+  <div class="cwide"><div class="pt" style="margin-bottom:10px">Coal Prices — U.S. Average ($/short ton)</div><div class="cwrap"><canvas id="coalp-chart" role="img" aria-label="Coal price history">Loading...</canvas></div></div>
+  <div class="cwide" style="margin-top:14px"><div class="pt" style="margin-bottom:10px">Coal Price by Sector — Latest Available</div><div class="twrap"><table class="dtbl"><thead><tr><th>Sector</th><th>Price</th><th>Unit</th><th>Period</th></tr></thead><tbody id="coalp-tbody"><tr><td colspan="4" style="color:var(--text3)">Loading...</td></tr></tbody></table></div></div>
+</div>
+  <div class="panel" id="panel-elec-p">
+  <div class="ph"><div><div class="pt">Electricity Prices</div><div class="ps">Retail prices by sector — EIA</div></div><button class="rbtn" onclick="elecPLoaded=false;loadElecPrices()">↻ Refresh</button></div>
+  <div class="cgrid" id="elecp-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+  <div class="cwide"><div class="pt" style="margin-bottom:10px">U.S. Average Retail Electricity Price (¢/kWh)</div><div class="cwrap"><canvas id="elecp-chart" role="img" aria-label="Electricity price by sector">Loading...</canvas></div></div>
+  <div class="cwide" style="margin-top:14px"><div class="pt" style="margin-bottom:10px">Price by Sector — Latest Month</div><div class="twrap"><table class="dtbl"><thead><tr><th>Sector</th><th>Price (¢/kWh)</th><th>Period</th><th>vs Prior Month</th></tr></thead><tbody id="elecp-tbody"><tr><td colspan="4" style="color:var(--text3)">Loading...</td></tr></tbody></table></div></div>
+</div>
 
   <!-- PRODUCTION -->
   <div class="panel" id="panel-crude-prod">
@@ -321,9 +402,23 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
     <div class="cwide" style="margin-top:14px"><div class="pt" style="margin-bottom:10px">Total Electricity Generation — Monthly</div><div class="cwrap"><canvas id="eg-chart" role="img" aria-label="Total electricity generation">Loading...</canvas></div></div>
   </div>
 
-  <div class="panel" id="panel-renewables"><div class="cs"><div style="font-size:32px">🌱</div><h3>Renewables Data</h3><p>Solar and wind generation by state, utility-scale vs distributed solar, capacity additions, and renewable share of generation over time.</p></div></div>
-  <div class="panel" id="panel-coal-prod"><div class="cs"><div style="font-size:32px">⛏️</div><h3>Coal Production</h3><p>Production by mining region (Appalachian, Powder River Basin, Illinois Basin), stocks at power plants, and exports by destination.</p></div></div>
-  <div class="panel" id="panel-co2"><div class="cs"><div style="font-size:32px">🌡️</div><h3>CO2 & Emissions</h3><p>Energy-related CO2 by fuel type and sector. Sourced from EIA emissions series.</p></div></div>
+  <div class="panel" id="panel-renewables">
+  <div class="ph"><div><div class="pt">Renewables</div><div class="ps">Solar, wind &amp; hydro generation — EIA</div></div><button class="rbtn" onclick="renLoaded=false;loadRenewables()">↻ Refresh</button></div>
+  <div class="cgrid" id="ren-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+  <div class="cwide"><div class="pt" style="margin-bottom:10px">Wind &amp; Solar Generation — Monthly (Thousand MWh)</div><div class="cwrap"><canvas id="ren-chart" role="img" aria-label="Renewables generation chart">Loading...</canvas></div></div>
+  <div class="cwide" style="margin-top:14px"><div class="pt" style="margin-bottom:10px">Renewable Share of Total Generation (%)</div><div class="cwrap"><canvas id="ren-share-chart" role="img" aria-label="Renewable share chart">Loading...</canvas></div></div>
+</div>
+  <div class="panel" id="panel-coal-prod">
+  <div class="ph"><div><div class="pt">Coal Production</div><div class="ps">U.S. coal production &amp; stocks — EIA</div></div><button class="rbtn" onclick="coalProdLoaded=false;loadCoalProd()">↻ Refresh</button></div>
+  <div class="cgrid" id="coalprod-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+  <div class="cwide"><div class="pt" style="margin-bottom:10px">U.S. Coal Production — Annual (Thousand Short Tons)</div><div class="cwrap"><canvas id="coalprod-chart" role="img" aria-label="Coal production chart">Loading...</canvas></div></div>
+  <div class="cwide" style="margin-top:14px"><div class="pt" style="margin-bottom:10px">Coal Stocks at Electric Power Plants (Thousand Short Tons)</div><div class="cwrap"><canvas id="coalstock-chart" role="img" aria-label="Coal stocks chart">Loading...</canvas></div></div>
+</div>
+  <div class="panel" id="panel-co2">
+  <div class="ph"><div><div class="pt">CO2 &amp; Emissions</div><div class="ps">Energy-related CO2 by fuel &amp; sector — EIA</div></div><button class="rbtn" onclick="co2Loaded=false;loadCo2()">↻ Refresh</button></div>
+  <div class="cgrid" id="co2-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+  <div class="cwide"><div class="pt" style="margin-bottom:10px">U.S. Energy-Related CO2 Emissions by Fuel (Million Metric Tons)</div><div class="cwrap"><canvas id="co2-chart" role="img" aria-label="CO2 emissions by fuel">Loading...</canvas></div></div>
+  <div class="cwide" style="margin-top:14px"><div class="pt" style="margin-bottom:14px">CO2 Emissions by Fuel Source</div><div id="co2-bars"></div></div>
 
   <!-- STOCKS -->
   <div class="panel" id="panel-st-all">
@@ -342,6 +437,158 @@ html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="panel" id="panel-rep-weekly"><div class="ph"><div class="pt">Weekly Reports</div></div><div class="rgrid" id="r-weekly"></div></div>
   <div class="panel" id="panel-rep-monthly"><div class="ph"><div class="pt">Monthly Reports</div></div><div class="rgrid" id="r-monthly"></div></div>
   <div class="panel" id="panel-rep-annual"><div class="ph"><div class="pt">Annual Outlooks</div></div><div class="rgrid" id="r-annual"></div></div>
+
+  <!-- ══════════ NEWS PANELS ══════════ -->
+  <div class="panel" id="panel-news-all">
+    <div class="ph"><div><div class="pt">All Energy News</div><div class="ps">Latest headlines across energy sector — Finnhub</div></div><button class="rbtn" onclick="newsAllLoaded=false;loadNewsAll()">↻ Refresh</button></div>
+    <div id="news-all-feed"><div class="skel" style="height:80px;margin-bottom:8px"></div><div class="skel" style="height:80px;margin-bottom:8px"></div><div class="skel" style="height:80px;margin-bottom:8px"></div></div>
+  </div>
+
+  <div class="panel" id="panel-news-company">
+    <div class="ph"><div><div class="pt">Company News</div><div class="ps">News by energy company — Finnhub</div></div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px" id="news-ticker-btns">
+      <button class="rbtn sel" onclick="loadCompanyNews('XOM',this)">XOM</button>
+      <button class="rbtn" onclick="loadCompanyNews('CVX',this)">CVX</button>
+      <button class="rbtn" onclick="loadCompanyNews('COP',this)">COP</button>
+      <button class="rbtn" onclick="loadCompanyNews('SLB',this)">SLB</button>
+      <button class="rbtn" onclick="loadCompanyNews('EOG',this)">EOG</button>
+      <button class="rbtn" onclick="loadCompanyNews('NEE',this)">NEE</button>
+      <button class="rbtn" onclick="loadCompanyNews('OXY',this)">OXY</button>
+      <button class="rbtn" onclick="loadCompanyNews('DVN',this)">DVN</button>
+    </div>
+    <div id="company-news-feed"><div class="skel" style="height:80px;margin-bottom:8px"></div><div class="skel" style="height:80px;margin-bottom:8px"></div></div>
+  </div>
+
+  <div class="panel" id="panel-news-market">
+    <div class="ph"><div><div class="pt">General Market News</div><div class="ps">Energy & macro market news — Finnhub</div></div><button class="rbtn" onclick="mktNewsLoaded=false;loadMarketNews()">↻ Refresh</button></div>
+    <div id="market-news-feed"><div class="skel" style="height:80px;margin-bottom:8px"></div><div class="skel" style="height:80px;margin-bottom:8px"></div></div>
+  </div>
+
+  <div class="panel" id="panel-news-sentiment">
+    <div class="ph"><div><div class="pt">News Sentiment</div><div class="ps">Bullish vs bearish signal per company — Finnhub</div></div><button class="rbtn" onclick="sentLoaded=false;loadSentiment()">↻ Refresh</button></div>
+    <div class="cgrid" id="sentiment-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+    <div class="cwide" style="margin-top:4px"><div class="pt" style="margin-bottom:12px">Sentiment Breakdown by Company</div><div id="sentiment-bars"></div></div>
+  </div>
+
+  <!-- ══════════ EARNINGS PANELS ══════════ -->
+  <div class="panel" id="panel-earn-calendar">
+    <div class="ph"><div><div class="pt">Earnings Calendar</div><div class="ps">Upcoming earnings for energy companies — Finnhub</div></div><button class="rbtn" onclick="earnCalLoaded=false;loadEarnCalendar()">↻ Refresh</button></div>
+    <div class="cgrid" id="earn-cal-summary"></div>
+    <div class="cwide" style="margin-top:4px">
+      <div class="pt" style="margin-bottom:12px">Upcoming Earnings Dates</div>
+      <div class="twrap"><table class="dtbl"><thead><tr><th>Company</th><th>Symbol</th><th>Date</th><th>Est. EPS</th><th>Prior EPS</th><th>Timing</th></tr></thead><tbody id="earn-cal-tbody"><tr><td colspan="6" style="color:var(--text3)">Loading...</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-earn-surprises">
+    <div class="ph"><div><div class="pt">Earnings Surprises</div><div class="ps">Actual vs estimated EPS — Finnhub</div></div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px" id="surp-ticker-btns">
+      <button class="rbtn sel" onclick="loadSurprises('XOM',this)">XOM</button>
+      <button class="rbtn" onclick="loadSurprises('CVX',this)">CVX</button>
+      <button class="rbtn" onclick="loadSurprises('COP',this)">COP</button>
+      <button class="rbtn" onclick="loadSurprises('SLB',this)">SLB</button>
+      <button class="rbtn" onclick="loadSurprises('NEE',this)">NEE</button>
+      <button class="rbtn" onclick="loadSurprises('OXY',this)">OXY</button>
+    </div>
+    <div class="cgrid" id="surp-summary"></div>
+    <div class="cwide"><div class="pt" style="margin-bottom:12px">EPS — Actual vs Estimated</div><div class="cwrap"><canvas id="surp-chart" role="img" aria-label="Earnings surprise chart">Loading...</canvas></div></div>
+    <div class="cwide" style="margin-top:14px"><div class="twrap"><table class="dtbl"><thead><tr><th>Period</th><th>Actual EPS</th><th>Est. EPS</th><th>Surprise</th><th>Surprise %</th></tr></thead><tbody id="surp-tbody"></tbody></table></div></div>
+  </div>
+
+  <div class="panel" id="panel-earn-estimates">
+    <div class="ph"><div><div class="pt">Revenue Estimates</div><div class="ps">Analyst consensus revenue forecasts — Finnhub</div></div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <button class="rbtn sel" onclick="loadRevenueEst('XOM',this)">XOM</button>
+      <button class="rbtn" onclick="loadRevenueEst('CVX',this)">CVX</button>
+      <button class="rbtn" onclick="loadRevenueEst('COP',this)">COP</button>
+      <button class="rbtn" onclick="loadRevenueEst('SLB',this)">SLB</button>
+      <button class="rbtn" onclick="loadRevenueEst('NEE',this)">NEE</button>
+    </div>
+    <div class="cwide"><div class="pt" style="margin-bottom:12px">Revenue Estimates — Analyst Consensus</div><div class="cwrap"><canvas id="rev-est-chart" role="img" aria-label="Revenue estimates chart">Loading...</canvas></div></div>
+    <div class="cwide" style="margin-top:14px"><div class="twrap"><table class="dtbl"><thead><tr><th>Period</th><th>Low Est.</th><th>Avg Est.</th><th>High Est.</th><th># Analysts</th></tr></thead><tbody id="rev-est-tbody"></tbody></table></div></div>
+  </div>
+
+  <div class="panel" id="panel-earn-eps">
+    <div class="ph"><div><div class="pt">EPS Estimates</div><div class="ps">Forward EPS analyst consensus — Finnhub</div></div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <button class="rbtn sel" onclick="loadEpsEst('XOM',this)">XOM</button>
+      <button class="rbtn" onclick="loadEpsEst('CVX',this)">CVX</button>
+      <button class="rbtn" onclick="loadEpsEst('COP',this)">COP</button>
+      <button class="rbtn" onclick="loadEpsEst('SLB',this)">SLB</button>
+      <button class="rbtn" onclick="loadEpsEst('NEE',this)">NEE</button>
+    </div>
+    <div class="cwide"><div class="pt" style="margin-bottom:12px">EPS Estimates — Analyst Consensus</div><div class="cwrap"><canvas id="eps-est-chart" role="img" aria-label="EPS estimates chart">Loading...</canvas></div></div>
+    <div class="cwide" style="margin-top:14px"><div class="twrap"><table class="dtbl"><thead><tr><th>Period</th><th>Low Est.</th><th>Avg Est.</th><th>High Est.</th><th># Analysts</th></tr></thead><tbody id="eps-est-tbody"></tbody></table></div></div>
+  </div>
+
+  <!-- ══════════ INSIDER & CONGRESS PANELS ══════════ -->
+  <div class="panel" id="panel-ins-sentiment">
+    <div class="ph"><div><div class="pt">Insider Sentiment</div><div class="ps">Monthly Share Purchase Ratio (MSPR) — Finnhub</div></div><button class="rbtn" onclick="insSentLoaded=false;loadInsSentiment()">↻ Refresh</button></div>
+    <div class="cgrid" id="ins-sent-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+    <div class="cwide"><div class="pt" style="margin-bottom:6px">MSPR Score by Company <span style="font-size:10px;color:var(--text3);font-weight:400">— positive = more buying, negative = more selling</span></div><div class="cwrap"><canvas id="mspr-chart" role="img" aria-label="Insider sentiment MSPR chart">Loading...</canvas></div></div>
+  </div>
+
+  <div class="panel" id="panel-ins-transactions">
+    <div class="ph"><div><div class="pt">Insider Transactions</div><div class="ps">Recent insider buy/sell filings — Finnhub</div></div></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
+      <button class="rbtn sel" onclick="loadInsiderTxn('XOM',this)">XOM</button>
+      <button class="rbtn" onclick="loadInsiderTxn('CVX',this)">CVX</button>
+      <button class="rbtn" onclick="loadInsiderTxn('COP',this)">COP</button>
+      <button class="rbtn" onclick="loadInsiderTxn('SLB',this)">SLB</button>
+      <button class="rbtn" onclick="loadInsiderTxn('NEE',this)">NEE</button>
+      <button class="rbtn" onclick="loadInsiderTxn('OXY',this)">OXY</button>
+    </div>
+    <div class="cwide"><div class="twrap"><table class="dtbl"><thead><tr><th>Name</th><th>Title</th><th>Action</th><th>Shares</th><th>Price</th><th>Value</th><th>Date</th></tr></thead><tbody id="ins-txn-tbody"><tr><td colspan="7" style="color:var(--text3)">Select a company above</td></tr></tbody></table></div></div>
+  </div>
+
+  <div class="panel" id="panel-ins-congress">
+    <div class="ph"><div><div class="pt">Congressional Trades</div><div class="ps">Senate & House energy stock trades — Finnhub</div></div><button class="rbtn" onclick="congressLoaded=false;loadCongress()">↻ Refresh</button></div>
+    <div class="cgrid" id="congress-summary"></div>
+    <div class="cwide"><div class="twrap"><table class="dtbl"><thead><tr><th>Name</th><th>Symbol</th><th>Action</th><th>Amount</th><th>Date Filed</th><th>Transaction Date</th></tr></thead><tbody id="congress-tbody"><tr><td colspan="6" style="color:var(--text3)">Loading...</td></tr></tbody></table></div></div>
+  </div>
+
+  <div class="panel" id="panel-ins-esg">
+    <div class="ph"><div><div class="pt">ESG Scores</div><div class="ps">Environmental, Social & Governance ratings — Finnhub</div></div><button class="rbtn" onclick="esgLoaded=false;loadEsg()">↻ Refresh</button></div>
+    <div class="cgrid" id="esg-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+    <div class="cwide"><div class="pt" style="margin-bottom:12px">ESG Score Comparison — Energy Companies</div><div class="cwrap"><canvas id="esg-chart" role="img" aria-label="ESG scores chart">Loading...</canvas></div></div>
+  </div>
+
+  <!-- ══════════ MARKET INTELLIGENCE PANELS ══════════ -->
+  <div class="panel" id="panel-intel-story">
+    <div class="ph"><div><div class="pt">AI Story Builder</div><div class="ps">Generate a market narrative from your dashboard data — powered by Claude</div></div></div>
+    <div class="cwide">
+      <div class="pt" style="margin-bottom:12px">What story do you want to tell?</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <button class="rbtn" onclick="buildStory('oil_outlook')">🛢️ Oil Price Outlook</button>
+        <button class="rbtn" onclick="buildStory('natgas_storage')">🔥 Nat Gas Storage Story</button>
+        <button class="rbtn" onclick="buildStory('energy_stocks')">📈 Energy Stock Analysis</button>
+        <button class="rbtn" onclick="buildStory('renewables_trend')">🌱 Renewables Growth</button>
+        <button class="rbtn" onclick="buildStory('insider_signal')">🔍 Insider Signal Report</button>
+        <button class="rbtn" onclick="buildStory('earnings_preview')">📊 Earnings Preview</button>
+      </div>
+      <div style="margin-bottom:12px">
+        <textarea id="story-custom" placeholder="Or describe your own story... e.g. 'Explain why natural gas prices spiked this week given storage levels and LNG exports'" style="width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:10px;color:var(--text);font-family:var(--font);font-size:12px;resize:vertical;min-height:70px;outline:none"></textarea>
+        <button class="rbtn" style="margin-top:8px" onclick="buildCustomStory()">Generate Story ↗</button>
+      </div>
+      <div id="story-output" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:18px;min-height:120px;display:none">
+        <div style="font-size:10px;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;font-family:var(--mono)">Generated Narrative</div>
+        <div id="story-text" style="font-size:13px;color:var(--text2);line-height:1.8"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-intel-signals">
+    <div class="ph"><div><div class="pt">Signal Dashboard</div><div class="ps">Combined buy/sell/hold signals across data sources</div></div><button class="rbtn" onclick="signalsLoaded=false;loadSignals()">↻ Refresh</button></div>
+    <div class="cgrid" id="signal-cards"><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div><div class="skel" style="height:88px"></div></div>
+    <div id="signal-rows" style="margin-top:4px"></div>
+  </div>
+
+  <div class="panel" id="panel-intel-watchlist">
+    <div class="ph"><div><div class="pt">Watchlist Summary</div><div class="ps">Snapshot of all tracked energy companies</div></div><button class="rbtn" onclick="watchLoaded=false;loadWatchlist()">↻ Refresh</button></div>
+    <div class="cwide">
+      <div class="twrap"><table class="dtbl"><thead><tr><th>Symbol</th><th>Name</th><th>Price</th><th>Change</th><th>P/E</th><th>Div Yield</th><th>52W High</th><th>52W Low</th></tr></thead><tbody id="watchlist-tbody"><tr><td colspan="8" style="color:var(--text3)">Loading...</td></tr></tbody></table></div>
+    </div>
+  </div>
 
 </main>
 </div>
@@ -415,7 +662,7 @@ function showPanel(id,el){
   document.querySelectorAll('.sb-item').forEach(i=>i.classList.remove('active'));
   document.getElementById('panel-'+id)?.classList.add('active');
   el?.classList.add('active');
-  const map={crude:loadCrude,petro:loadPetro,'ng-price':loadNgPrice,'crude-prod':loadCrudeProd,'ng-prod':loadNgProd,'ng-storage':loadStorage,'ng-impexp':loadImpExp,'elec-gen':loadElecGen,'st-all':()=>loadStocks('all'),'st-oil':()=>loadStocks('oil'),'st-svc':()=>loadStocks('svc'),'st-util':()=>loadStocks('util'),'st-ren':()=>loadStocks('ren'),'rep-all':()=>loadReports('all'),'rep-steo':()=>loadReports('steo'),'rep-weekly':()=>loadReports('weekly'),'rep-monthly':()=>loadReports('monthly'),'rep-annual':()=>loadReports('annual')};
+  const map={crude:loadCrude,petro:loadPetro,'ng-price':loadNgPrice,'ng-regional':loadNgRegional,'coal-p':loadCoalPrices,'elec-p':loadElecPrices,'lng':loadLng,'crude-prod':loadCrudeProd,'ng-prod':loadNgProd,'ng-storage':loadStorage,'ng-impexp':loadImpExp,'elec-gen':loadElecGen,renewables:loadRenewables,'coal-prod':loadCoalProd,co2:loadCo2,'st-all':()=>loadStocks('all'),'st-oil':()=>loadStocks('oil'),'st-svc':()=>loadStocks('svc'),'st-util':()=>loadStocks('util'),'st-ren':()=>loadStocks('ren'),'rep-all':()=>loadReports('all'),'rep-steo':()=>loadReports('steo'),'rep-weekly':()=>loadReports('weekly'),'rep-monthly':()=>loadReports('monthly'),'rep-annual':()=>loadReports('annual'),'news-all':loadNewsAll,'news-company':()=>loadCompanyNews('XOM',document.querySelector('#news-ticker-btns .sel')),'news-market':loadMarketNews,'news-sentiment':loadSentiment,'earn-calendar':loadEarnCalendar,'earn-surprises':()=>loadSurprises('XOM',document.querySelector('#surp-ticker-btns .sel')),'earn-estimates':()=>loadRevenueEst('XOM',null),'earn-eps':()=>loadEpsEst('XOM',null),'ins-sentiment':loadInsSentiment,'ins-transactions':()=>{},'ins-congress':loadCongress,'ins-esg':loadEsg,'intel-story':()=>{},'intel-signals':loadSignals,'intel-watchlist':loadWatchlist};
   if(map[id]) map[id]();
 }
 
@@ -598,6 +845,588 @@ function loadReports(filter){
 }
 
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.getElementById('movl').classList.remove('open'); });
+
+
+// LNG EXPORTS
+let lngLoaded=false;
+async function loadLng(){
+  if(lngLoaded) return; lngLoaded=true;
+  const series=[
+    {id:'NG.N9133US2.M',lbl:'Total LNG Exports',unit:'Bcf',color:'#0096ff'},
+    {id:'NG.N9133US2.A',lbl:'LNG Exports (Annual)',unit:'Bcf',color:'#00d4aa'},
+    {id:'NG.N9102US2.M',lbl:'Pipeline Exports',unit:'Bcf',color:'#a78bfa'},
+  ];
+  const el=document.getElementById('lng-cards'); el.innerHTML='';
+  const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  res.forEach(({s,d})=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; el.appendChild(mkCard(s.lbl,v!=null?f2(v,1):null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color)); });
+  const hist=await eiaGet('NG.N9133US2.M',60).catch(()=>[]);
+  const sorted=[...hist].sort((a,b)=>a.period.localeCompare(b.period));
+  if(sorted.length) mkChart('lng-chart','bar',sorted.map(x=>x.period),[{label:'LNG Exports (Bcf)',data:sorted.map(x=>Number(x.value)),backgroundColor:'rgba(0,150,255,0.4)',borderColor:'#0096ff',borderWidth:1}]);
+}
+
+// REGIONAL NAT GAS PRICES
+let ngRegLoaded=false;
+async function loadNgRegional(){
+  if(ngRegLoaded) return; ngRegLoaded=true;
+  const regions=[
+    {id:'NG.N3010NE3.M',lbl:'New England',color:'#00c87a'},
+    {id:'NG.N3010MA3.M',lbl:'Middle Atlantic',color:'#0096ff'},
+    {id:'NG.N3010ENC.M',lbl:'East North Central',color:'#a78bfa'},
+    {id:'NG.N3010SA3.M',lbl:'South Atlantic',color:'#ffb020'},
+    {id:'NG.N3010MTN.M',lbl:'Mountain',color:'#ff6b6b'},
+    {id:'NG.N3010PAC.M',lbl:'Pacific',color:'#00d4aa'},
+  ];
+  const el=document.getElementById('ngreg-cards'); el.innerHTML='';
+  const res=await Promise.all(regions.map(s=>eiaGet(s.id,2).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  const tableRows=[];
+  res.forEach(({s,d})=>{
+    const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null;
+    el.appendChild(mkCard(s.lbl,v!=null?'$'+f2(v):null,cc(v,p),cs(v,p),'$/Mcf'+(d[0]?' · '+d[0].period:''),s.color));
+    tableRows.push(`<tr><td>${s.lbl}</td><td>${v!=null?'$'+f2(v):'--'}</td><td>--</td><td>--</td></tr>`);
+  });
+  document.getElementById('ngreg-tbody').innerHTML=tableRows.join('');
+  // Chart - historical for NE and SA
+  const [ne,sa]=await Promise.all([eiaGet('NG.N3010NE3.M',60),eiaGet('NG.N3010SA3.M',60)]);
+  const dates=[...new Set([...ne,...sa].map(x=>x.period))].sort().slice(-60);
+  const neM=Object.fromEntries(ne.map(x=>[x.period,Number(x.value)]));
+  const saM=Object.fromEntries(sa.map(x=>[x.period,Number(x.value)]));
+  mkChart('ngreg-chart','line',dates,[
+    {label:'New England',data:dates.map(d=>neM[d]??null),borderColor:'#00c87a',borderWidth:1.5,pointRadius:0,tension:0.3},
+    {label:'South Atlantic',data:dates.map(d=>saM[d]??null),borderColor:'#ffb020',borderWidth:1.5,pointRadius:0,tension:0.3}
+  ],v=>'$'+v.toFixed(2));
+}
+
+// COAL PRICES
+let coalPLoaded=false;
+async function loadCoalPrices(){
+  if(coalPLoaded) return; coalPLoaded=true;
+  const series=[
+    {id:'COAL.price-by-rank.us.annual.TOT.D.A',lbl:'U.S. Avg Coal Price',unit:'$/short ton',color:'#888'},
+    {id:'TOTAL.ESRPUUS.A',lbl:'Elec Sector Coal Cost',unit:'$/MMBtu',color:'#ffb020'},
+    {id:'TOTAL.CLTCPUS.A',lbl:'Total Coal Consumption',unit:'Trillion BTU',color:'#aaa'},
+  ];
+  const el=document.getElementById('coalp-cards'); el.innerHTML='';
+  const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  const tbody=[];
+  res.forEach(({s,d})=>{
+    const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null;
+    el.appendChild(mkCard(s.lbl,v!=null?(s.unit.includes('$')?'$'+f2(v):f2(v,1)):null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color));
+    tbody.push(`<tr><td>${s.lbl}</td><td>${v!=null?f2(v,2):'--'}</td><td>${s.unit}</td><td>${d[0]?.period||'--'}</td></tr>`);
+  });
+  document.getElementById('coalp-tbody').innerHTML=tbody.join('');
+  // Chart - electricity sector coal cost over time
+  const hist=await eiaGet('TOTAL.ESRPUUS.A',20).catch(()=>[]);
+  const sorted=[...hist].sort((a,b)=>a.period.localeCompare(b.period));
+  if(sorted.length) mkChart('coalp-chart','bar',sorted.map(x=>x.period),[{label:'Elec Sector Coal Cost ($/MMBtu)',data:sorted.map(x=>Number(x.value)),backgroundColor:'rgba(136,136,136,0.4)',borderColor:'#888',borderWidth:1}]);
+}
+
+// ELECTRICITY PRICES
+let elecPLoaded=false;
+async function loadElecPrices(){
+  if(elecPLoaded) return; elecPLoaded=true;
+  const sectors=[
+    {id:'ELEC.PRICE.US-RES.M',lbl:'Residential',color:'#ff6b6b'},
+    {id:'ELEC.PRICE.US-COM.M',lbl:'Commercial',color:'#0096ff'},
+    {id:'ELEC.PRICE.US-IND.M',lbl:'Industrial',color:'#ffb020'},
+    {id:'ELEC.PRICE.US-ALL.M',lbl:'All Sectors Avg',color:'#00d4aa'},
+  ];
+  const el=document.getElementById('elecp-cards'); el.innerHTML='';
+  const res=await Promise.all(sectors.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  const tbody=[];
+  res.forEach(({s,d})=>{
+    const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null;
+    el.appendChild(mkCard(s.lbl,v!=null?f2(v,2):null,cc(v,p),cs(v,p),'¢/kWh'+(d[0]?' · '+d[0].period:''),s.color));
+    tbody.push(`<tr><td>${s.lbl}</td><td>${v!=null?f2(v,2):'--'}</td><td>${d[0]?.period||'--'}</td><td class="${cc(v,p)}">${cs(v,p)}</td></tr>`);
+  });
+  document.getElementById('elecp-tbody').innerHTML=tbody.join('');
+  // Chart - all sectors 5 years
+  const allData=await Promise.all(sectors.map(s=>eiaGet(s.id,60).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  const dates=[...new Set(allData.flatMap(({d})=>d.map(x=>x.period)))].sort().slice(-60);
+  const datasets=allData.map(({s,d})=>({ label:s.lbl, data:dates.map(dt=>{ const row=d.find(x=>x.period===dt); return row?Number(row.value):null; }), borderColor:s.color, borderWidth:1.5, pointRadius:0, tension:0.3, fill:false }));
+  mkChart('elecp-chart','line',dates,datasets,v=>v.toFixed(1)+'¢');
+}
+
+// RENEWABLES
+let renLoaded=false;
+async function loadRenewables(){
+  if(renLoaded) return; renLoaded=true;
+  const series=[
+    {id:'ELEC.GEN.WND-US-99.M',lbl:'Wind Generation',unit:'Thousand MWh',color:'#00c87a'},
+    {id:'ELEC.GEN.SUN-US-99.M',lbl:'Utility Solar',unit:'Thousand MWh',color:'#ffb020'},
+    {id:'ELEC.GEN.DPV-US-99.M',lbl:'Distributed Solar (Rooftop)',unit:'Thousand MWh',color:'#ff6b6b'},
+    {id:'ELEC.GEN.HYC-US-99.M',lbl:'Conventional Hydro',unit:'Thousand MWh',color:'#0096ff'},
+  ];
+  const el=document.getElementById('ren-cards'); el.innerHTML='';
+  const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  res.forEach(({s,d})=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; el.appendChild(mkCard(s.lbl,v!=null?(v/1000).toFixed(1)+'k':null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color)); });
+  // Wind + Solar chart
+  const [wind,solar]=await Promise.all([eiaGet('ELEC.GEN.WND-US-99.M',60),eiaGet('ELEC.GEN.SUN-US-99.M',60)]);
+  const dates=[...new Set([...wind,...solar].map(x=>x.period))].sort().slice(-60);
+  const wM=Object.fromEntries(wind.map(x=>[x.period,Number(x.value)]));
+  const sM=Object.fromEntries(solar.map(x=>[x.period,Number(x.value)]));
+  mkChart('ren-chart','line',dates,[
+    {label:'Wind (Thousand MWh)',data:dates.map(d=>wM[d]??null),borderColor:'#00c87a',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(0,200,122,0.05)',tension:0.3},
+    {label:'Solar (Thousand MWh)',data:dates.map(d=>sM[d]??null),borderColor:'#ffb020',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(255,176,32,0.05)',tension:0.3}
+  ]);
+  // Renewable share chart
+  const [total,renTotal]=await Promise.all([eiaGet('ELEC.GEN.ALL-US-99.M',60),eiaGet('ELEC.GEN.RE-US-99.M',60)]);
+  const tM=Object.fromEntries(total.map(x=>[x.period,Number(x.value)]));
+  const rM=Object.fromEntries(renTotal.map(x=>[x.period,Number(x.value)]));
+  const shareDates=[...new Set([...total,...renTotal].map(x=>x.period))].sort().slice(-60);
+  mkChart('ren-share-chart','line',shareDates,[
+    {label:'Renewable Share %',data:shareDates.map(d=>tM[d]&&rM[d]?(rM[d]/tM[d]*100):null),borderColor:'#00d4aa',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(0,212,170,0.08)',tension:0.3}
+  ],v=>v.toFixed(1)+'%');
+}
+
+// COAL PRODUCTION
+let coalProdLoaded=false;
+async function loadCoalProd(){
+  if(coalProdLoaded) return; coalProdLoaded=true;
+  const series=[
+    {id:'TOTAL.CLPRPUS.A',lbl:'Total Coal Production',unit:'Trillion BTU',color:'#888'},
+    {id:'COAL.distribution.electric-power.us.total.A',lbl:'Coal to Electric Power',unit:'Thousand Short Tons',color:'#ffb020'},
+    {id:'TOTAL.CLSTPUS.A',lbl:'Coal Stocks',unit:'Trillion BTU',color:'#aaa'},
+  ];
+  const el=document.getElementById('coalprod-cards'); el.innerHTML='';
+  const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  res.forEach(({s,d})=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; el.appendChild(mkCard(s.lbl,v!=null?f2(v,1):null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color)); });
+  // Production chart
+  const prod=await eiaGet('TOTAL.CLPRPUS.A',20).catch(()=>[]);
+  const sp=[...prod].sort((a,b)=>a.period.localeCompare(b.period));
+  if(sp.length) mkChart('coalprod-chart','bar',sp.map(x=>x.period),[{label:'Coal Production (Trillion BTU)',data:sp.map(x=>Number(x.value)),backgroundColor:'rgba(136,136,136,0.4)',borderColor:'#888',borderWidth:1}]);
+  // Stocks at power plants
+  const stks=await eiaGet('ELEC.STOCKS.COW-US-98.M',24).catch(()=>[]);
+  const ss=[...stks].sort((a,b)=>a.period.localeCompare(b.period));
+  if(ss.length) mkChart('coalstock-chart','line',ss.map(x=>x.period),[{label:'Coal Stocks at Power Plants (Thousand Short Tons)',data:ss.map(x=>Number(x.value)),borderColor:'#ffb020',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(255,176,32,0.06)',tension:0.3}]);
+}
+
+// CO2 EMISSIONS
+let co2Loaded=false;
+async function loadCo2(){
+  if(co2Loaded) return; co2Loaded=true;
+  const fuels=[
+    {id:'TOTAL.CO2ETI.A',lbl:'Total Energy CO2',unit:'MMT',color:'#ff4d4d'},
+    {id:'TOTAL.CO2EPE.A',lbl:'Petroleum CO2',unit:'MMT',color:'#ffb020'},
+    {id:'TOTAL.CO2ENG.A',lbl:'Natural Gas CO2',unit:'MMT',color:'#a78bfa'},
+    {id:'TOTAL.CO2ECL.A',lbl:'Coal CO2',unit:'MMT',color:'#888'},
+  ];
+  const el=document.getElementById('co2-cards'); el.innerHTML='';
+  const res=await Promise.all(fuels.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  let total=null;
+  res.forEach(({s,d},i)=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; if(i===0) total=v; el.appendChild(mkCard(s.lbl,v!=null?f2(v,1):null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color)); });
+  // Stacked area chart
+  const allHist=await Promise.all(fuels.slice(1).map(f=>eiaGet(f.id,30).then(d=>({f,d})).catch(()=>({f,d:[]}))));
+  const dates=[...new Set(allHist.flatMap(({d})=>d.map(x=>x.period)))].sort();
+  const datasets=allHist.map(({f,d})=>({ label:f.lbl.replace(' CO2',''), data:dates.map(dt=>{ const r=d.find(x=>x.period===dt); return r?Number(r.value):null; }), borderColor:f.color, backgroundColor:f.color+'22', borderWidth:1.5, pointRadius:0, fill:true, tension:0.3 }));
+  if(dates.length) mkChart('co2-chart','line',dates,datasets,v=>v.toFixed(0)+' MMT');
+  // Bars breakdown
+  const barsEl=document.getElementById('co2-bars');
+  if(barsEl && total){
+    const latest=res.slice(1).map(({s,d})=>({lbl:s.lbl.replace(' CO2',''),val:d[0]?Number(d[0].value):0,color:s.color}));
+    barsEl.innerHTML=latest.map(item=>{ const pct=total?((item.val/total)*100).toFixed(1):0; return `<div class="pi"><div class="ph2"><span class="pl">${item.lbl}</span><span class="pv">${f2(item.val,1)} MMT (${pct}%)</span></div><div class="pbb"><div class="pb" style="width:${pct}%;background:${item.color}"></div></div></div>`; }).join('');
+  }
+}
+
+
+// ── NEWS ──────────────────────────────────────────────────────────────────
+let newsAllLoaded=false,mktNewsLoaded=false,sentLoaded=false;
+const FH_NEWS_TICKERS=['XOM','CVX','COP','SLB','EOG','NEE','OXY','DVN'];
+
+function fhGet(path){ return fetch('https://finnhub.io/api/v1'+path+'&token='+FH_KEY).then(r=>r.json()).catch(()=>null); }
+function fhDate(ts){ return new Date(ts*1000).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}); }
+
+function newsCard(item){
+  const d=document.createElement('div'); d.className='news-card';
+  d.onclick=()=>window.open(item.url,'_blank');
+  d.innerHTML=`
+    ${item.image?`<img class="news-img" src="${item.image}" onerror="this.style.display='none'" alt="">`:'' }
+    <div class="news-body">
+      <div class="news-src">${item.source||''}${item.category?' · '+item.category:''}</div>
+      <div class="news-headline">${item.headline||''}</div>
+      <div class="news-summary">${item.summary||''}</div>
+      <div class="news-date">${item.datetime?fhDate(item.datetime):''}</div>
+    </div>`;
+  return d;
+}
+
+function fhRequired(el){
+  if(FH_KEY==='YOUR_FINNHUB_KEY'){
+    el.innerHTML='<div style="color:var(--amber);font-size:12px;font-family:var(--mono);padding:14px;border:1px solid var(--border);border-radius:8px">⚠ Add your Finnhub API key to enable this feature.</div>';
+    return true;
+  }
+  return false;
+}
+
+async function loadNewsAll(){
+  if(newsAllLoaded) return; newsAllLoaded=true;
+  const el=document.getElementById('news-all-feed');
+  if(fhRequired(el)) return;
+  el.innerHTML='<div class="skel" style="height:80px;margin-bottom:8px"></div>'.repeat(5);
+  // Fetch news for top 3 energy tickers and merge
+  const results=await Promise.all(['XOM','CVX','SLB'].map(sym=>{
+    const to=new Date(),from=new Date(Date.now()-7*86400000);
+    const fmt=d=>d.toISOString().split('T')[0];
+    return fhGet(`/company-news?symbol=${sym}&from=${fmt(from)}&to=${fmt(to)}`);
+  }));
+  const all=[...new Set((results.flat().filter(Boolean))
+    .sort((a,b)=>b.datetime-a.datetime)
+    .filter((v,i,a)=>a.findIndex(x=>x.headline===v.headline)===i)
+    .slice(0,15))];
+  el.innerHTML='';
+  if(!all.length){el.innerHTML='<div style="color:var(--text3);font-size:12px">No recent news found.</div>';return;}
+  all.forEach(item=>el.appendChild(newsCard(item)));
+}
+
+async function loadCompanyNews(sym,btn){
+  document.querySelectorAll('#news-ticker-btns .rbtn').forEach(b=>b.classList.remove('sel'));
+  btn?.classList.add('sel');
+  const el=document.getElementById('company-news-feed');
+  if(fhRequired(el)) return;
+  el.innerHTML='<div class="skel" style="height:80px;margin-bottom:8px"></div>'.repeat(4);
+  const to=new Date(),from=new Date(Date.now()-14*86400000);
+  const fmt=d=>d.toISOString().split('T')[0];
+  const data=await fhGet(`/company-news?symbol=${sym}&from=${fmt(from)}&to=${fmt(to)}`);
+  el.innerHTML='';
+  if(!data||!data.length){el.innerHTML='<div style="color:var(--text3);font-size:12px">No recent news for '+sym+'</div>';return;}
+  data.slice(0,12).forEach(item=>el.appendChild(newsCard(item)));
+}
+
+async function loadMarketNews(){
+  if(mktNewsLoaded) return; mktNewsLoaded=true;
+  const el=document.getElementById('market-news-feed');
+  if(fhRequired(el)) return;
+  el.innerHTML='<div class="skel" style="height:80px;margin-bottom:8px"></div>'.repeat(4);
+  const data=await fhGet('/news?category=energy');
+  const data2=await fhGet('/news?category=general');
+  const all=[...(data||[]),...(data2||[])].sort((a,b)=>b.datetime-a.datetime).slice(0,15);
+  el.innerHTML='';
+  all.forEach(item=>el.appendChild(newsCard(item)));
+}
+
+async function loadSentiment(){
+  if(sentLoaded) return; sentLoaded=true;
+  const el=document.getElementById('sentiment-cards');
+  const barsEl=document.getElementById('sentiment-bars');
+  if(fhRequired(el)) return;
+  const tickers=['XOM','CVX','COP','SLB','NEE'];
+  const results=await Promise.all(tickers.map(s=>fhGet(`/news-sentiment?symbol=${s}`).then(d=>({s,d})).catch(()=>({s,d:null}))));
+  el.innerHTML='';
+  const barData=[];
+  results.forEach(({s,d})=>{
+    if(!d||!d.sentiment) return;
+    const bull=d.sentiment.bullishPercent||0, bear=d.sentiment.bearishPercent||0;
+    const score=(bull-bear).toFixed(2);
+    const cls=score>0?'up':score<0?'dn':'fl';
+    el.appendChild(mkCard(s+' Sentiment',(score>0?'+':'')+score,cls,score>0?'Bullish':'Bearish','Bull: '+(bull*100).toFixed(0)+'% Bear: '+(bear*100).toFixed(0)+'%',score>0?'#00c87a':'#ff4d4d'));
+    barData.push({s,bull:bull*100,bear:bear*100});
+  });
+  if(barData.length&&barsEl){
+    barsEl.innerHTML=barData.map(x=>`
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;color:var(--text2)">${x.s}</span><span style="font-size:11px;font-family:var(--mono);color:var(--text3)">Bull ${x.bull.toFixed(0)}% / Bear ${x.bear.toFixed(0)}%</span></div>
+        <div style="display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--bg4)">
+          <div style="width:${x.bull}%;background:var(--green)"></div>
+          <div style="width:${x.bear}%;background:var(--red)"></div>
+        </div>
+      </div>`).join('');
+  }
+}
+
+// ── EARNINGS ────────────────────────────────────────────────────────────────
+let earnCalLoaded=false;
+async function loadEarnCalendar(){
+  if(earnCalLoaded) return; earnCalLoaded=true;
+  const tbody=document.getElementById('earn-cal-tbody');
+  const summary=document.getElementById('earn-cal-summary');
+  if(fhRequired(tbody)) return;
+  const syms=['XOM','CVX','COP','SLB','EOG','PSX','MPC','NEE','OXY','DVN','HAL','BKR'];
+  const from=new Date().toISOString().split('T')[0];
+  const to=new Date(Date.now()+90*86400000).toISOString().split('T')[0];
+  const data=await fhGet(`/calendar/earnings?from=${from}&to=${to}`);
+  const earnings=(data?.earningsCalendar||[]).filter(e=>syms.includes(e.symbol)).sort((a,b)=>a.date.localeCompare(b.date));
+  // Summary cards
+  summary.innerHTML='';
+  summary.appendChild(mkCard('Upcoming Reports',earnings.length+'','fl','next 90 days','',null));
+  const next=earnings[0];
+  if(next) summary.appendChild(mkCard('Next Report',next.symbol,'fl',next.date,'',null));
+  // Table
+  tbody.innerHTML=earnings.length?earnings.map(e=>`<tr>
+    <td>${e.symbol}</td><td>${e.company||e.symbol}</td><td>${e.date}</td>
+    <td class="${e.epsEstimate>0?'up':'fl'}">${e.epsEstimate!=null?'$'+f2(e.epsEstimate):'--'}</td>
+    <td>${e.epsPriorYear!=null?'$'+f2(e.epsPriorYear):'--'}</td>
+    <td style="color:var(--text3)">${e.hour==='bmo'?'Before Open':e.hour==='amc'?'After Close':'During Market'}</td>
+  </tr>`).join(''):'<tr><td colspan="6" style="color:var(--text3)">No upcoming earnings found for tracked energy companies</td></tr>';
+}
+
+async function loadSurprises(sym,btn){
+  document.querySelectorAll('#surp-ticker-btns .rbtn').forEach(b=>b.classList.remove('sel'));
+  btn?.classList.add('sel');
+  const summary=document.getElementById('surp-summary');
+  if(fhRequired(summary)) return;
+  const data=await fhGet(`/stock/earnings?symbol=${sym}&limit=8`);
+  if(!data||!data.length){document.getElementById('surp-tbody').innerHTML='<tr><td colspan="5" style="color:var(--text3)">No data</td></tr>';return;}
+  summary.innerHTML='';
+  const beats=data.filter(e=>e.actual>e.estimate).length;
+  summary.appendChild(mkCard('Beat Rate',(beats/data.length*100).toFixed(0)+'%','up',beats+' of '+data.length+' quarters','',null));
+  const avgSurp=data.reduce((a,e)=>a+(e.surprise||0),0)/data.length;
+  summary.appendChild(mkCard('Avg Surprise',(avgSurp>0?'+':'')+f2(avgSurp)+'%',avgSurp>0?'up':'dn','avg EPS beat/miss','',null));
+  const sorted=[...data].reverse();
+  mkChart('surp-chart','bar',sorted.map(e=>e.period),[
+    {label:'Actual EPS',data:sorted.map(e=>e.actual),backgroundColor:'rgba(0,200,122,0.5)',borderColor:'#00c87a',borderWidth:1},
+    {label:'Est. EPS',data:sorted.map(e=>e.estimate),backgroundColor:'rgba(0,150,255,0.3)',borderColor:'#0096ff',borderWidth:1}
+  ]);
+  document.getElementById('surp-tbody').innerHTML=data.map(e=>{
+    const surp=e.surprise,cls=surp>0?'up':surp<0?'dn':'fl';
+    return `<tr><td>${e.period}</td><td class="${e.actual>0?'up':'dn'}">${e.actual!=null?'$'+f2(e.actual):'--'}</td><td>${e.estimate!=null?'$'+f2(e.estimate):'--'}</td><td class="${cls}">${surp!=null?(surp>0?'+':'')+f2(surp):'--'}</td><td class="${cls}">${e.surprisePercent!=null?(e.surprisePercent>0?'+':'')+f2(e.surprisePercent)+'%':'--'}</td></tr>`;
+  }).join('');
+}
+
+async function loadRevenueEst(sym,btn){
+  document.querySelectorAll('#panel-earn-estimates .rbtn').forEach(b=>b.classList.remove('sel'));
+  btn?.classList.add('sel');
+  const el=document.getElementById('rev-est-tbody');
+  if(fhRequired(el)) return;
+  const data=await fhGet(`/stock/revenue-estimate?symbol=${sym}&freq=quarterly`);
+  const rows=data?.revenueEstimate||[];
+  const sorted=rows.sort((a,b)=>a.period.localeCompare(b.period));
+  const labels=sorted.map(r=>r.period);
+  mkChart('rev-est-chart','bar',labels,[
+    {label:'Low Est.',data:sorted.map(r=>r.revenueMin),backgroundColor:'rgba(255,107,107,0.3)',borderColor:'#ff6b6b',borderWidth:1},
+    {label:'Avg Est.',data:sorted.map(r=>r.revenueAvg),backgroundColor:'rgba(0,150,255,0.4)',borderColor:'#0096ff',borderWidth:1},
+    {label:'High Est.',data:sorted.map(r=>r.revenueMax),backgroundColor:'rgba(0,200,122,0.3)',borderColor:'#00c87a',borderWidth:1}
+  ],v=>'$'+fM(v));
+  el.innerHTML=sorted.map(r=>`<tr><td>${r.period}</td><td>${fM(r.revenueMin)}</td><td style="color:var(--accent2)">${fM(r.revenueAvg)}</td><td>${fM(r.revenueMax)}</td><td>${r.numberAnalysts||'--'}</td></tr>`).join('');
+}
+
+async function loadEpsEst(sym,btn){
+  document.querySelectorAll('#panel-earn-eps .rbtn').forEach(b=>b.classList.remove('sel'));
+  btn?.classList.add('sel');
+  const el=document.getElementById('eps-est-tbody');
+  if(fhRequired(el)) return;
+  const data=await fhGet(`/stock/eps-estimate?symbol=${sym}&freq=quarterly`);
+  const rows=data?.epsEstimate||[];
+  const sorted=rows.sort((a,b)=>a.period.localeCompare(b.period));
+  mkChart('eps-est-chart','bar',sorted.map(r=>r.period),[
+    {label:'Low Est.',data:sorted.map(r=>r.epsMin),backgroundColor:'rgba(255,107,107,0.3)',borderColor:'#ff6b6b',borderWidth:1},
+    {label:'Avg Est.',data:sorted.map(r=>r.epsAvg),backgroundColor:'rgba(0,150,255,0.4)',borderColor:'#0096ff',borderWidth:1},
+    {label:'High Est.',data:sorted.map(r=>r.epsMax),backgroundColor:'rgba(0,200,122,0.3)',borderColor:'#00c87a',borderWidth:1}
+  ]);
+  el.innerHTML=sorted.map(r=>`<tr><td>${r.period}</td><td>${f2(r.epsMin)}</td><td style="color:var(--accent2)">${f2(r.epsAvg)}</td><td>${f2(r.epsMax)}</td><td>${r.numberAnalysts||'--'}</td></tr>`).join('');
+}
+
+// ── INSIDER & CONGRESS ──────────────────────────────────────────────────────
+let insSentLoaded=false,congressLoaded=false,esgLoaded=false;
+
+async function loadInsSentiment(){
+  if(insSentLoaded) return; insSentLoaded=true;
+  const el=document.getElementById('ins-sent-cards');
+  if(fhRequired(el)) return;
+  const tickers=['XOM','CVX','COP','SLB','NEE','OXY'];
+  const now=new Date(),from=new Date(now.getFullYear(),now.getMonth()-6,1).toISOString().split('T')[0],to=now.toISOString().split('T')[0];
+  const results=await Promise.all(tickers.map(s=>fhGet(`/stock/insider-sentiment?symbol=${s}&from=${from}&to=${to}`).then(d=>({s,d})).catch(()=>({s,d:null}))));
+  el.innerHTML='';
+  const labels=[],msprData=[];
+  results.forEach(({s,d})=>{
+    const data=d?.data||[];
+    if(!data.length) return;
+    const latest=data[data.length-1];
+    const mspr=latest.mspr||0;
+    const cls=mspr>0?'up':mspr<0?'dn':'fl';
+    el.appendChild(mkCard(s+' MSPR',f2(mspr,1),cls,mspr>10?'Strong Buy':mspr>0?'Mild Buy':mspr<-10?'Strong Sell':'Mild Sell','Monthly Share Purchase Ratio',mspr>0?'#00c87a':'#ff4d4d'));
+    labels.push(s); msprData.push(mspr);
+  });
+  if(labels.length){
+    mkChart('mspr-chart','bar',labels,[{
+      label:'MSPR',
+      data:msprData,
+      backgroundColor:msprData.map(v=>v>0?'rgba(0,200,122,0.5)':'rgba(255,77,77,0.5)'),
+      borderColor:msprData.map(v=>v>0?'#00c87a':'#ff4d4d'),
+      borderWidth:1
+    }],v=>v.toFixed(1));
+  }
+}
+
+async function loadInsiderTxn(sym,btn){
+  document.querySelectorAll('#panel-ins-transactions .rbtn').forEach(b=>b.classList.remove('sel'));
+  btn?.classList.add('sel');
+  const el=document.getElementById('ins-txn-tbody');
+  if(fhRequired(el)) return;
+  const data=await fhGet(`/stock/insider-transactions?symbol=${sym}`);
+  const txns=data?.data||[];
+  el.innerHTML=txns.slice(0,15).map(t=>{
+    const buy=t.transactionCode==='P'||t.share>0;
+    const val=t.share&&t.price?Math.abs(t.share*t.price):null;
+    return `<tr>
+      <td>${t.name||'--'}</td><td style="color:var(--text3)">${t.reportedTitle||'--'}</td>
+      <td class="${buy?'up':'dn'}">${buy?'BUY':'SELL'}</td>
+      <td>${t.share!=null?Number(t.share).toLocaleString():'--'}</td>
+      <td>${t.price!=null?'$'+f2(t.price):'--'}</td>
+      <td>${val?'$'+fM(val):'--'}</td>
+      <td style="color:var(--text3)">${t.filingDate||'--'}</td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="7" style="color:var(--text3)">No recent transactions</td></tr>';
+}
+
+async function loadCongress(){
+  if(congressLoaded) return; congressLoaded=true;
+  const summary=document.getElementById('congress-summary');
+  const tbody=document.getElementById('congress-tbody');
+  if(fhRequired(tbody)) return;
+  const energySyms=['XOM','CVX','COP','SLB','EOG','PSX','MPC','NEE','OXY','DVN','HAL','BKR','FSLR','ENPH'];
+  const data=await fhGet('/stock/senate-trading?symbol=XOM');
+  // Try a broader set
+  const results=await Promise.all(['XOM','CVX','NEE','COP'].map(s=>fhGet(`/stock/senate-trading?symbol=${s}`).then(d=>({s,d})).catch(()=>({s,d:null}))));
+  const all=results.flatMap(({d})=>(d?.data||[])).sort((a,b)=>b.filingDate?.localeCompare(a.filingDate||'')||0);
+  summary.innerHTML='';
+  const buys=all.filter(t=>t.transaction==='Purchase').length;
+  const sells=all.filter(t=>t.transaction==='Sale').length;
+  summary.appendChild(mkCard('Congressional Buys',buys+'','up','energy stocks','',null));
+  summary.appendChild(mkCard('Congressional Sells',sells+'','dn','energy stocks','',null));
+  tbody.innerHTML=all.slice(0,20).map(t=>`<tr>
+    <td>${t.name||'--'}</td><td style="color:var(--accent)">${t.symbol||'--'}</td>
+    <td class="${t.transaction==='Purchase'?'up':'dn'}">${t.transaction||'--'}</td>
+    <td style="color:var(--text3)">${t.amount||'--'}</td>
+    <td style="color:var(--text3)">${t.filingDate||'--'}</td>
+    <td style="color:var(--text3)">${t.transactionDate||'--'}</td>
+  </tr>`).join('') || '<tr><td colspan="6" style="color:var(--text3)">No recent congressional trades found</td></tr>';
+}
+
+async function loadEsg(){
+  if(esgLoaded) return; esgLoaded=true;
+  const el=document.getElementById('esg-cards');
+  if(fhRequired(el)) return;
+  const tickers=['XOM','CVX','COP','NEE','SLB'];
+  const results=await Promise.all(tickers.map(s=>fhGet(`/stock/esg?symbol=${s}`).then(d=>({s,d})).catch(()=>({s,d:null}))));
+  el.innerHTML='';
+  const labels=[],eScores=[],sScores=[],gScores=[];
+  results.forEach(({s,d})=>{
+    if(!d||!d.environmentScore) return;
+    const total=d.totalEsg||0;
+    const cls=total>60?'up':total>40?'fl':'dn';
+    el.appendChild(mkCard(s+' ESG',f2(total,1),cls,'out of 100','E:'+f2(d.environmentScore,0)+' S:'+f2(d.socialScore,0)+' G:'+f2(d.governanceScore,0),total>60?'#00c87a':total>40?'#ffb020':'#ff4d4d'));
+    labels.push(s); eScores.push(d.environmentScore); sScores.push(d.socialScore); gScores.push(d.governanceScore);
+  });
+  if(labels.length){
+    mkChart('esg-chart','bar',labels,[
+      {label:'Environment',data:eScores,backgroundColor:'rgba(0,200,122,0.5)',borderColor:'#00c87a',borderWidth:1},
+      {label:'Social',data:sScores,backgroundColor:'rgba(0,150,255,0.4)',borderColor:'#0096ff',borderWidth:1},
+      {label:'Governance',data:gScores,backgroundColor:'rgba(167,139,250,0.4)',borderColor:'#a78bfa',borderWidth:1}
+    ]);
+  }
+}
+
+// ── MARKET INTELLIGENCE ──────────────────────────────────────────────────────
+let signalsLoaded=false,watchLoaded=false;
+
+const STORY_PROMPTS={
+  oil_outlook:`You are an energy market analyst. Based on current WTI crude oil near $105/bbl (up from ~$60 a year ago), Brent at $102 with WTI premium, and U.S. crude production at record highs near 13.7 Mb/d, write a concise 3-paragraph market narrative covering: (1) what's driving the current price level, (2) key risks to watch, and (3) a forward outlook. Use specific numbers. Keep it sharp and professional.`,
+  natgas_storage:`You are a natural gas market analyst. Write a 3-paragraph narrative on U.S. natural gas storage dynamics: current Henry Hub price near $3.10/MMBtu, underground storage levels, LNG export growth pulling on supply, and what to watch heading into summer/winter. Be specific and cite relevant trends.`,
+  energy_stocks:`You are an energy equity analyst. Write a 3-paragraph narrative analyzing the current energy sector: XOM and CVX near 52-week highs, oilfield services (SLB, HAL) benefiting from activity, utilities (NEE) facing rate headwinds, and renewables stocks under pressure. Discuss valuation, dividends, and sector rotation themes.`,
+  renewables_trend:`You are a clean energy analyst. Write a 3-paragraph narrative on the U.S. renewables buildout: solar and wind generation growth, grid integration challenges, IRA incentive impacts, and how traditional energy companies are positioning. Include specific TWh figures and growth rates.`,
+  insider_signal:`You are a market intelligence analyst. Write a 3-paragraph report on what insider buying and selling patterns at major energy companies (XOM, CVX, COP, OXY) typically signal about management's view of the sector. Discuss how MSPR scores and congressional trading activity can be interpreted as leading indicators.`,
+  earnings_preview:`You are an energy sector earnings analyst. Write a 3-paragraph earnings preview for major energy companies: what drives EPS beats in the oil & gas sector, how commodity prices flow through to earnings, and what guidance language to watch for on capex, buybacks, and dividends.`
+};
+
+async function buildStory(type){
+  const prompt=STORY_PROMPTS[type];
+  if(!prompt) return;
+  await runStory(prompt);
+}
+
+async function buildCustomStory(){
+  const prompt=document.getElementById('story-custom').value.trim();
+  if(!prompt) return;
+  await runStory(`You are an energy market analyst. ${prompt} Write a clear, data-driven narrative of 2-3 paragraphs. Be specific and professional.`);
+}
+
+async function runStory(prompt){
+  const out=document.getElementById('story-output');
+  const txt=document.getElementById('story-text');
+  out.style.display='block';
+  txt.innerHTML='<span style="color:var(--text3);font-family:var(--mono);font-size:12px">Generating narrative...</span>';
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const d=await r.json();
+    const text=d.content?.map(b=>b.text||'').join('')||'Could not generate narrative.';
+    // Format paragraphs
+    txt.innerHTML=text.split('\n\n').map(p=>`<p>${p}</p>`).join('');
+  }catch(e){
+    txt.innerHTML='<span style="color:var(--red)">Error generating story. Check console.</span>';
+  }
+}
+
+async function loadSignals(){
+  if(signalsLoaded) return; signalsLoaded=true;
+  const el=document.getElementById('signal-rows');
+  const summary=document.getElementById('signal-cards');
+  if(fhRequired(el)) return;
+  const tickers=['XOM','CVX','COP','SLB','NEE','OXY'];
+  const results=await Promise.all(tickers.map(s=>Promise.all([
+    fhGet(`/quote?symbol=${s}`),
+    fhGet(`/stock/metric?symbol=${s}&metric=all`),
+    fhGet(`/stock/insider-sentiment?symbol=${s}&from=${new Date(Date.now()-90*86400000).toISOString().split('T')[0]}&to=${new Date().toISOString().split('T')[0]}`)
+  ]).then(([q,m,ins])=>({s,q,m,ins})).catch(()=>({s,q:null,m:null,ins:null}))));
+  let buys=0,sells=0,holds=0;
+  el.innerHTML='';
+  results.forEach(({s,q,m,ins})=>{
+    if(!q) return;
+    const chg=q.dp||0;
+    const mspr=ins?.data?.slice(-1)[0]?.mspr||0;
+    const pe=(m?.metric?.peBasicExclExtraTTM)||0;
+    // Simple signal logic
+    let sig='HOLD',sigCls='sig-hold';
+    if(chg>1&&mspr>0) { sig='BUY'; sigCls='sig-buy'; buys++; }
+    else if(chg<-1&&mspr<0) { sig='SELL'; sigCls='sig-sell'; sells++; }
+    else holds++;
+    const row=document.createElement('div'); row.className='signal-row';
+    row.innerHTML=`
+      <div class="co-t">${s}</div>
+      <div style="font-size:11px;color:var(--text2)">Price chg: <span class="${chg>0?'up':'dn'}">${(chg>0?'+':'')+f2(chg)}%</span></div>
+      <div class="sig-${mspr>0?'bull':'bear'}">${f2(mspr,1)}<span style="font-size:9px;color:var(--text3)"> MSPR</span></div>
+      <div style="font-size:11px;color:var(--text3)">${pe?'P/E '+f2(pe,1):'--'}</div>
+      <div style="font-size:11px;color:var(--text3)">$${q.c?.toFixed(2)||'--'}</div>
+      <div><span class="sig-badge ${sigCls}">${sig}</span></div>`;
+    el.appendChild(row);
+  });
+  summary.innerHTML='';
+  summary.appendChild(mkCard('Buy Signals',buys+'','up','based on price + insider','',null));
+  summary.appendChild(mkCard('Hold Signals',holds+'','fl','neutral signals','',null));
+  summary.appendChild(mkCard('Sell Signals',sells+'','dn','based on price + insider','',null));
+}
+
+async function loadWatchlist(){
+  if(watchLoaded) return; watchLoaded=true;
+  const el=document.getElementById('watchlist-tbody');
+  if(fhRequired(el)) return;
+  const all=[...TKRS.oil,...TKRS.svc,...TKRS.util,...TKRS.ren];
+  el.innerHTML='<tr><td colspan="8" style="color:var(--text3)">Loading all tickers...</td></tr>';
+  const results=await Promise.all(all.map(t=>Promise.all([
+    fhGet(`/quote?symbol=${t.s}`),
+    fhGet(`/stock/metric?symbol=${t.s}&metric=all`)
+  ]).then(([q,m])=>({t,q,m})).catch(()=>({t,q:null,m:null}))));
+  el.innerHTML=results.map(({t,q,m})=>{
+    const chg=q?.dp,cls=!chg?'fl':chg>0?'up':'dn';
+    const me=m?.metric||{};
+    return `<tr>
+      <td style="color:var(--accent);font-family:var(--mono)">${t.s}</td>
+      <td>${t.n}</td>
+      <td style="font-family:var(--mono)">${q?.c?'$'+q.c.toFixed(2):'--'}</td>
+      <td class="${cls}" style="font-family:var(--mono)">${chg!=null?(chg>0?'+':'')+chg.toFixed(2)+'%':'--'}</td>
+      <td style="font-family:var(--mono)">${me.peBasicExclExtraTTM?.toFixed(1)||'--'}</td>
+      <td style="font-family:var(--mono)">${me.currentDividendYieldTTM?.toFixed(2)||'--'}%</td>
+      <td style="font-family:var(--mono)">${me['52WeekHigh']?'$'+me['52WeekHigh'].toFixed(2):'--'}</td>
+      <td style="font-family:var(--mono)">${me['52WeekLow']?'$'+me['52WeekLow'].toFixed(2):'--'}</td>
+    </tr>`;
+  }).join('');
+}
 
 // INIT
 checkLocal().then(()=>{ loadCrude(); loadReports('all'); });
