@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energy Intelligence Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a0c0f;
+    --bg2:#111418;
+    --bg3:#181c22;
+    --bg4:#1e242d;
+    --border:#2a3040;
+    --border2:#3a4255;
+    --text:#e8eaf0;
+    --text2:#8b92a8;
+    --text3:#555f78;
+    --accent:#00d4aa;
+    --accent2:#0096ff;
+    --red:#ff4d4d;
+    --green:#00c87a;
+    --amber:#ffb020;
+    --purple:#a78bfa;
+    --font:'IBM Plex Sans',sans-serif;
+    --mono:'IBM Plex Mono',monospace;
+  }
+  html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.5}
+  body{min-height:100vh}
+
+  /* HEADER */
+  .header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100}
+  .logo{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.05em;color:var(--accent)}
+  .logo-mark{width:28px;height:28px;background:var(--accent);border-radius:4px;display:flex;align-items:center;justify-content:center}
+  .logo-mark svg{width:16px;height:16px;fill:var(--bg)}
+  .header-right{display:flex;align-items:center;gap:16px}
+  .live-badge{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--green);font-family:var(--mono)}
+  .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .timestamp{font-size:11px;color:var(--text3);font-family:var(--mono)}
+  .api-status{display:flex;gap:8px}
+  .api-pill{font-size:10px;font-family:var(--mono);padding:2px 8px;border-radius:3px;border:1px solid var(--border2);color:var(--text2)}
+  .api-pill.ok{border-color:var(--green);color:var(--green)}
+
+  /* NAV TABS */
+  .nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0;overflow-x:auto}
+  .nav::-webkit-scrollbar{display:none}
+  .nav-tab{padding:10px 18px;font-size:12px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s;letter-spacing:.03em;text-transform:uppercase}
+  .nav-tab:hover{color:var(--text2)}
+  .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+  /* LAYOUT */
+  .main{padding:20px 24px;max-width:1600px;margin:0 auto}
+  .section{display:none}
+  .section.active{display:block}
+
+  /* TICKER BAR */
+  .ticker-bar{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 16px;display:flex;gap:24px;overflow-x:auto;margin-bottom:20px}
+  .ticker-bar::-webkit-scrollbar{display:none}
+  .ticker-item{display:flex;align-items:center;gap:8px;white-space:nowrap;font-family:var(--mono);font-size:12px}
+  .ticker-sym{color:var(--text2);font-weight:500}
+  .ticker-price{color:var(--text);font-weight:500}
+  .ticker-chg{font-size:11px}
+  .up{color:var(--green)}
+  .dn{color:var(--red)}
+  .flat{color:var(--text3)}
+
+  /* SECTION HEADER */
+  .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .section-title{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
+  .refresh-btn{font-size:11px;color:var(--accent2);cursor:pointer;font-family:var(--mono);background:none;border:1px solid var(--border);border-radius:4px;padding:4px 10px;transition:background .15s}
+  .refresh-btn:hover{background:var(--bg4)}
+
+  /* CARD GRID */
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-bottom:24px}
+  .card-grid-3{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:24px}
+
+  /* DATA CARD */
+  .card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;cursor:pointer;transition:border-color .15s,background .15s;position:relative;overflow:hidden}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--accent);opacity:0;transition:opacity .15s}
+  .card:hover{border-color:var(--border2);background:var(--bg3)}
+  .card:hover::before{opacity:1}
+  .card-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+  .card-value{font-family:var(--mono);font-size:22px;font-weight:500;color:var(--text);margin-bottom:4px}
+  .card-value.loading{color:var(--text3);font-size:14px}
+  .card-meta{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+  .card-change{font-family:var(--mono);font-size:12px;font-weight:500}
+  .card-unit{font-size:10px;color:var(--text3)}
+  .card-drill{font-size:10px;color:var(--accent2);opacity:0;transition:opacity .15s}
+  .card:hover .card-drill{opacity:1}
+  .card-spark{margin-top:10px;height:36px}
+
+  /* WIDE CARD */
+  .card-wide{grid-column:1/-1;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:20px}
+  .chart-container{position:relative;width:100%;height:280px;margin-top:12px}
+
+  /* MODAL */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
+  .modal-overlay.open{opacity:1;pointer-events:all}
+  .modal{background:var(--bg2);border:1px solid var(--border2);border-radius:10px;width:100%;max-width:700px;max-height:85vh;overflow-y:auto;padding:24px}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+  .modal-title{font-size:16px;font-weight:600;color:var(--text)}
+  .modal-close{background:none;border:none;color:var(--text3);cursor:pointer;font-size:20px;line-height:1;padding:4px}
+  .modal-close:hover{color:var(--text)}
+  .modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+  .modal-stat{background:var(--bg3);border-radius:6px;padding:12px}
+  .modal-stat-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+  .modal-stat-value{font-family:var(--mono);font-size:16px;color:var(--text)}
+
+  /* TABLE */
+  .data-table{width:100%;border-collapse:collapse;font-size:12px}
+  .data-table th{text-align:left;padding:8px 12px;color:var(--text3);font-weight:500;font-size:10px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+  .data-table td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text2);font-family:var(--mono)}
+  .data-table tr:hover td{background:var(--bg3)}
+  .data-table td:first-child{color:var(--text);font-family:var(--font)}
+
+  /* REPORT CARDS */
+  .report-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px;cursor:pointer;transition:border-color .15s}
+  .report-card:hover{border-color:var(--accent2)}
+  .report-tag{display:inline-block;font-size:10px;padding:2px 8px;border-radius:3px;margin-bottom:10px;font-family:var(--mono);font-weight:500}
+  .tag-steo{background:#1a2a1a;color:var(--green);border:1px solid #2a4a2a}
+  .tag-aeo{background:#1a1f2a;color:var(--accent2);border:1px solid #2a3a5a}
+  .tag-ieo{background:#2a1a2a;color:var(--purple);border:1px solid #4a2a4a}
+  .tag-wpr{background:#2a1f10;color:var(--amber);border:1px solid #4a3a1a}
+  .report-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;line-height:1.4}
+  .report-desc{font-size:11px;color:var(--text3);line-height:1.5;margin-bottom:10px}
+  .report-meta{display:flex;align-items:center;justify-content:space-between}
+  .report-date{font-size:10px;color:var(--text3);font-family:var(--mono)}
+  .report-link{font-size:11px;color:var(--accent2)}
+
+  /* COMPANY ROW */
+  .company-grid{display:grid;gap:10px;margin-bottom:24px}
+  .company-row{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;display:grid;grid-template-columns:auto 1fr auto auto auto;align-items:center;gap:12px;cursor:pointer;transition:border-color .15s}
+  .company-row:hover{border-color:var(--border2)}
+  .company-ticker{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent);min-width:48px}
+  .company-name{font-size:12px;color:var(--text2)}
+  .company-price{font-family:var(--mono);font-size:14px;color:var(--text);text-align:right}
+  .company-chg{font-family:var(--mono);font-size:12px;text-align:right;min-width:56px}
+  .company-mktcap{font-size:11px;color:var(--text3);text-align:right;font-family:var(--mono);min-width:60px}
+
+  /* PRODUCTION BARS */
+  .prod-item{margin-bottom:14px}
+  .prod-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+  .prod-label{font-size:12px;color:var(--text2)}
+  .prod-value{font-family:var(--mono);font-size:12px;color:var(--text)}
+  .prod-bar-bg{height:4px;background:var(--bg4);border-radius:2px;overflow:hidden}
+  .prod-bar{height:4px;border-radius:2px;transition:width 1s ease}
+
+  /* LOADING SKELETON */
+  .skel{background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:4px}
+  @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+  /* ERROR */
+  .error-msg{font-size:11px;color:var(--red);font-family:var(--mono)}
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:var(--bg)}
+  ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+
+  /* MOBILE */
+  @media(max-width:640px){
+    .header{padding:0 14px}
+    .main{padding:14px}
+    .card-grid,.card-grid-3{grid-template-columns:1fr 1fr}
+    .modal-grid{grid-template-columns:1fr}
+    .company-row{grid-template-columns:auto 1fr auto auto;font-size:11px}
+    .company-mktcap{display:none}
+    .header-right .api-status{display:none}
+    .nav-tab{padding:10px 12px;font-size:11px}
+  }
+  @media(max-width:400px){
+    .card-grid,.card-grid-3{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 16 16"><path d="M8 1L1 5v6l7 4 7-4V5L8 1zm0 2.2L13 6.5v3L8 12.8 3 9.5v-3L8 3.2z"/></svg>
+    </div>
+    ENERGY INTEL
+  </div>
+  <div class="header-right">
+    <div class="api-status">
+      <span class="api-pill ok" id="eia-status">EIA ●</span>
+      <span class="api-pill ok" id="fh-status">FINNHUB ●</span>
+    </div>
+    <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+    <div class="timestamp" id="clock">--:--:-- ET</div>
+  </div>
+</header>
+
+<nav class="nav">
+  <div class="nav-tab active" onclick="showSection('prices')">Commodity Prices</div>
+  <div class="nav-tab" onclick="showSection('production')">Energy Production</div>
+  <div class="nav-tab" onclick="showSection('stocks')">Energy Stocks</div>
+  <div class="nav-tab" onclick="showSection('reports')">Research Reports</div>
+</nav>
+
+<main class="main">
+
+  <!-- TICKER BAR -->
+  <div class="ticker-bar" id="ticker-bar">
+    <div class="ticker-item"><span class="ticker-sym">WTI</span><span class="ticker-price" id="t-wti">--</span><span class="ticker-chg flat" id="tc-wti">--</span></div>
+    <div class="ticker-item"><span class="ticker-sym">BRENT</span><span class="ticker-price" id="t-brent">--</span><span class="ticker-chg flat" id="tc-brent">--</span></div>
+    <div class="ticker-item"><span class="ticker-sym">NAT GAS</span><span class="ticker-price" id="t-gas">--</span><span class="ticker-chg flat" id="tc-gas">--</span></div>
+    <div class="ticker-item"><span class="ticker-sym">COAL</span><span class="ticker-price" id="t-coal">--</span><span class="ticker-chg flat" id="tc-coal">--</span></div>
+    <div class="ticker-item"><span class="ticker-sym">XOM</span><span class="ticker-price" id="t-xom">--</span><span class="ticker-chg flat" id="tc-xom">--</span></div>
+    <div class="ticker-item"><span class="ticker-sym">CVX</span><span class="ticker-price" id="t-cvx">--</span><span class="ticker-chg flat" id="tc-cvx">--</span></div>
+    <div class="ticker-item"><span class="ticker-sym">NEE</span><span class="ticker-price" id="t-nee">--</span><span class="ticker-chg flat" id="tc-nee">--</span></div>
+  </div>
+
+  <!-- PRICES SECTION -->
+  <div class="section active" id="sec-prices">
+    <div class="section-header">
+      <span class="section-title">Commodity Prices — EIA Data</span>
+      <button class="refresh-btn" onclick="loadPrices()">↻ Refresh</button>
+    </div>
+    <div class="card-grid" id="price-cards">
+      <div class="card skel" style="height:110px"></div>
+      <div class="card skel" style="height:110px"></div>
+      <div class="card skel" style="height:110px"></div>
+      <div class="card skel" style="height:110px"></div>
+      <div class="card skel" style="height:110px"></div>
+      <div class="card skel" style="height:110px"></div>
+    </div>
+    <div class="card-wide">
+      <div class="section-header" style="margin-bottom:0">
+        <span class="section-title">WTI Crude Oil — Historical Price ($/bbl)</span>
+        <div style="display:flex;gap:8px">
+          <button class="refresh-btn" onclick="loadChart('PET.RWTC.W','wti-chart','WTI Crude $/bbl')">WTI</button>
+          <button class="refresh-btn" onclick="loadChart('NG.RNGWHHD.W','wti-chart','Henry Hub $/MMBtu')">Nat Gas</button>
+        </div>
+      </div>
+      <div class="chart-container"><canvas id="wti-chart" role="img" aria-label="WTI crude oil price chart">Loading chart data...</canvas></div>
+    </div>
+  </div>
+
+  <!-- PRODUCTION SECTION -->
+  <div class="section" id="sec-production">
+    <div class="section-header">
+      <span class="section-title">U.S. Energy Production — EIA Data</span>
+      <button class="refresh-btn" onclick="loadProduction()">↻ Refresh</button>
+    </div>
+    <div class="card-grid" id="prod-cards">
+      <div class="card skel" style="height:110px"></div>
+      <div class="card skel" style="height:110px"></div>
+      <div class="card skel" style="height:110px"></div>
+      <div class="card skel" style="height:110px"></div>
+    </div>
+    <div class="card-wide" style="margin-bottom:24px">
+      <div class="section-title" style="margin-bottom:16px">Electricity Generation Mix — by Source</div>
+      <div id="elec-prod-bars">
+        <div class="skel" style="height:14px;margin-bottom:14px;border-radius:3px"></div>
+        <div class="skel" style="height:14px;margin-bottom:14px;border-radius:3px"></div>
+        <div class="skel" style="height:14px;margin-bottom:14px;border-radius:3px"></div>
+        <div class="skel" style="height:14px;margin-bottom:14px;border-radius:3px"></div>
+      </div>
+    </div>
+    <div class="card-wide">
+      <div class="section-title" style="margin-bottom:12px">U.S. Crude Oil Production — Weekly (Mb/d)</div>
+      <div class="chart-container"><canvas id="prod-chart" role="img" aria-label="US crude oil weekly production">Loading...</canvas></div>
+    </div>
+  </div>
+
+  <!-- STOCKS SECTION -->
+  <div class="section" id="sec-stocks">
+    <div class="section-header">
+      <span class="section-title">Energy Equities — Finnhub Data</span>
+      <button class="refresh-btn" onclick="loadStocks()">↻ Refresh</button>
+    </div>
+    <div class="card-grid" id="stocks-summary">
+      <div class="card skel" style="height:90px"></div>
+      <div class="card skel" style="height:90px"></div>
+      <div class="card skel" style="height:90px"></div>
+    </div>
+    <div class="section-title" style="margin-bottom:12px">Major Energy Companies</div>
+    <div class="company-grid" id="company-list">
+      <div class="skel" style="height:52px;border-radius:8px"></div>
+      <div class="skel" style="height:52px;border-radius:8px"></div>
+      <div class="skel" style="height:52px;border-radius:8px"></div>
+      <div class="skel" style="height:52px;border-radius:8px"></div>
+      <div class="skel" style="height:52px;border-radius:8px"></div>
+      <div class="skel" style="height:52px;border-radius:8px"></div>
+    </div>
+  </div>
+
+  <!-- REPORTS SECTION -->
+  <div class="section" id="sec-reports">
+    <div class="section-header">
+      <span class="section-title">EIA Research & Outlook Reports</span>
+    </div>
+    <div class="card-grid-3" id="report-cards"></div>
+    <div class="section-title" style="margin-bottom:12px;margin-top:8px">EIA Data Publications — Latest Release Dates</div>
+    <div class="card-wide">
+      <table class="data-table">
+        <thead><tr><th>Publication</th><th>Frequency</th><th>Coverage</th><th>Access</th></tr></thead>
+        <tbody>
+          <tr><td>Weekly Petroleum Status Report</td><td>Weekly</td><td>Crude, gasoline, distillate stocks + prices</td><td><a href="https://www.eia.gov/petroleum/supply/weekly/" target="_blank" style="color:var(--accent2)">eia.gov ↗</a></td></tr>
+          <tr><td>Natural Gas Storage Report</td><td>Weekly</td><td>Working gas in underground storage</td><td><a href="https://www.eia.gov/naturalgas/storage/dashboard/" target="_blank" style="color:var(--accent2)">eia.gov ↗</a></td></tr>
+          <tr><td>Short-Term Energy Outlook (STEO)</td><td>Monthly</td><td>18-month forecast — all energy</td><td><a href="https://www.eia.gov/outlooks/steo/" target="_blank" style="color:var(--accent2)">eia.gov ↗</a></td></tr>
+          <tr><td>Monthly Energy Review</td><td>Monthly</td><td>Comprehensive energy summary</td><td><a href="https://www.eia.gov/totalenergy/data/monthly/" target="_blank" style="color:var(--accent2)">eia.gov ↗</a></td></tr>
+          <tr><td>Annual Energy Outlook (AEO)</td><td>Annual</td><td>Long-range U.S. energy projections</td><td><a href="https://www.eia.gov/outlooks/aeo/" target="_blank" style="color:var(--accent2)">eia.gov ↗</a></td></tr>
+          <tr><td>Electric Power Monthly</td><td>Monthly</td><td>Generation, sales, capacity by state</td><td><a href="https://www.eia.gov/electricity/monthly/" target="_blank" style="color:var(--accent2)">eia.gov ↗</a></td></tr>
+          <tr><td>Quarterly Coal Report</td><td>Quarterly</td><td>Production, stocks, prices</td><td><a href="https://www.eia.gov/coal/production/quarterly/" target="_blank" style="color:var(--accent2)">eia.gov ↗</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal" id="modal-content">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Detail</div>
+      <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+const EIA_KEY = 'VlkU0aQxAyGJsscCNPl0q2hjaJLGgKUBxcZFaIah';
+const FH_KEY = 'd8dq509r01qhm4agkbt0d8dq509r01qhm4agkbtg';
+
+// Clock
+function updateClock(){
+  const now = new Date();
+  const et = new Intl.DateTimeFormat('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'America/New_York'}).format(now);
+  document.getElementById('clock').textContent = et + ' ET';
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// Nav
+function showSection(id){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('sec-'+id).classList.add('active');
+  event.target.classList.add('active');
+  if(id==='prices' && !pricesLoaded) loadPrices();
+  if(id==='production' && !prodLoaded) loadProduction();
+  if(id==='stocks' && !stocksLoaded) loadStocks();
+  if(id==='reports' && !reportsLoaded) loadReports();
+}
+
+let pricesLoaded=false, prodLoaded=false, stocksLoaded=false, reportsLoaded=false;
+let priceChart=null, prodChart=null;
+
+// EIA fetch helper
+async function eiaFetch(seriesId, limit=2){
+  const url = `https://api.eia.gov/v2/seriesid/${seriesId}?api_key=${EIA_KEY}&length=${limit}&sort[0][column]=period&sort[0][direction]=desc`;
+  const r = await fetch(url);
+  const d = await r.json();
+  return d?.response?.data || [];
+}
+
+// EIA v2 route helper
+async function eiaV2(route, params){
+  const p = new URLSearchParams({api_key:EIA_KEY,...params});
+  const r = await fetch(`https://api.eia.gov/v2/${route}?${p}`);
+  const d = await r.json();
+  return d?.response?.data || [];
+}
+
+function fmt(n, dec=2){ return n != null ? Number(n).toFixed(dec) : '--'; }
+function fmtM(n){ if(!n) return '--'; n=Number(n); if(n>=1e9) return (n/1e9).toFixed(2)+'B'; if(n>=1e6) return (n/1e6).toFixed(1)+'M'; return n.toFixed(0); }
+
+function chgSpan(val, prev){
+  if(val==null||prev==null) return '<span class="flat">--</span>';
+  const d = ((val-prev)/prev*100);
+  const cls = d>0?'up':d<0?'dn':'flat';
+  const sign = d>0?'+':'';
+  return `<span class="${cls}">${sign}${d.toFixed(2)}%</span>`;
+}
+
+// ============ PRICES ============
+async function loadPrices(){
+  pricesLoaded = true;
+  const series = [
+    {id:'PET.RWTC.W', label:'WTI Crude Oil', unit:'$/bbl', color:'#00c87a', ticker:'t-wti', tickerChg:'tc-wti'},
+    {id:'PET.RBRTE.D', label:'Brent Crude Oil', unit:'$/bbl', color:'#0096ff', ticker:'t-brent', tickerChg:'tc-brent'},
+    {id:'NG.RNGWHHD.D', label:'Henry Hub Nat Gas', unit:'$/MMBtu', color:'#a78bfa', ticker:'t-gas', tickerChg:'tc-gas'},
+    {id:'PET.EER_EPLLPA_PF4_Y35NY_DPG.W', label:'Propane (Mont Belv)', unit:'$/gal', color:'#ffb020'},
+    {id:'PET.EER_EPMRR_PF4_RGC_DPG.W', label:'RBOB Gasoline', unit:'$/gal', color:'#ff4d4d'},
+    {id:'PET.EPD2DXL0_PF4_Y35NY_DPG.W', label:'No.2 Heating Oil', unit:'$/gal', color:'#00d4aa'},
+  ];
+
+  const container = document.getElementById('price-cards');
+  container.innerHTML = '';
+
+  const fetches = series.map(s=>eiaFetch(s.id,3).then(data=>({s,data})).catch(()=>({s,data:[]})));
+  const results = await Promise.all(fetches);
+
+  results.forEach(({s,data})=>{
+    const cur = data[0]; const prev = data[1];
+    const val = cur ? Number(cur.value) : null;
+    const prevVal = prev ? Number(prev.value) : null;
+    const chg = (val&&prevVal) ? ((val-prevVal)/prevVal*100) : null;
+    const chgCls = chg==null?'flat':chg>0?'up':'dn';
+    const chgStr = chg!=null ? (chg>0?'+':'')+chg.toFixed(2)+'%' : '--';
+    const period = cur ? cur.period : '';
+
+    if(s.ticker){
+      const tel = document.getElementById(s.ticker);
+      const tcel = document.getElementById(s.tickerChg);
+      if(tel) tel.textContent = val ? '$'+fmt(val) : '--';
+      if(tcel){ tcel.textContent = chgStr; tcel.className = 'ticker-chg '+chgCls; }
+    }
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-label">${s.label}</div>
+      <div class="card-value">${val ? '$'+fmt(val) : '<span class="loading">No data</span>'}</div>
+      <div class="card-meta">
+        <span class="card-change ${chgCls}">${chgStr}</span>
+        <span class="card-unit">${s.unit} · ${period}</span>
+      </div>
+      <div class="card-drill">Click for history →</div>
+    `;
+    card.onclick = () => openPriceModal(s, data);
+    container.appendChild(card);
+  });
+
+  loadChart('PET.RWTC.W','wti-chart','WTI Crude $/bbl');
+}
+
+async function loadChart(seriesId, canvasId, label){
+  const data = await eiaFetch(seriesId, 52);
+  const sorted = [...data].sort((a,b)=>a.period.localeCompare(b.period));
+  const labels = sorted.map(d=>d.period);
+  const values = sorted.map(d=>Number(d.value));
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  if(priceChart) priceChart.destroy();
+  priceChart = new Chart(canvas, {
+    type:'line',
+    data:{
+      labels,
+      datasets:[{
+        label,
+        data:values,
+        borderColor:'#00d4aa',
+        borderWidth:1.5,
+        pointRadius:0,
+        fill:true,
+        backgroundColor:'rgba(0,212,170,0.06)',
+        tension:0.3
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,backgroundColor:'#1e242d',titleColor:'#8b92a8',bodyColor:'#e8eaf0',borderColor:'#2a3040',borderWidth:1}},
+      scales:{
+        x:{ticks:{color:'#555f78',font:{size:10},maxTicksLimit:8,maxRotation:0},grid:{color:'#1e242d'}},
+        y:{ticks:{color:'#555f78',font:{size:10},callback:v=>'$'+v.toFixed(0)},grid:{color:'#1e242d'}}
+      }
+    }
+  });
+}
+
+function openPriceModal(s, data){
+  document.getElementById('modal-title').textContent = s.label;
+  const rows = data.slice(0,10).map(d=>`<tr><td>${d.period}</td><td>$${fmt(Number(d.value))}</td><td>${s.unit}</td></tr>`).join('');
+  document.getElementById('modal-body').innerHTML = `
+    <table class="data-table"><thead><tr><th>Period</th><th>Price</th><th>Unit</th></tr></thead><tbody>${rows}</tbody></table>
+    <div style="margin-top:16px;font-size:11px;color:var(--text3)">Source: U.S. Energy Information Administration (EIA) · Series: ${s.id}</div>
+  `;
+  document.getElementById('modal').classList.add('open');
+}
+
+// ============ PRODUCTION ============
+async function loadProduction(){
+  prodLoaded = true;
+
+  const prodSeries = [
+    {id:'PET.WCRFPUS2.W', label:'Crude Oil Production', unit:'Mb/d', color:'#00c87a'},
+    {id:'NG.N9070US2.W', label:'Dry Nat Gas Production', unit:'MMcf/d', color:'#a78bfa'},
+    {id:'COAL.production.total-us-total.A', label:'Coal Production (Annual)', unit:'kT', color:'#ffb020'},
+    {id:'TOTAL.ELETPUS.M', label:'Total Electricity Gen', unit:'Thousand MWh', color:'#0096ff'},
+  ];
+
+  const container = document.getElementById('prod-cards');
+  container.innerHTML = '';
+
+  const fetches = prodSeries.map(s=>eiaFetch(s.id,2).then(data=>({s,data})).catch(()=>({s,data:[]})));
+  const results = await Promise.all(fetches);
+
+  results.forEach(({s,data})=>{
+    const cur = data[0]; const prev = data[1];
+    const val = cur ? Number(cur.value) : null;
+    const prevVal = prev ? Number(prev.value) : null;
+    const chg = (val&&prevVal) ? ((val-prevVal)/prevVal*100) : null;
+    const chgCls = chg==null?'flat':chg>0?'up':'dn';
+    const chgStr = chg!=null ? (chg>0?'+':'')+chg.toFixed(2)+'%' : '--';
+    const dispVal = val ? (val>=1000?(val/1000).toFixed(1)+'k':val.toFixed(1)) : null;
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-label">${s.label}</div>
+      <div class="card-value">${dispVal || '<span class="loading">Loading...</span>'}</div>
+      <div class="card-meta">
+        <span class="card-change ${chgCls}">${chgStr}</span>
+        <span class="card-unit">${s.unit}</span>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  loadElecMix();
+  loadProdChart();
+}
+
+async function loadElecMix(){
+  const sources = [
+    {label:'Natural Gas', color:'#a78bfa', pct:42},
+    {label:'Coal', color:'#ffb020', pct:16},
+    {label:'Nuclear', color:'#0096ff', pct:19},
+    {label:'Wind', color:'#00c87a', pct:10},
+    {label:'Solar', color:'#ff4d4d', pct:5},
+    {label:'Hydro', color:'#00d4aa', pct:6},
+    {label:'Other', color:'#555f78', pct:2},
+  ];
+  const container = document.getElementById('elec-prod-bars');
+  container.innerHTML = sources.map(s=>`
+    <div class="prod-item">
+      <div class="prod-header">
+        <span class="prod-label">${s.label}</span>
+        <span class="prod-value">${s.pct}%</span>
+      </div>
+      <div class="prod-bar-bg"><div class="prod-bar" style="width:${s.pct}%;background:${s.color}"></div></div>
+    </div>
+  `).join('');
+}
+
+async function loadProdChart(){
+  const data = await eiaFetch('PET.WCRFPUS2.W', 52);
+  const sorted = [...data].sort((a,b)=>a.period.localeCompare(b.period));
+  const canvas = document.getElementById('prod-chart');
+  if(!canvas) return;
+  if(prodChart) prodChart.destroy();
+  prodChart = new Chart(canvas, {
+    type:'bar',
+    data:{
+      labels: sorted.map(d=>d.period),
+      datasets:[{label:'Mb/d',data:sorted.map(d=>Number(d.value)),backgroundColor:'rgba(0,150,255,0.5)',borderColor:'#0096ff',borderWidth:1}]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1e242d',titleColor:'#8b92a8',bodyColor:'#e8eaf0',borderColor:'#2a3040',borderWidth:1}},
+      scales:{
+        x:{ticks:{color:'#555f78',font:{size:10},maxTicksLimit:10,maxRotation:0},grid:{display:false}},
+        y:{ticks:{color:'#555f78',font:{size:10}},grid:{color:'#1e242d'}}
+      }
+    }
+  });
+}
+
+// ============ STOCKS ============
+const ENERGY_TICKERS = [
+  {sym:'XOM', name:'ExxonMobil', ticker:'t-xom', tickerChg:'tc-xom'},
+  {sym:'CVX', name:'Chevron'},
+  {sym:'COP', name:'ConocoPhillips'},
+  {sym:'SLB', name:'SLB (Schlumberger)'},
+  {sym:'EOG', name:'EOG Resources'},
+  {sym:'PSX', name:'Phillips 66'},
+  {sym:'MPC', name:'Marathon Petroleum'},
+  {sym:'NEE', name:'NextEra Energy', ticker:'t-nee', tickerChg:'tc-nee'},
+  {sym:'OXY', name:'Occidental Petroleum'},
+  {sym:'DVN', name:'Devon Energy'},
+];
+
+async function loadStocks(){
+  stocksLoaded = true;
+  if(FH_KEY === 'd8dq509r01qhm4agkbt0d8dq509r01qhm4agkbtg'){
+    document.getElementById('company-list').innerHTML = `
+      <div style="padding:20px;color:var(--amber);font-size:12px;font-family:var(--mono);border:1px solid var(--border);border-radius:8px">
+        ⚠ Add your Finnhub API key to the code (line 3: const FH_KEY = '...') to enable live stock data.
+      </div>`;
+    document.getElementById('stocks-summary').innerHTML = '';
+    return;
+  }
+
+  const container = document.getElementById('company-list');
+  container.innerHTML = '';
+
+  const fetches = ENERGY_TICKERS.map(t=>
+    fetch(`https://finnhub.io/api/v1/quote?symbol=${t.sym}&token=${FH_KEY}`)
+      .then(r=>r.json()).then(d=>({t,d})).catch(()=>({t,d:{}}))
+  );
+  const results = await Promise.all(fetches);
+
+  let gainers=0, losers=0, totalMktChg=0;
+  results.forEach(({t,d})=>{
+    const price = d.c; const prev = d.pc; const chg = d.dp;
+    const chgCls = !chg?'flat':chg>0?'up':'dn';
+    const chgStr = chg!=null ? (chg>0?'+':'')+chg.toFixed(2)+'%' : '--';
+    if(chg>0) gainers++; else if(chg<0) losers++;
+    if(chg) totalMktChg += chg;
+    if(t.ticker){
+      const tel = document.getElementById(t.ticker);
+      const tcel = document.getElementById(t.tickerChg);
+      if(tel) tel.textContent = price ? '$'+price.toFixed(2) : '--';
+      if(tcel){ tcel.textContent = chgStr; tcel.className='ticker-chg '+chgCls; }
+    }
+    const row = document.createElement('div');
+    row.className = 'company-row';
+    row.innerHTML = `
+      <div class="company-ticker">${t.sym}</div>
+      <div class="company-name">${t.name}</div>
+      <div class="company-price">${price?'$'+price.toFixed(2):'--'}</div>
+      <div class="company-chg ${chgCls}">${chgStr}</div>
+      <div class="company-mktcap">${d.h&&d.l?'H:$'+d.h.toFixed(1)+' L:$'+d.l.toFixed(1):'--'}</div>
+    `;
+    row.onclick = () => openStockModal(t, d);
+    container.appendChild(row);
+  });
+
+  const avg = (totalMktChg/ENERGY_TICKERS.length).toFixed(2);
+  document.getElementById('stocks-summary').innerHTML = `
+    <div class="card"><div class="card-label">Sector Gainers</div><div class="card-value up">${gainers}</div><div class="card-meta"><span class="card-unit">of ${ENERGY_TICKERS.length} tracked</span></div></div>
+    <div class="card"><div class="card-label">Sector Losers</div><div class="card-value dn">${losers}</div><div class="card-meta"><span class="card-unit">of ${ENERGY_TICKERS.length} tracked</span></div></div>
+    <div class="card"><div class="card-label">Avg Sector Change</div><div class="card-value ${avg>0?'up':avg<0?'dn':'flat'}">${avg>0?'+':''}${avg}%</div><div class="card-meta"><span class="card-unit">energy index proxy</span></div></div>
+  `;
+}
+
+async function openStockModal(t, quote){
+  document.getElementById('modal-title').textContent = t.sym + ' — ' + t.name;
+  let profHtml = '<div style="color:var(--text3);font-size:12px">Loading fundamentals...</div>';
+  document.getElementById('modal-body').innerHTML = `
+    <div class="modal-grid">
+      <div class="modal-stat"><div class="modal-stat-label">Current Price</div><div class="modal-stat-value">$${quote.c?.toFixed(2)||'--'}</div></div>
+      <div class="modal-stat"><div class="modal-stat-label">Prev Close</div><div class="modal-stat-value">$${quote.pc?.toFixed(2)||'--'}</div></div>
+      <div class="modal-stat"><div class="modal-stat-label">Day High</div><div class="modal-stat-value">$${quote.h?.toFixed(2)||'--'}</div></div>
+      <div class="modal-stat"><div class="modal-stat-label">Day Low</div><div class="modal-stat-value">$${quote.l?.toFixed(2)||'--'}</div></div>
+    </div>
+    <div id="modal-fundamentals">${profHtml}</div>
+  `;
+  document.getElementById('modal').classList.add('open');
+
+  try {
+    const [profile, metrics] = await Promise.all([
+      fetch(`https://finnhub.io/api/v1/stock/profile2?symbol=${t.sym}&token=${FH_KEY}`).then(r=>r.json()),
+      fetch(`https://finnhub.io/api/v1/stock/metric?symbol=${t.sym}&metric=all&token=${FH_KEY}`).then(r=>r.json())
+    ]);
+    const m = metrics.metric || {};
+    document.getElementById('modal-fundamentals').innerHTML = `
+      <div style="margin-bottom:16px;padding-top:16px;border-top:1px solid var(--border)">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:10px">Company Profile</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6">${profile.name||''} · ${profile.exchange||''} · ${profile.finnhubIndustry||''}<br>Market Cap: <span style="color:var(--text)">${fmtM(profile.marketCapitalization*1e6)}</span></div>
+      </div>
+      <div class="modal-grid">
+        <div class="modal-stat"><div class="modal-stat-label">P/E Ratio</div><div class="modal-stat-value">${m['peBasicExclExtraTTM']?.toFixed(1)||'--'}</div></div>
+        <div class="modal-stat"><div class="modal-stat-label">EPS (TTM)</div><div class="modal-stat-value">${m['epsBasicExclExtraItemsTTM']?.toFixed(2)||'--'}</div></div>
+        <div class="modal-stat"><div class="modal-stat-label">Div Yield</div><div class="modal-stat-value">${m['currentDividendYieldTTM']?.toFixed(2)||'--'}%</div></div>
+        <div class="modal-stat"><div class="modal-stat-label">52W High</div><div class="modal-stat-value">$${m['52WeekHigh']?.toFixed(2)||'--'}</div></div>
+        <div class="modal-stat"><div class="modal-stat-label">52W Low</div><div class="modal-stat-value">$${m['52WeekLow']?.toFixed(2)||'--'}</div></div>
+        <div class="modal-stat"><div class="modal-stat-label">Beta</div><div class="modal-stat-value">${m['beta']?.toFixed(2)||'--'}</div></div>
+      </div>
+    `;
+  } catch(e){ document.getElementById('modal-fundamentals').innerHTML = '<div class="error-msg">Could not load fundamentals</div>'; }
+}
+
+// ============ REPORTS ============
+function loadReports(){
+  reportsLoaded = true;
+  const reports = [
+    {tag:'tag-steo',tagLabel:'STEO',title:'Short-Term Energy Outlook',desc:'18-month forward projections for oil, natural gas, coal, electricity, renewables, and carbon emissions. Updated monthly.',date:'Monthly',url:'https://www.eia.gov/outlooks/steo/'},
+    {tag:'tag-aeo',tagLabel:'AEO',title:'Annual Energy Outlook 2025',desc:'Long-range projections for U.S. energy through 2050 across multiple economic and policy scenarios.',date:'Annual',url:'https://www.eia.gov/outlooks/aeo/'},
+    {tag:'tag-ieo',tagLabel:'IEO',title:'International Energy Outlook',desc:'Global energy market projections including non-OECD countries, covering demand, supply, and CO2 emissions worldwide.',date:'Annual',url:'https://www.eia.gov/outlooks/ieo/'},
+    {tag:'tag-wpr',tagLabel:'WPSR',title:'Weekly Petroleum Status Report',desc:'Current U.S. crude oil, gasoline, distillate, and other petroleum product stocks, production, imports, and refinery operations.',date:'Weekly',url:'https://www.eia.gov/petroleum/supply/weekly/'},
+    {tag:'tag-steo',tagLabel:'MER',title:'Monthly Energy Review',desc:'Comprehensive monthly summary of U.S. energy statistics — production, consumption, stocks, trade, and prices.',date:'Monthly',url:'https://www.eia.gov/totalenergy/data/monthly/'},
+    {tag:'tag-aeo',tagLabel:'EPM',title:'Electric Power Monthly',desc:'Detailed statistics on electricity generation by fuel type and sector, retail sales, revenue, and prices by state.',date:'Monthly',url:'https://www.eia.gov/electricity/monthly/'},
+    {tag:'tag-wpr',tagLabel:'NGSR',title:'Natural Gas Storage Report',desc:'Weekly underground natural gas storage levels by region — a key market indicator for Henry Hub price movements.',date:'Weekly',url:'https://www.eia.gov/naturalgas/storage/dashboard/'},
+    {tag:'tag-ieo',tagLabel:'QCR',title:'Quarterly Coal Report',desc:'U.S. coal production, stocks, exports, imports, and prices with mine-level and regional breakdowns.',date:'Quarterly',url:'https://www.eia.gov/coal/production/quarterly/'},
+    {tag:'tag-steo',tagLabel:'TIE',title:"Today in Energy",desc:'Daily short articles with charts and analysis on current energy topics, data releases, and market developments.',date:'Daily',url:'https://www.eia.gov/todayinenergy/'},
+  ];
+
+  const container = document.getElementById('report-cards');
+  container.innerHTML = reports.map(r=>`
+    <div class="report-card" onclick="window.open('${r.url}','_blank')">
+      <div><span class="report-tag ${r.tag}">${r.tagLabel}</span></div>
+      <div class="report-title">${r.title}</div>
+      <div class="report-desc">${r.desc}</div>
+      <div class="report-meta">
+        <span class="report-date">↻ ${r.date}</span>
+        <span class="report-link">Open eia.gov ↗</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Modal close
+function closeModal(e){ if(e.target===document.getElementById('modal')) document.getElementById('modal').classList.remove('open'); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.getElementById('modal').classList.remove('open'); });
+
+// CVX ticker via Finnhub
+async function loadTickerStock(sym, priceId, chgId){
+  if(FH_KEY==='d8dq509r01qhm4agkbt0d8dq509r01qhm4agkbtg') return;
+  try{
+    const d = await fetch(`https://finnhub.io/api/v1/quote?symbol=${sym}&token=${FH_KEY}`).then(r=>r.json());
+    const el = document.getElementById(priceId);
+    const cel = document.getElementById(chgId);
+    if(el) el.textContent = d.c?'$'+d.c.toFixed(2):'--';
+    if(cel){
+      const chg = d.dp;
+      cel.textContent = chg!=null?(chg>0?'+':'')+chg.toFixed(2)+'%':'--';
+      cel.className = 'ticker-chg '+(chg>0?'up':chg<0?'dn':'flat');
+    }
+  }catch(e){}
+}
+
+// Init
+loadPrices();
+loadReports();
+loadTickerStock('CVX','t-cvx','tc-cvx');
+loadTickerStock('NEE','t-nee','tc-nee');
+
+// EIA coal ticker
+eiaFetch('COAL.price-by-rank.us.annual.TOT.D.A',2).then(data=>{
+  const cur = data[0];
+  if(cur){
+    document.getElementById('t-coal').textContent = '$'+Number(cur.value).toFixed(2);
+    document.getElementById('tc-coal').textContent = 'Annual';
+    document.getElementById('tc-coal').className = 'ticker-chg flat';
+  }
+}).catch(()=>{});
+</script>
+</body>
+</html>
