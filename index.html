@@ -630,6 +630,7 @@ async function checkLocal(){
 
 // Helpers
 async function eiaGet(sid,n=52){ const r=await fetch(`https://api.eia.gov/v2/seriesid/${sid}?api_key=${EIA_KEY}&length=${n}&sort[0][column]=period&sort[0][direction]=desc`); const d=await r.json(); return d?.response?.data||[]; }
+async function eiaV2(route,params,n=24){ const p=new URLSearchParams({api_key:EIA_KEY,length:n,'sort[0][column]':'period','sort[0][direction]':'desc',...params}); const r=await fetch(`https://api.eia.gov/v2/${route}?${p}`); const d=await r.json(); return d?.response?.data||[]; }
 async function localGet(p){ const r=await fetch(LOCAL+p); return r.json(); }
 const f2=(n,d=2)=>n!=null?Number(n).toFixed(d):'--';
 const fM=(n)=>{ if(!n) return '--'; n=Number(n); return n>=1e9?(n/1e9).toFixed(2)+'B':n>=1e6?(n/1e6).toFixed(1)+'M':n.toFixed(0); };
@@ -900,49 +901,52 @@ async function loadNgRegional(){
 let coalPLoaded=false;
 async function loadCoalPrices(){
   if(coalPLoaded) return; coalPLoaded=true;
-  const series=[
-    {id:'ELEC.COST.COW-US-98.A',lbl:'Coal Cost — Electric Power',unit:'$/MMBtu',color:'#888'},
-    {id:'ELEC.COST.NG-US-98.A',lbl:'Nat Gas Cost — Electric Power',unit:'$/MMBtu',color:'#ffb020'},
-    {id:'ELEC.COST.PC-US-98.A',lbl:'Petroleum Cost — Electric Power',unit:'$/MMBtu',color:'#aaa'},
-  ];
   const el=document.getElementById('coalp-cards'); el.innerHTML='';
-  const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  // Use electricity fuel receipts cost route
+  const fuels=[
+    {fuel:'COW',lbl:'Coal — Elec Power Cost',color:'#888'},
+    {fuel:'NG',lbl:'Nat Gas — Elec Power Cost',color:'#ffb020'},
+    {fuel:'PC',lbl:'Petroleum — Elec Power Cost',color:'#aaa'},
+  ];
   const tbody=[];
-  res.forEach(({s,d})=>{
-    const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null;
-    el.appendChild(mkCard(s.lbl,v!=null?(s.unit.includes('$')?'$'+f2(v):f2(v,1)):null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color));
-    tbody.push(`<tr><td>${s.lbl}</td><td>${v!=null?f2(v,2):'--'}</td><td>${s.unit}</td><td>${d[0]?.period||'--'}</td></tr>`);
+  const res=await Promise.all(fuels.map(f=>
+    eiaV2('electricity/electric-power-operational-data/data',{'data[]':'receipts_cost','facets[fueltypeid][]':f.fuel,'facets[location][]':'US','facets[sectorid][]':'98','frequency':'annual'},3)
+    .then(d=>({f,d})).catch(()=>({f,d:[]}))));
+  res.forEach(({f,d})=>{
+    const v=d[0]?Number(d[0].receipts_cost):null,p=d[1]?Number(d[1].receipts_cost):null;
+    el.appendChild(mkCard(f.lbl,v!=null?'$'+f2(v,2):null,cc(v,p),cs(v,p),'$/MMBtu'+(d[0]?' · '+d[0].period:''),f.color));
+    tbody.push(`<tr><td>${f.lbl}</td><td>${v!=null?'$'+f2(v,2):'--'}</td><td>$/MMBtu</td><td>${d[0]?.period||'--'}</td></tr>`);
   });
   document.getElementById('coalp-tbody').innerHTML=tbody.join('');
-  // Chart - electricity sector coal cost over time
-  const hist=await eiaGet('ELEC.COST.COW-US-98.A',20).catch(()=>[]);
+  // Chart
+  const hist=await eiaV2('electricity/electric-power-operational-data/data',{'data[]':'receipts_cost','facets[fueltypeid][]':'COW','facets[location][]':'US','facets[sectorid][]':'98','frequency':'annual'},20).catch(()=>[]);
   const sorted=[...hist].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
-  if(sorted.length) mkChart('coalp-chart','bar',sorted.map(x=>x.period),[{label:'Elec Sector Coal Cost ($/MMBtu)',data:sorted.map(x=>Number(x.value)),backgroundColor:'rgba(136,136,136,0.4)',borderColor:'#888',borderWidth:1}]);
+  if(sorted.length) mkChart('coalp-chart','bar',sorted.map(x=>x.period),[{label:'Coal Cost $/MMBtu',data:sorted.map(x=>Number(x.receipts_cost)),backgroundColor:'rgba(136,136,136,0.4)',borderColor:'#888',borderWidth:1}]);
 }
 
 // ELECTRICITY PRICES
 let elecPLoaded=false;
 async function loadElecPrices(){
   if(elecPLoaded) return; elecPLoaded=true;
-  const sectors=[
-    {id:'ELEC.PRICE.US-RES.M',lbl:'Residential',color:'#ff6b6b'},
-    {id:'ELEC.PRICE.US-COM.M',lbl:'Commercial',color:'#0096ff'},
-    {id:'ELEC.PRICE.US-IND.M',lbl:'Industrial',color:'#ffb020'},
-    {id:'ELEC.PRICE.US-ALL.M',lbl:'All Sectors Avg',color:'#00d4aa'},
-  ];
   const el=document.getElementById('elecp-cards'); el.innerHTML='';
-  const res=await Promise.all(sectors.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  const sectors=[
+    {sid:'RES',lbl:'Residential',color:'#ff6b6b'},
+    {sid:'COM',lbl:'Commercial',color:'#0096ff'},
+    {sid:'IND',lbl:'Industrial',color:'#ffb020'},
+    {sid:'ALL',lbl:'All Sectors Avg',color:'#00d4aa'},
+  ];
   const tbody=[];
-  res.forEach(({s,d})=>{
-    const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null;
+  const allData=await Promise.all(sectors.map(s=>
+    eiaV2('electricity/retail-sales/data',{'data[]':'price','facets[sectorid][]':s.sid,'facets[stateid][]':'US','frequency':'monthly'},36)
+    .then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  allData.forEach(({s,d})=>{
+    const v=d[0]?Number(d[0].price):null,p=d[1]?Number(d[1].price):null;
     el.appendChild(mkCard(s.lbl,v!=null?f2(v,2):null,cc(v,p),cs(v,p),'¢/kWh'+(d[0]?' · '+d[0].period:''),s.color));
     tbody.push(`<tr><td>${s.lbl}</td><td>${v!=null?f2(v,2):'--'}</td><td>${d[0]?.period||'--'}</td><td class="${cc(v,p)}">${cs(v,p)}</td></tr>`);
   });
   document.getElementById('elecp-tbody').innerHTML=tbody.join('');
-  // Chart - all sectors 5 years
-  const allData=await Promise.all(sectors.map(s=>eiaGet(s.id,60).then(d=>({s,d})).catch(()=>({s,d:[]}))));
-  const dates=[...new Set(allData.flatMap(({d})=>d.map(x=>x.period)))].sort().slice(-60);
-  const datasets=allData.map(({s,d})=>({ label:s.lbl, data:dates.map(dt=>{ const row=d.find(x=>x.period===dt); return row?Number(row.value):null; }), borderColor:s.color, borderWidth:1.5, pointRadius:0, tension:0.3, fill:false }));
+  const dates=[...new Set(allData.flatMap(({d})=>d.map(x=>x.period)))].sort().slice(-48);
+  const datasets=allData.map(({s,d})=>({label:s.lbl,data:dates.map(dt=>{const row=d.find(x=>x.period===dt);return row?Number(row.price):null;}),borderColor:s.color,borderWidth:1.5,pointRadius:0,tension:0.3,fill:false}));
   mkChart('elecp-chart','line',dates,datasets,v=>v.toFixed(1)+'¢');
 }
 
@@ -969,7 +973,7 @@ async function loadRenewables(){
     {label:'Solar (Thousand MWh)',data:dates.map(d=>sM[d]??null),borderColor:'#ffb020',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(255,176,32,0.05)',tension:0.3}
   ]);
   // Renewable share chart
-  const [total,renTotal]=await Promise.all([eiaGet('ELEC.GEN.ALL-US-99.M',60),eiaGet('ELEC.GEN.RE-US-99.M',60)]);
+  const [total,renTotal]=await Promise.all([eiaGet('ELEC.GEN.ALL-US-99.M',60).catch(()=>[]),eiaGet('ELEC.GEN.WND-US-99.M',60).then(w=>w).catch(()=>[])]);
   const tM=Object.fromEntries(total.map(x=>[x.period,Number(x.value)]));
   const rM=Object.fromEntries(renTotal.map(x=>[x.period,Number(x.value)]));
   const shareDates=[...new Set([...total,...renTotal].map(x=>x.period))].sort().slice(-60);
@@ -982,22 +986,23 @@ async function loadRenewables(){
 let coalProdLoaded=false;
 async function loadCoalProd(){
   if(coalProdLoaded) return; coalProdLoaded=true;
-  const series=[
-    {id:'COAL.mine_production.total-us-total.annual.A',lbl:'Total Coal Production',unit:'Thousand Short Tons',color:'#888'},
-    {id:'ELEC.CONS_EG_BTU.COW-US-98.A',lbl:'Coal to Electric Power',unit:'Trillion BTU',color:'#ffb020'},
-    {id:'ELEC.STOCKS.COW-US-98.M',lbl:'Coal Stocks at Power Plants',unit:'Thousand Short Tons',color:'#aaa'},
-  ];
   const el=document.getElementById('coalprod-cards'); el.innerHTML='';
-  const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
-  res.forEach(({s,d})=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; el.appendChild(mkCard(s.lbl,v!=null?f2(v,1):null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color)); });
-  // Production chart
-  const prod=await eiaGet('COAL.mine_production.total-us-total.annual.A',20).catch(()=>[]);
-  const sp=[...prod].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
-  if(sp.length) mkChart('coalprod-chart','bar',sp.map(x=>x.period),[{label:'Coal Production (Trillion BTU)',data:sp.map(x=>Number(x.value)),backgroundColor:'rgba(136,136,136,0.4)',borderColor:'#888',borderWidth:1}]);
-  // Stocks at power plants
-  const stks=await eiaGet('ELEC.STOCKS.COW-US-98.M',24).catch(()=>[]);
-  const ss=[...stks].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
-  if(ss.length) mkChart('coalstock-chart','line',ss.map(x=>x.period),[{label:'Coal Stocks at Power Plants (Thousand Short Tons)',data:ss.map(x=>Number(x.value)),borderColor:'#ffb020',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(255,176,32,0.06)',tension:0.3}]);
+  // Coal production via v2 route
+  const [prod,stocks]=await Promise.all([
+    eiaV2('coal/production/data',{'data[]':'production','facets[location][]':'US','frequency':'annual'},3).catch(()=>[]),
+    eiaV2('electricity/electric-power-operational-data/data',{'data[]':'stocks','facets[fueltypeid][]':'COW','facets[location][]':'US','facets[sectorid][]':'98','frequency':'monthly'},3).catch(()=>[])
+  ]);
+  const pv=prod[0]?Number(prod[0].production):null,pp=prod[1]?Number(prod[1].production):null;
+  el.appendChild(mkCard('Total Coal Production',pv!=null?f2(pv,0):null,cc(pv,pp),cs(pv,pp),'Thousand Short Tons'+(prod[0]?' · '+prod[0].period:''),'#888'));
+  const sv=stocks[0]?Number(stocks[0].stocks):null,sp2=stocks[1]?Number(stocks[1].stocks):null;
+  el.appendChild(mkCard('Coal Stocks — Power Plants',sv!=null?f2(sv,0):null,cc(sv,sp2),cs(sv,sp2),'Thousand Short Tons'+(stocks[0]?' · '+stocks[0].period:''),'#ffb020'));
+  // Charts
+  const prodHist=await eiaV2('coal/production/data',{'data[]':'production','facets[location][]':'US','frequency':'annual'},20).catch(()=>[]);
+  const sp=[...prodHist].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
+  if(sp.length) mkChart('coalprod-chart','bar',sp.map(x=>x.period),[{label:'Coal Production (Thousand Short Tons)',data:sp.map(x=>Number(x.production)),backgroundColor:'rgba(136,136,136,0.4)',borderColor:'#888',borderWidth:1}]);
+  const stkHist=await eiaV2('electricity/electric-power-operational-data/data',{'data[]':'stocks','facets[fueltypeid][]':'COW','facets[location][]':'US','facets[sectorid][]':'98','frequency':'monthly'},36).catch(()=>[]);
+  const ss=[...stkHist].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
+  if(ss.length) mkChart('coalstock-chart','line',ss.map(x=>x.period),[{label:'Coal Stocks at Power Plants',data:ss.map(x=>Number(x.stocks)),borderColor:'#ffb020',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(255,176,32,0.06)',tension:0.3}]);
 }
 
 // CO2 EMISSIONS
@@ -1005,13 +1010,15 @@ let co2Loaded=false;
 async function loadCo2(){
   if(co2Loaded) return; co2Loaded=true;
   const fuels=[
-    {id:'TOTAL.TETCBUS.A',lbl:'Total Energy CO2',unit:'MMT',color:'#ff4d4d'},
-    {id:'TOTAL.PETCBUS.A',lbl:'Petroleum CO2',unit:'MMT',color:'#ffb020'},
-    {id:'TOTAL.NGTCBUS.A',lbl:'Natural Gas CO2',unit:'MMT',color:'#a78bfa'},
-    {id:'TOTAL.CLTCBUS.A',lbl:'Coal CO2',unit:'MMT',color:'#888'},
+    {id:'TETCBUS',lbl:'Total Energy CO2',unit:'MMT',color:'#ff4d4d'},
+    {id:'PETCBUS',lbl:'Petroleum CO2',unit:'MMT',color:'#ffb020'},
+    {id:'NGTCBUS',lbl:'Natural Gas CO2',unit:'MMT',color:'#a78bfa'},
+    {id:'CLTCBUS',lbl:'Coal CO2',unit:'MMT',color:'#888'},
   ];
   const el=document.getElementById('co2-cards'); el.innerHTML='';
-  const res=await Promise.all(fuels.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  const res=await Promise.all(fuels.map(s=>
+    eiaV2('total-energy/data',{'data[]':'value','facets[msn][]':s.id,'frequency':'annual'},3)
+    .then(d=>({s,d})).catch(()=>({s,d:[]}))));
   let total=null;
   res.forEach(({s,d},i)=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; if(i===0) total=v; el.appendChild(mkCard(s.lbl,v!=null?f2(v,1):null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color)); });
   // Stacked area chart
@@ -1022,7 +1029,7 @@ async function loadCo2(){
   // Bars breakdown
   const barsEl=document.getElementById('co2-bars');
   if(barsEl && total){
-    const latest=res.slice(1).map(({s,d})=>({lbl:s.lbl.replace(' CO2',''),val:d[0]?Number(d[0].value):0,color:s.color}));
+    const latest=res.slice(1).map(({s,d})=>({lbl:s.lbl.replace(' CO2',''),val:d[0]?Number(d[0].value||d[0].value):0,color:s.color}));
     barsEl.innerHTML=latest.map(item=>{ const pct=total?((item.val/total)*100).toFixed(1):0; return `<div class="pi"><div class="ph2"><span class="pl">${item.lbl}</span><span class="pv">${f2(item.val,1)} MMT (${pct}%)</span></div><div class="pbb"><div class="pb" style="width:${pct}%;background:${item.color}"></div></div></div>`; }).join('');
   }
 }
