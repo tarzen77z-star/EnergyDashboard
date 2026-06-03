@@ -677,7 +677,7 @@ async function loadCrude(){
   if(wv&&bv){ const sp=bv-wv; el.appendChild(mkCard('Brent-WTI Spread','$'+f2(Math.abs(sp)),sp>0?'up':'dn',sp>0?'Brent premium':'WTI premium','$/bbl','#ffb020')); }
   drawCrudeChart();
 }
-async function drawCrudeChart(){ const d=await eiaGet(crudeSeries,crudeRange); const s=[...d].sort((a,b)=>a.period.localeCompare(b.period)); mkChart('crude-chart','line',s.map(x=>x.period),[{label:crudeLabel,data:s.map(x=>Number(x.value)),borderColor:'#00d4aa',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(0,212,170,0.05)',tension:0.3}],v=>'$'+v.toFixed(0)); }
+async function drawCrudeChart(){ const d=await eiaGet(crudeSeries,crudeRange); const s=[...d].sort((a,b)=>String(a.period).localeCompare(String(b.period))); mkChart('crude-chart','line',s.map(x=>x.period),[{label:crudeLabel,data:s.map(x=>Number(x.value)),borderColor:'#00d4aa',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(0,212,170,0.05)',tension:0.3}],v=>'$'+v.toFixed(0)); }
 function switchCrude(sid,lbl){crudeSeries=sid;crudeLabel=lbl;drawCrudeChart();}
 function setRange(r,bid){ crudeRange=r; document.querySelectorAll('#range-btns .rbtn').forEach(b=>{b.classList.remove('sel');if(b.id===bid)b.classList.add('sel');}); drawCrudeChart(); }
 
@@ -688,7 +688,7 @@ async function loadPetro(){
   const el=document.getElementById('petro-cards'); el.innerHTML='';
   const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
   res.forEach(({s,d})=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; const card=mkCard(s.lbl,v?'$'+f2(v):null,cc(v,p),cs(v,p),s.unit,s.color); el.appendChild(card); if(s.tkrP&&v) setTkr(s.tkrP,s.tkrC,'$'+f2(v),cs(v,p),cc(v,p)); });
-  const gd=await eiaGet('PET.EMM_EPMR_PTE_NUS_DPG.W',104); const gs=[...gd].sort((a,b)=>a.period.localeCompare(b.period));
+  const gd=await eiaGet('PET.EMM_EPMR_PTE_NUS_DPG.W',104); const gs=[...gd].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
   mkChart('gas-chart','line',gs.map(x=>x.period),[{label:'Retail Gasoline $/gal',data:gs.map(x=>Number(x.value)),borderColor:'#ff6b6b',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(255,107,107,0.05)',tension:0.3}],v=>'$'+v.toFixed(2));
 }
 
@@ -699,7 +699,7 @@ async function loadNgPrice(){
   const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null;
   el.appendChild(mkCard('Henry Hub Spot',v?'$'+f2(v):null,cc(v,p),cs(v,p),'$/MMBtu · '+(d[0]?.period||''),'#a78bfa'));
   if(v) setTkr('t-ng','tc-ng','$'+f2(v),cs(v,p),cc(v,p));
-  const h=await eiaGet('NG.RNGWHHD.D',260); const s=[...h].sort((a,b)=>a.period.localeCompare(b.period));
+  const h=await eiaGet('NG.RNGWHHD.D',260); const s=[...h].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
   mkChart('ng-chart','line',s.map(x=>x.period),[{label:'Henry Hub $/MMBtu',data:s.map(x=>Number(x.value)),borderColor:'#a78bfa',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(167,139,250,0.05)',tension:0.3}],v=>'$'+v.toFixed(2));
 }
 
@@ -709,7 +709,7 @@ async function loadCrudeProd(){
   const d=await eiaGet('PET.WCRFPUS2.W',3); const el=document.getElementById('cp-cards'); el.innerHTML='';
   const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null;
   el.appendChild(mkCard('U.S. Crude Production',v?(v/1000).toFixed(1)+'k':null,cc(v,p),cs(v,p),'Mb/d · '+(d[0]?.period||''),'#00c87a'));
-  const h=await eiaGet('PET.WCRFPUS2.W',104); const s=[...h].sort((a,b)=>a.period.localeCompare(b.period));
+  const h=await eiaGet('PET.WCRFPUS2.W',104); const s=[...h].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
   mkChart('cp-chart','bar',s.map(x=>x.period),[{label:'Mb/d',data:s.map(x=>Number(x.value)),backgroundColor:'rgba(0,150,255,0.4)',borderColor:'#0096ff',borderWidth:1}]);
 }
 
@@ -719,7 +719,7 @@ async function loadElecGen(){
   const d=await eiaGet('ELEC.GEN.ALL-US-99.M',3); const el=document.getElementById('eg-cards'); el.innerHTML='';
   const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null;
   el.appendChild(mkCard('Total Electricity Gen',v?(v/1000).toFixed(1)+'k':null,cc(v,p),cs(v,p),'Thousand MWh','#ff6b6b'));
-  const h=await eiaGet('ELEC.GEN.ALL-US-99.M',60); const s=[...h].sort((a,b)=>a.period.localeCompare(b.period));
+  const h=await eiaGet('ELEC.GEN.ALL-US-99.M',60); const s=[...h].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
   mkChart('eg-chart','bar',s.map(x=>x.period),[{label:'Thousand MWh',data:s.map(x=>Number(x.value)),backgroundColor:'rgba(255,107,107,0.4)',borderColor:'#ff6b6b',borderWidth:1}]);
 }
 
@@ -860,7 +860,7 @@ async function loadLng(){
   const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
   res.forEach(({s,d})=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; el.appendChild(mkCard(s.lbl,v!=null?f2(v,1):null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color)); });
   const hist=await eiaGet('NG.N9133US2.M',60).catch(()=>[]);
-  const sorted=[...hist].sort((a,b)=>a.period.localeCompare(b.period));
+  const sorted=[...hist].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
   if(sorted.length) mkChart('lng-chart','bar',sorted.map(x=>x.period),[{label:'LNG Exports (Bcf)',data:sorted.map(x=>Number(x.value)),backgroundColor:'rgba(0,150,255,0.4)',borderColor:'#0096ff',borderWidth:1}]);
 }
 
@@ -916,7 +916,7 @@ async function loadCoalPrices(){
   document.getElementById('coalp-tbody').innerHTML=tbody.join('');
   // Chart - electricity sector coal cost over time
   const hist=await eiaGet('ELEC.COST.COW-US-98.A',20).catch(()=>[]);
-  const sorted=[...hist].sort((a,b)=>a.period.localeCompare(b.period));
+  const sorted=[...hist].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
   if(sorted.length) mkChart('coalp-chart','bar',sorted.map(x=>x.period),[{label:'Elec Sector Coal Cost ($/MMBtu)',data:sorted.map(x=>Number(x.value)),backgroundColor:'rgba(136,136,136,0.4)',borderColor:'#888',borderWidth:1}]);
 }
 
@@ -992,11 +992,11 @@ async function loadCoalProd(){
   res.forEach(({s,d})=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; el.appendChild(mkCard(s.lbl,v!=null?f2(v,1):null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color)); });
   // Production chart
   const prod=await eiaGet('COAL.mine_production.total-us-total.annual.A',20).catch(()=>[]);
-  const sp=[...prod].sort((a,b)=>a.period.localeCompare(b.period));
+  const sp=[...prod].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
   if(sp.length) mkChart('coalprod-chart','bar',sp.map(x=>x.period),[{label:'Coal Production (Trillion BTU)',data:sp.map(x=>Number(x.value)),backgroundColor:'rgba(136,136,136,0.4)',borderColor:'#888',borderWidth:1}]);
   // Stocks at power plants
   const stks=await eiaGet('ELEC.STOCKS.COW-US-98.M',24).catch(()=>[]);
-  const ss=[...stks].sort((a,b)=>a.period.localeCompare(b.period));
+  const ss=[...stks].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
   if(ss.length) mkChart('coalstock-chart','line',ss.map(x=>x.period),[{label:'Coal Stocks at Power Plants (Thousand Short Tons)',data:ss.map(x=>Number(x.value)),borderColor:'#ffb020',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(255,176,32,0.06)',tension:0.3}]);
 }
 
@@ -1216,7 +1216,7 @@ async function _loadRevenueEst_orig(sym,btn){
   if(fhRequired(el)) return;
   const data=await fhGet(`/stock/revenue-estimate?symbol=${sym}&freq=quarterly`);
   const rows=data?.revenueEstimate||[];
-  const sorted=rows.sort((a,b)=>a.period.localeCompare(b.period));
+  const sorted=rows.sort((a,b)=>String(a.period).localeCompare(String(b.period)));
   const labels=sorted.map(r=>r.period);
   mkChart('rev-est-chart','bar',labels,[
     {label:'Low Est.',data:sorted.map(r=>r.revenueMin),backgroundColor:'rgba(255,107,107,0.3)',borderColor:'#ff6b6b',borderWidth:1},
