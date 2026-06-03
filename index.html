@@ -716,10 +716,10 @@ async function loadCrudeProd(){
 // ELEC GEN
 async function loadElecGen(){
   if(egLoaded) return; egLoaded=true;
-  const d=await eiaGet('TOTAL.ELETPUS.M',3); const el=document.getElementById('eg-cards'); el.innerHTML='';
+  const d=await eiaGet('ELEC.GEN.ALL-US-99.M',3); const el=document.getElementById('eg-cards'); el.innerHTML='';
   const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null;
   el.appendChild(mkCard('Total Electricity Gen',v?(v/1000).toFixed(1)+'k':null,cc(v,p),cs(v,p),'Thousand MWh','#ff6b6b'));
-  const h=await eiaGet('TOTAL.ELETPUS.M',60); const s=[...h].sort((a,b)=>a.period.localeCompare(b.period));
+  const h=await eiaGet('ELEC.GEN.ALL-US-99.M',60); const s=[...h].sort((a,b)=>a.period.localeCompare(b.period));
   mkChart('eg-chart','bar',s.map(x=>x.period),[{label:'Thousand MWh',data:s.map(x=>Number(x.value)),backgroundColor:'rgba(255,107,107,0.4)',borderColor:'#ff6b6b',borderWidth:1}]);
 }
 
@@ -901,9 +901,9 @@ let coalPLoaded=false;
 async function loadCoalPrices(){
   if(coalPLoaded) return; coalPLoaded=true;
   const series=[
-    {id:'COAL.price-by-rank.us.annual.TOT.D.A',lbl:'U.S. Avg Coal Price',unit:'$/short ton',color:'#888'},
-    {id:'TOTAL.ESRPUUS.A',lbl:'Elec Sector Coal Cost',unit:'$/MMBtu',color:'#ffb020'},
-    {id:'TOTAL.CLTCPUS.A',lbl:'Total Coal Consumption',unit:'Trillion BTU',color:'#aaa'},
+    {id:'ELEC.COST.COW-US-98.A',lbl:'Coal Cost — Electric Power',unit:'$/MMBtu',color:'#888'},
+    {id:'ELEC.COST.NG-US-98.A',lbl:'Nat Gas Cost — Electric Power',unit:'$/MMBtu',color:'#ffb020'},
+    {id:'ELEC.COST.PC-US-98.A',lbl:'Petroleum Cost — Electric Power',unit:'$/MMBtu',color:'#aaa'},
   ];
   const el=document.getElementById('coalp-cards'); el.innerHTML='';
   const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
@@ -915,7 +915,7 @@ async function loadCoalPrices(){
   });
   document.getElementById('coalp-tbody').innerHTML=tbody.join('');
   // Chart - electricity sector coal cost over time
-  const hist=await eiaGet('TOTAL.ESRPUUS.A',20).catch(()=>[]);
+  const hist=await eiaGet('ELEC.COST.COW-US-98.A',20).catch(()=>[]);
   const sorted=[...hist].sort((a,b)=>a.period.localeCompare(b.period));
   if(sorted.length) mkChart('coalp-chart','bar',sorted.map(x=>x.period),[{label:'Elec Sector Coal Cost ($/MMBtu)',data:sorted.map(x=>Number(x.value)),backgroundColor:'rgba(136,136,136,0.4)',borderColor:'#888',borderWidth:1}]);
 }
@@ -983,15 +983,15 @@ let coalProdLoaded=false;
 async function loadCoalProd(){
   if(coalProdLoaded) return; coalProdLoaded=true;
   const series=[
-    {id:'TOTAL.CLPRPUS.A',lbl:'Total Coal Production',unit:'Trillion BTU',color:'#888'},
-    {id:'COAL.distribution.electric-power.us.total.A',lbl:'Coal to Electric Power',unit:'Thousand Short Tons',color:'#ffb020'},
-    {id:'TOTAL.CLSTPUS.A',lbl:'Coal Stocks',unit:'Trillion BTU',color:'#aaa'},
+    {id:'COAL.mine_production.total-us-total.annual.A',lbl:'Total Coal Production',unit:'Thousand Short Tons',color:'#888'},
+    {id:'ELEC.CONS_EG_BTU.COW-US-98.A',lbl:'Coal to Electric Power',unit:'Trillion BTU',color:'#ffb020'},
+    {id:'ELEC.STOCKS.COW-US-98.M',lbl:'Coal Stocks at Power Plants',unit:'Thousand Short Tons',color:'#aaa'},
   ];
   const el=document.getElementById('coalprod-cards'); el.innerHTML='';
   const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
   res.forEach(({s,d})=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; el.appendChild(mkCard(s.lbl,v!=null?f2(v,1):null,cc(v,p),cs(v,p),s.unit+(d[0]?' · '+d[0].period:''),s.color)); });
   // Production chart
-  const prod=await eiaGet('TOTAL.CLPRPUS.A',20).catch(()=>[]);
+  const prod=await eiaGet('COAL.mine_production.total-us-total.annual.A',20).catch(()=>[]);
   const sp=[...prod].sort((a,b)=>a.period.localeCompare(b.period));
   if(sp.length) mkChart('coalprod-chart','bar',sp.map(x=>x.period),[{label:'Coal Production (Trillion BTU)',data:sp.map(x=>Number(x.value)),backgroundColor:'rgba(136,136,136,0.4)',borderColor:'#888',borderWidth:1}]);
   // Stocks at power plants
@@ -1005,10 +1005,10 @@ let co2Loaded=false;
 async function loadCo2(){
   if(co2Loaded) return; co2Loaded=true;
   const fuels=[
-    {id:'TOTAL.CO2ETI.A',lbl:'Total Energy CO2',unit:'MMT',color:'#ff4d4d'},
-    {id:'TOTAL.CO2EPE.A',lbl:'Petroleum CO2',unit:'MMT',color:'#ffb020'},
-    {id:'TOTAL.CO2ENG.A',lbl:'Natural Gas CO2',unit:'MMT',color:'#a78bfa'},
-    {id:'TOTAL.CO2ECL.A',lbl:'Coal CO2',unit:'MMT',color:'#888'},
+    {id:'TOTAL.TETCBUS.A',lbl:'Total Energy CO2',unit:'MMT',color:'#ff4d4d'},
+    {id:'TOTAL.PETCBUS.A',lbl:'Petroleum CO2',unit:'MMT',color:'#ffb020'},
+    {id:'TOTAL.NGTCBUS.A',lbl:'Natural Gas CO2',unit:'MMT',color:'#a78bfa'},
+    {id:'TOTAL.CLTCBUS.A',lbl:'Coal CO2',unit:'MMT',color:'#888'},
   ];
   const el=document.getElementById('co2-cards'); el.innerHTML='';
   const res=await Promise.all(fuels.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
@@ -1200,8 +1200,11 @@ async function loadRevenueEst(sym,btn){
   document.querySelectorAll('#panel-earn-estimates .rbtn').forEach(b=>b.classList.remove('sel'));
   btn?.classList.add('sel');
   const el=document.getElementById('rev-est-tbody');
-  document.getElementById('rev-est-chart').parentElement.innerHTML='<div style="padding:20px;color:var(--amber);font-size:12px;font-family:var(--mono);border:1px solid var(--border);border-radius:8px">⚠ Revenue Estimates require Finnhub paid plan. Use Earnings Surprises (free) for historical EPS data instead.</div>';
-  el.innerHTML='<tr><td colspan="5" style="color:var(--amber)">Revenue estimates require Finnhub paid plan.</td></tr>';
+  const chartEl=document.getElementById('rev-est-chart');
+  const chartWrap=chartEl?.closest('.cwide');
+  const msg='<div style="padding:16px;color:var(--amber);font-size:12px;font-family:var(--mono);border:1px solid var(--border);border-radius:8px">⚠ Revenue Estimates require Finnhub paid plan. Use <b>Earnings Surprises</b> for historical EPS actuals vs estimates (free).</div>';
+  if(chartWrap) chartWrap.innerHTML=msg;
+  if(el) el.innerHTML='<tr><td colspan="5" style="color:var(--amber)">Revenue estimates require Finnhub paid plan.</td></tr>';
   return;
   // Original code below kept for future paid tier upgrade:
   _loadRevenueEst_orig(sym,btn);
@@ -1227,16 +1230,10 @@ async function loadEpsEst(sym,btn){
   document.querySelectorAll('#panel-earn-eps .rbtn').forEach(b=>b.classList.remove('sel'));
   btn?.classList.add('sel');
   const el=document.getElementById('eps-est-tbody');
-  if(fhRequired(el)) return;
-  const data=await fhGet(`/stock/eps-estimate?symbol=${sym}&freq=quarterly`);
-  const rows=data?.epsEstimate||[];
-  const sorted=rows.sort((a,b)=>a.period.localeCompare(b.period));
-  mkChart('eps-est-chart','bar',sorted.map(r=>r.period),[
-    {label:'Low Est.',data:sorted.map(r=>r.epsMin),backgroundColor:'rgba(255,107,107,0.3)',borderColor:'#ff6b6b',borderWidth:1},
-    {label:'Avg Est.',data:sorted.map(r=>r.epsAvg),backgroundColor:'rgba(0,150,255,0.4)',borderColor:'#0096ff',borderWidth:1},
-    {label:'High Est.',data:sorted.map(r=>r.epsMax),backgroundColor:'rgba(0,200,122,0.3)',borderColor:'#00c87a',borderWidth:1}
-  ]);
-  el.innerHTML=sorted.map(r=>`<tr><td>${r.period}</td><td>${f2(r.epsMin)}</td><td style="color:var(--accent2)">${f2(r.epsAvg)}</td><td>${f2(r.epsMax)}</td><td>${r.numberAnalysts||'--'}</td></tr>`).join('');
+  const chartWrap=document.getElementById('eps-est-chart')?.closest('.cwide');
+  const msg='<div style="padding:16px;color:var(--amber);font-size:12px;font-family:var(--mono);border:1px solid var(--border);border-radius:8px">⚠ EPS Estimates require Finnhub paid plan. Use <b>Earnings Surprises</b> for historical EPS actuals vs estimates (free).</div>';
+  if(chartWrap) chartWrap.innerHTML=msg;
+  if(el) el.innerHTML='<tr><td colspan="5" style="color:var(--amber)">EPS forward estimates require Finnhub paid plan.</td></tr>';
 }
 
 // ── INSIDER & CONGRESS ──────────────────────────────────────────────────────
