@@ -122,9 +122,9 @@ Cards linking directly to EIA publications — STEO, AEO, IEO, Weekly Petroleum 
 | WTI Crude Oil | `PET.RWTC.W` |
 | Brent Crude Oil | `PET.RBRTE.D` |
 | Henry Hub Natural Gas | `NG.RNGWHHD.D` |
-| RBOB Gasoline | `PET.EER_EPMRR_PF4_RGC_DPG.W` |
-| No.2 Heating Oil | `PET.EPD2DXL0_PF4_Y35NY_DPG.W` |
-| Propane (Mont Belvieu) | `PET.EER_EPLLPA_PF4_Y35NY_DPG.W` |
+| RBOB Gasoline | `petroleum/pri/spt` v2, product EPMRR, Los Angeles (NY reformulated no longer published) |
+| No.2 Heating Oil | `petroleum/pri/spt` v2, product EPD2F, New York Harbor |
+| Propane (Mont Belvieu) | `petroleum/pri/spt` v2, product EPLLPA, Mont Belvieu |
 | U.S. Crude Production | `PET.WCRFPUS2.W` |
 | Dry Nat Gas Production | `NG.N9070US2.W` |
 | Total Electricity Gen | `TOTAL.ELETPUS.M` |

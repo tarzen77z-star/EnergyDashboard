@@ -685,9 +685,12 @@ function setRange(r,bid){ crudeRange=r; document.querySelectorAll('#range-btns .
 // PETRO
 async function loadPetro(){
   if(petroLoaded) return; petroLoaded=true;
-  const series=[{id:'PET.EER_EPMRR_PF4_RGC_DPG.W',lbl:'RBOB Gasoline',unit:'$/gal',color:'#ff6b6b',tkrP:'t-gas',tkrC:'tc-gas'},{id:'PET.EPD2DXL0_PF4_Y35NY_DPG.W',lbl:'No.2 Heating Oil',unit:'$/gal',color:'#00d4aa'},{id:'PET.EER_EPLLPA_PF4_Y35NY_DPG.W',lbl:'Propane (Mont Belvieu)',unit:'$/gal',color:'#ffb020'}];
+  // EIA retired the old weekly spot series (they now 404), so these cards use
+  // the v2 petroleum spot-price dataset instead. NY reformulated gasoline is
+  // no longer published, so the gasoline card uses the LA reformulated series.
+  const series=[{prod:'EPMRR',area:'Y05LA',lbl:'Reformulated Gasoline (LA)',unit:'$/gal',color:'#ff6b6b',tkrP:'t-gas',tkrC:'tc-gas'},{prod:'EPD2F',area:'Y35NY',lbl:'No.2 Heating Oil (NY Harbor)',unit:'$/gal',color:'#00d4aa'},{prod:'EPLLPA',area:'Y44MB',lbl:'Propane (Mont Belvieu)',unit:'$/gal',color:'#ffb020'}];
   const el=document.getElementById('petro-cards'); el.innerHTML='';
-  const res=await Promise.all(series.map(s=>eiaGet(s.id,3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
+  const res=await Promise.all(series.map(s=>eiaV2('petroleum/pri/spt/data',{'data[]':'value','facets[product][]':s.prod,'facets[duoarea][]':s.area,'facets[process][]':'PF4','frequency':'daily'},3).then(d=>({s,d})).catch(()=>({s,d:[]}))));
   res.forEach(({s,d})=>{ const v=d[0]?Number(d[0].value):null,p=d[1]?Number(d[1].value):null; const card=mkCard(s.lbl,v?'$'+f2(v):null,cc(v,p),cs(v,p),s.unit,s.color); el.appendChild(card); if(s.tkrP&&v) setTkr(s.tkrP,s.tkrC,'$'+f2(v),cs(v,p),cc(v,p)); });
   const gd=await eiaGet('PET.EMM_EPMR_PTE_NUS_DPG.W',104); const gs=[...gd].sort((a,b)=>String(a.period).localeCompare(String(b.period)));
   mkChart('gas-chart','line',gs.map(x=>x.period),[{label:'Retail Gasoline $/gal',data:gs.map(x=>Number(x.value)),borderColor:'#ff6b6b',borderWidth:1.5,pointRadius:0,fill:true,backgroundColor:'rgba(255,107,107,0.05)',tension:0.3}],v=>'$'+v.toFixed(2));
