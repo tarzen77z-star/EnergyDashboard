@@ -6,6 +6,7 @@
 <title>Energy Intelligence Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -61,6 +62,15 @@ section{margin-top:30px}
 .card .chg{font-family:var(--mono);font-size:13px;margin-top:2px}
 .card .meta{color:var(--text2);font-size:12px;margin-top:8px}
 .card .note{color:var(--text3);font-size:12px;margin-top:6px;line-height:1.45}
+#strips-grid .card .val{font-size:15px;font-weight:400;line-height:1.6}
+#strips-grid .strip-line{white-space:nowrap}
+.sec-head{position:relative}
+.sec-head.has-copy{padding-right:48px}
+.copybtn{position:absolute;top:2px;right:0;background:var(--panel2);border:1px solid var(--border2);border-radius:6px;color:var(--text2);font-size:12px;line-height:1;padding:5px 8px;cursor:pointer}
+.copybtn:hover{color:var(--text);border-color:var(--accent)}
+.xbtn{background:var(--accent);color:#07120e;border:0;border-radius:8px;padding:10px 18px;font-family:var(--font);font-size:14px;font-weight:600;cursor:pointer;margin-top:14px}
+.xbtn:disabled{opacity:.6;cursor:default}
+.xbtn.bad{background:var(--panel2);color:var(--amber);border:1px solid var(--amber)}
 .fail{color:var(--amber);font-size:12px;font-family:var(--mono);border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:var(--panel)}
 .chart-wrap{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;margin-top:12px}
 .chart-wrap h3{font-size:14px;font-weight:500;margin-bottom:8px}
@@ -94,6 +104,7 @@ footer b{color:var(--text2)}
     <h1>Energy markets, trader-first.</h1>
     <p class="sub">Benchmarks, spreads, storage, and fund positioning — the numbers that move energy prices, with the jargon translated. Prices are EIA spot or weekly unless labeled futures.</p>
     <div class="takeaway"><span class="lbl">Market takeaway</span><span id="takeaway">Loading live prices…</span></div>
+    <button id="export-xlsx" class="xbtn" type="button" title="Download all dashboard data as an Excel workbook">Export to Excel</button>
   </div>
 
   <section id="tier1">
@@ -373,7 +384,7 @@ async function loadStrips(){
     if(!m){ html+=failCard(label+' — calendar strips','Strips data unavailable for this commodity.'); return; }
     const dec=(m.decimals!=null?m.decimals:2);
     const fmt=v=>(v!=null?('$'+Number(v).toFixed(dec)):'--');
-    const strips=(m.strips||[]).map(s=>`Cal-${s.year} ${fmt(s.value)} (${s.months} months)`).join('<br>')||'No full calendar year in table';
+    const strips=(m.strips||[]).map(s=>`<span class="strip-line">Cal-${s.year} ${fmt(s.value)} (${s.months} months)</span>`).join('<br>')||'No full calendar year in table';
     const spreads=(m.spreads||[]).map(s=>`${esc(s.label)} ${fmt(s.value)}`).join('<br>')||'Spreads unavailable';
     html+=`<div class="card"><div class="lbl">${esc(label)} — calendar strips</div><div class="val">${strips}</div><div class="meta">Trade date ${esc(dj.trade_date||'--')} · CME monthly settlements · ${esc(m.unit||'')}</div><div class="note">Time spreads:<br>${spreads}.</div></div>`;
   });
@@ -444,8 +455,206 @@ function buildTakeaway(){
   if(ngs)parts.push(`nat-gas storage ${f2(ngs.v,0)} Bcf`);
   $('takeaway').textContent=parts.length?parts.join(' · ')+'.':"Live prices, spreads, storage, and positioning for energy traders — data loads from EIA, Finnhub, and CFTC.";
 }
+
+// ---------- export to Excel + copy buttons (displayed data only) ----------
+function etDateStr(){const d=etNow();const p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate());}
+function flatTxt(el){return el?el.innerText.replace(/\s+/g,' ').trim():'';}
+function gridCards(id){const g=$(id);return g?[...g.querySelectorAll('.card')]:[];}
+function cardRow(c){
+  const meta=flatTxt(c.querySelector('.meta')),note=flatTxt(c.querySelector('.note'));
+  const detail=[meta,note].filter(Boolean).join(' · ');
+  return [flatTxt(c.querySelector('.lbl')),flatTxt(c.querySelector('.val')),flatTxt(c.querySelector('.chg')),detail];
+}
+function gridRows(id){
+  const out=[];
+  gridCards(id).forEach(c=>{
+    const row=cardRow(c);
+    if(!row.some(x=>x))return;
+    if(row[1]==='--'&&/Data unavailable/.test(c.innerText))return;
+    out.push(row);
+  });
+  return out;
+}
+async function exportXLSX(){
+  const btn=$('export-xlsx');
+  const failState=msg=>{if(btn){btn.textContent=msg;btn.disabled=true;btn.classList.add('bad');}};
+  if(typeof XLSX==='undefined'){failState('Export unavailable — library failed to load');return;}
+  const wb=XLSX.utils.book_new();
+  let sheets=0;
+  const add=(name,aoa)=>{if(!aoa||!aoa.length)return;XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(aoa),name);sheets++;};
+  const snap=[['Section','Item','Value','Change','Detail']];
+  gridRows('tier1-grid').forEach(r=>snap.push(['Trader strip',...r]));
+  document.querySelectorAll('#tier1 > .card').forEach(c=>{
+    const row=cardRow(c);
+    if(row.some(x=>x)&&!(row[1]==='--'&&/Data unavailable/.test(c.innerText)))snap.push(['Trader strip',...row]);
+  });
+  gridRows('spreads-grid').forEach(r=>snap.push(['Spreads',...r]));
+  gridRows('storage-grid').forEach(r=>snap.push(['Storage',...r]));
+  gridRows('cot-grid').forEach(r=>snap.push(['COT latest',...r]));
+  if(snap.length>1)add('Snapshot',snap);
+  const sto=gridRows('storage-grid');
+  if(sto.length)add('Storage',[['Item','Value','Change','Detail'],...sto]);
+  const eq=gridRows('eq-grid');
+  if(eq.length)add('Equities',[['Company','Price','Day change','Fundamentals'],...eq]);
+  try{
+    const sj=await getStrips();
+    if(sj&&sj.commodities){
+      const cols=['WTI','RBOB','ULSD','NG'];
+      const labels={WTI:'WTI $/bbl',RBOB:'RBOB $/gal',ULSD:'ULSD $/gal',NG:'Natural gas $/MMBtu'};
+      const months=new Set();
+      cols.forEach(code=>{const m=sj.commodities[code];if(m&&m.settlements)Object.keys(m.settlements).forEach(k=>months.add(k));});
+      const ms=[...months].sort();
+      if(ms.length){
+        const aoa=[['CME monthly settlements · trade date',sj.trade_date||'--'],[],['Month',...cols.map(c=>labels[c])]];
+        ms.forEach(mo=>{aoa.push([mo,...cols.map(code=>{const mm=sj.commodities[code];return (mm&&mm.settlements&&mm.settlements[mo]!=null)?mm.settlements[mo]:'';})]);});
+        add('Strips monthly',aoa);
+      }
+      const years=new Set();
+      cols.forEach(code=>{const m=sj.commodities[code];if(m&&m.strips)m.strips.forEach(s=>years.add(String(s.year)));});
+      const ys=[...years].sort();
+      if(ys.length){
+        const aoa=[['Calendar strips · trade date',sj.trade_date||'--'],[],['Calendar year',...cols.map(c=>labels[c])]];
+        ys.forEach(y=>{aoa.push([y,...cols.map(code=>{const mm=sj.commodities[code];const s=mm&&mm.strips?mm.strips.find(x=>String(x.year)===y):null;return s?s.value:'';})]);});
+        add('Cal strips',aoa);
+      }
+    }
+  }catch(e){}
+  try{
+    const dj=await getDerived();
+    if(dj&&dj.cot&&dj.cot.markets){
+      const names=['WTI crude','Natural gas','RBOB gasoline','ULSD heating oil'];
+      const dates=new Set();
+      names.forEach(nm=>{const m=dj.cot.markets[nm];if(m&&m.history)m.history.forEach(p=>{if(p.date)dates.add(p.date);});});
+      const ds=[...dates].sort().reverse();
+      if(ds.length){
+        const aoa=[['CFTC funds nets — weekly (newest first)'],[],['Report date',...names]];
+        ds.forEach(dt=>{aoa.push([dt,...names.map(nm=>{const m=dj.cot.markets[nm];const p=m&&m.history?m.history.find(x=>x.date===dt):null;return p?p.net:'';})]);});
+        add('COT history',aoa);
+      }
+    }
+  }catch(e){}
+  try{
+    if(typeof Chart!=='undefined'){
+      const blocks=[];
+      const crude=Chart.getChart('crude-chart');
+      if(crude&&crude.data&&crude.data.labels){
+        blocks.push(['Crude history — WTI & Brent, weekly $/bbl'],['Date','WTI','Brent']);
+        crude.data.labels.forEach((lb,i)=>{blocks.push([lb,crude.data.datasets[0]?crude.data.datasets[0].data[i]:'',crude.data.datasets[1]?crude.data.datasets[1].data[i]:'']);});
+        blocks.push([]);
+      }
+      const ngc=Chart.getChart('ng-chart');
+      if(ngc&&ngc.data&&ngc.data.labels){
+        blocks.push(['Henry Hub history — daily $/MMBtu'],['Date','Henry Hub']);
+        ngc.data.labels.forEach((lb,i)=>{blocks.push([lb,ngc.data.datasets[0]?ngc.data.datasets[0].data[i]:'']);});
+        blocks.push([]);
+      }
+      const gasc=Chart.getChart('gas-chart');
+      if(gasc&&gasc.data&&gasc.data.labels){
+        blocks.push(['Retail gasoline — weekly $/gal'],['Date','Retail gasoline']);
+        gasc.data.labels.forEach((lb,i)=>{blocks.push([lb,gasc.data.datasets[0]?gasc.data.datasets[0].data[i]:'']);});
+      }
+      if(blocks.length)add('Price history',blocks);
+    }
+  }catch(e){}
+  if(!sheets){failState('Export unavailable — no data to export');setTimeout(()=>{if(btn){btn.disabled=false;btn.classList.remove('bad');btn.textContent='Export to Excel';}},4000);return;}
+  XLSX.writeFile(wb,'EnergyDashboard-'+etDateStr()+'.xlsx');
+}
+function copyText(btn,text){
+  const done=ok=>{
+    btn.textContent=ok?'✓ Copied':'Copy failed';
+    setTimeout(()=>{btn.textContent='📋';},2000);
+  };
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>done(true)).catch(()=>fallbackCopy(text,done));
+  }else fallbackCopy(text,done);
+}
+function fallbackCopy(text,done){
+  try{
+    const ta=document.createElement('textarea');
+    ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();
+    const ok=document.execCommand('copy');
+    document.body.removeChild(ta);done(!!ok);
+  }catch(e){done(false);}
+}
+function cardsToTSV(cards,header){
+  const rows=[header];
+  cards.forEach(c=>{
+    const row=cardRow(c);
+    if(row.some(x=>x)&&!(row[1]==='--'&&/Data unavailable/.test(c.innerText)))rows.push(row);
+  });
+  if(rows.length<=1)return '';
+  return rows.map(r=>r.join('\t')).join('\n');
+}
+function stripsTSV(){
+  const g=$('strips-grid');if(!g)return '';
+  const rows=[['Commodity','Item','Value']];
+  g.querySelectorAll('.card').forEach(c=>{
+    const lbl=flatTxt(c.querySelector('.lbl')).replace(' — calendar strips','');
+    const valEl=c.querySelector('.val');
+    if(valEl){
+      valEl.innerHTML.split('<br>').forEach(ln=>{
+        const txt=ln.replace(/<[^>]+>/g,'').trim();
+        if(!txt)return;
+        const m=txt.match(/^(Cal-\d+)\s+(\S+)\s+\(/);
+        if(m)rows.push([lbl,m[1],m[2]]);
+        else rows.push([lbl,txt,'']);
+      });
+    }
+    const noteEl=c.querySelector('.note');
+    if(noteEl){
+      noteEl.innerHTML.split('<br>').forEach(ln=>{
+        const txt=ln.replace(/<[^>]+>/g,'').trim();
+        if(!txt||/^Time spreads:?$/i.test(txt))return;
+        const m=txt.match(/^(.*?)\s+(\$-?[\d,]+(?:\.\d+)?)\.?$/);
+        if(m)rows.push([lbl,m[1].trim(),m[2]]);
+        else rows.push([lbl,txt,'']);
+      });
+    }
+  });
+  if(rows.length<=1)return '';
+  return rows.map(r=>r.join('\t')).join('\n');
+}
+function newsText(){
+  const sec=$('news-sec');if(!sec)return '';
+  const lines=['What moves prices'];
+  sec.querySelectorAll('.news-item').forEach(it=>{
+    const t=it.innerText.replace(/\s+/g,' ').trim();
+    if(t)lines.push(t);
+  });
+  if(lines.length<=1)return '';
+  return lines.join('\n');
+}
+function addCopyButton(headEl,getText){
+  if(!headEl)return;
+  const b=document.createElement('button');
+  b.type='button';b.className='copybtn';b.textContent='📋';b.title='Copy section data';
+  b.addEventListener('click',()=>{
+    const t=getText();
+    if(!t){b.textContent='Nothing to copy';setTimeout(()=>{b.textContent='📋';},2000);return;}
+    copyText(b,t);
+  });
+  headEl.classList.add('has-copy');
+  headEl.appendChild(b);
+}
+function initCopyButtons(){
+  const heads=id=>document.querySelectorAll('#'+id+' .sec-head');
+  addCopyButton(heads('tier1')[0],()=>cardsToTSV(document.querySelectorAll('#tier1 .card'),['Item','Value','Change','Detail']));
+  addCopyButton(heads('spreads-sec')[0],()=>cardsToTSV(document.querySelectorAll('#spreads-grid .card'),['Item','Value','Change','Detail']));
+  addCopyButton(heads('storage-sec')[0],()=>cardsToTSV(document.querySelectorAll('#storage-grid .card'),['Item','Value','Change','Detail']));
+  addCopyButton(heads('storage-sec')[1],()=>cardsToTSV(document.querySelectorAll('#cot-grid .card'),['Item','Value','Change','Detail']));
+  addCopyButton(heads('strips-sec')[0],stripsTSV);
+  addCopyButton(heads('equities-sec')[0],()=>cardsToTSV(document.querySelectorAll('#eq-grid .card'),['Company','Price','Day change','Fundamentals']));
+  addCopyButton(heads('news-sec')[0],newsText);
+}
 // ---------- init ----------
 (async function init(){
+  const xb=$('export-xlsx');
+  if(xb){
+    xb.addEventListener('click',exportXLSX);
+    if(typeof XLSX==='undefined'){xb.textContent='Export unavailable — library failed to load';xb.disabled=true;xb.classList.add('bad');}
+  }
+  try{initCopyButtons();}catch(e){}
   try{await loadTicker();}catch(e){}
   try{await loadTier1();}catch(e){}
   await Promise.allSettled([loadHistory(),loadSpreads(),loadStorage(),loadCOT(),loadEquities(),loadNews(),loadCOTHist(),loadNewsHist(),loadStrips()]);
