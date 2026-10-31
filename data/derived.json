@@ -1,0 +1,1081 @@
+{
+ "generated_at": "2026-10-31T01:02:06.549092Z",
+ "cot": {
+  "source": "CFTC Socrata dataset 6dca-aqww (publicreporting.cftc.gov)",
+  "report_date": "2026-10-27",
+  "markets": {
+   "WTI crude": {
+    "code": "067651",
+    "exchange": "NYMEX WTI",
+    "report_date": "2026-10-27",
+    "net": 74343,
+    "long": 330168,
+    "short": 255825,
+    "week_change": -14982,
+    "open_interest": 1886280,
+    "pct_long": 17.5,
+    "pct_short": 13.6,
+    "history": [
+     {
+      "date": "2026-10-27",
+      "net": 74343
+     },
+     {
+      "date": "2026-10-20",
+      "net": 89325
+     },
+     {
+      "date": "2026-10-13",
+      "net": 100343
+     },
+     {
+      "date": "2026-10-06",
+      "net": 99060
+     },
+     {
+      "date": "2026-09-29",
+      "net": 109463
+     },
+     {
+      "date": "2026-09-22",
+      "net": 141106
+     },
+     {
+      "date": "2026-09-15",
+      "net": 135905
+     },
+     {
+      "date": "2026-09-08",
+      "net": 136579
+     },
+     {
+      "date": "2026-09-01",
+      "net": 129911
+     },
+     {
+      "date": "2026-08-25",
+      "net": 123449
+     },
+     {
+      "date": "2026-08-18",
+      "net": 122090
+     },
+     {
+      "date": "2026-08-11",
+      "net": 99196
+     },
+     {
+      "date": "2026-08-04",
+      "net": 112443
+     },
+     {
+      "date": "2026-07-28",
+      "net": 120108
+     },
+     {
+      "date": "2026-07-21",
+      "net": 81689
+     },
+     {
+      "date": "2026-07-14",
+      "net": 62683
+     },
+     {
+      "date": "2026-07-07",
+      "net": 75749
+     },
+     {
+      "date": "2026-06-30",
+      "net": 110531
+     },
+     {
+      "date": "2026-06-23",
+      "net": 114633
+     },
+     {
+      "date": "2026-06-16",
+      "net": 124483
+     },
+     {
+      "date": "2026-06-09",
+      "net": 130301
+     },
+     {
+      "date": "2026-06-02",
+      "net": 155874
+     },
+     {
+      "date": "2026-05-26",
+      "net": 160998
+     },
+     {
+      "date": "2026-05-19",
+      "net": 172580
+     },
+     {
+      "date": "2026-05-12",
+      "net": 169877
+     },
+     {
+      "date": "2026-05-05",
+      "net": 178786
+     },
+     {
+      "date": "2026-04-28",
+      "net": 191911
+     },
+     {
+      "date": "2026-04-21",
+      "net": 192302
+     },
+     {
+      "date": "2026-04-14",
+      "net": 206541
+     },
+     {
+      "date": "2026-04-07",
+      "net": 202153
+     },
+     {
+      "date": "2026-03-31",
+      "net": 213488
+     },
+     {
+      "date": "2026-03-24",
+      "net": 233620
+     },
+     {
+      "date": "2026-03-17",
+      "net": 218688
+     },
+     {
+      "date": "2026-03-10",
+      "net": 228015
+     },
+     {
+      "date": "2026-03-03",
+      "net": 172150
+     },
+     {
+      "date": "2026-02-24",
+      "net": 172712
+     },
+     {
+      "date": "2026-02-17",
+      "net": 141343
+     },
+     {
+      "date": "2026-02-10",
+      "net": 117814
+     },
+     {
+      "date": "2026-02-03",
+      "net": 124565
+     },
+     {
+      "date": "2026-01-27",
+      "net": 96982
+     },
+     {
+      "date": "2026-01-20",
+      "net": 78792
+     },
+     {
+      "date": "2026-01-13",
+      "net": 58128
+     },
+     {
+      "date": "2026-01-06",
+      "net": 57352
+     },
+     {
+      "date": "2025-12-30",
+      "net": 64591
+     },
+     {
+      "date": "2025-12-23",
+      "net": 64898
+     },
+     {
+      "date": "2025-12-16",
+      "net": 54896
+     },
+     {
+      "date": "2025-12-09",
+      "net": 58433
+     },
+     {
+      "date": "2025-12-02",
+      "net": 51037
+     },
+     {
+      "date": "2025-11-25",
+      "net": 55017
+     },
+     {
+      "date": "2025-11-18",
+      "net": 69176
+     }
+    ]
+   },
+   "Natural gas": {
+    "code": "023651",
+    "exchange": "NYMEX Henry Hub",
+    "report_date": "2026-10-27",
+    "net": -255164,
+    "long": 269454,
+    "short": 524618,
+    "week_change": -13892,
+    "open_interest": 1681043,
+    "pct_long": 16.0,
+    "pct_short": 31.2,
+    "history": [
+     {
+      "date": "2026-10-27",
+      "net": -255164
+     },
+     {
+      "date": "2026-10-20",
+      "net": -241272
+     },
+     {
+      "date": "2026-10-13",
+      "net": -233578
+     },
+     {
+      "date": "2026-10-06",
+      "net": -236439
+     },
+     {
+      "date": "2026-09-29",
+      "net": -231020
+     },
+     {
+      "date": "2026-09-22",
+      "net": -216530
+     },
+     {
+      "date": "2026-09-15",
+      "net": -221587
+     },
+     {
+      "date": "2026-09-08",
+      "net": -219767
+     },
+     {
+      "date": "2026-09-01",
+      "net": -208911
+     },
+     {
+      "date": "2026-08-25",
+      "net": -197932
+     },
+     {
+      "date": "2026-08-18",
+      "net": -203503
+     },
+     {
+      "date": "2026-08-11",
+      "net": -197135
+     },
+     {
+      "date": "2026-08-04",
+      "net": -197546
+     },
+     {
+      "date": "2026-07-28",
+      "net": -190799
+     },
+     {
+      "date": "2026-07-21",
+      "net": -171138
+     },
+     {
+      "date": "2026-07-14",
+      "net": -178612
+     },
+     {
+      "date": "2026-07-07",
+      "net": -165307
+     },
+     {
+      "date": "2026-06-30",
+      "net": -170803
+     },
+     {
+      "date": "2026-06-23",
+      "net": -176689
+     },
+     {
+      "date": "2026-06-16",
+      "net": -173476
+     },
+     {
+      "date": "2026-06-09",
+      "net": -193957
+     },
+     {
+      "date": "2026-06-02",
+      "net": -186115
+     },
+     {
+      "date": "2026-05-26",
+      "net": -203181
+     },
+     {
+      "date": "2026-05-19",
+      "net": -192196
+     },
+     {
+      "date": "2026-05-12",
+      "net": -176306
+     },
+     {
+      "date": "2026-05-05",
+      "net": -166646
+     },
+     {
+      "date": "2026-04-28",
+      "net": -166273
+     },
+     {
+      "date": "2026-04-21",
+      "net": -168315
+     },
+     {
+      "date": "2026-04-14",
+      "net": -186888
+     },
+     {
+      "date": "2026-04-07",
+      "net": -183987
+     },
+     {
+      "date": "2026-03-31",
+      "net": -167456
+     },
+     {
+      "date": "2026-03-24",
+      "net": -172607
+     },
+     {
+      "date": "2026-03-17",
+      "net": -178029
+     },
+     {
+      "date": "2026-03-10",
+      "net": -186856
+     },
+     {
+      "date": "2026-03-03",
+      "net": -206422
+     },
+     {
+      "date": "2026-02-24",
+      "net": -198519
+     },
+     {
+      "date": "2026-02-17",
+      "net": -185812
+     },
+     {
+      "date": "2026-02-10",
+      "net": -171865
+     },
+     {
+      "date": "2026-02-03",
+      "net": -172310
+     },
+     {
+      "date": "2026-01-27",
+      "net": -163606
+     },
+     {
+      "date": "2026-01-20",
+      "net": -193490
+     },
+     {
+      "date": "2026-01-13",
+      "net": -185601
+     },
+     {
+      "date": "2026-01-06",
+      "net": -165559
+     },
+     {
+      "date": "2025-12-30",
+      "net": -154894
+     },
+     {
+      "date": "2025-12-23",
+      "net": -156320
+     },
+     {
+      "date": "2025-12-16",
+      "net": -128037
+     },
+     {
+      "date": "2025-12-09",
+      "net": -106479
+     },
+     {
+      "date": "2025-12-02",
+      "net": -126479
+     },
+     {
+      "date": "2025-11-25",
+      "net": -138403
+     },
+     {
+      "date": "2025-11-18",
+      "net": -137719
+     }
+    ]
+   },
+   "RBOB gasoline": {
+    "code": "111659",
+    "exchange": "NYMEX RBOB",
+    "report_date": "2026-10-27",
+    "net": 71465,
+    "long": 109016,
+    "short": 37551,
+    "week_change": 1876,
+    "open_interest": 334170,
+    "pct_long": 32.6,
+    "pct_short": 11.2,
+    "history": [
+     {
+      "date": "2026-10-27",
+      "net": 71465
+     },
+     {
+      "date": "2026-10-20",
+      "net": 69589
+     },
+     {
+      "date": "2026-10-13",
+      "net": 75461
+     },
+     {
+      "date": "2026-10-06",
+      "net": 70531
+     },
+     {
+      "date": "2026-09-29",
+      "net": 65231
+     },
+     {
+      "date": "2026-09-22",
+      "net": 69125
+     },
+     {
+      "date": "2026-09-15",
+      "net": 62921
+     },
+     {
+      "date": "2026-09-08",
+      "net": 73192
+     },
+     {
+      "date": "2026-09-01",
+      "net": 69625
+     },
+     {
+      "date": "2026-08-25",
+      "net": 64159
+     },
+     {
+      "date": "2026-08-18",
+      "net": 57844
+     },
+     {
+      "date": "2026-08-11",
+      "net": 54300
+     },
+     {
+      "date": "2026-08-04",
+      "net": 58307
+     },
+     {
+      "date": "2026-07-28",
+      "net": 62269
+     },
+     {
+      "date": "2026-07-21",
+      "net": 60994
+     },
+     {
+      "date": "2026-07-14",
+      "net": 57985
+     },
+     {
+      "date": "2026-07-07",
+      "net": 58224
+     },
+     {
+      "date": "2026-06-30",
+      "net": 54331
+     },
+     {
+      "date": "2026-06-23",
+      "net": 52104
+     },
+     {
+      "date": "2026-06-16",
+      "net": 51787
+     },
+     {
+      "date": "2026-06-09",
+      "net": 47043
+     },
+     {
+      "date": "2026-06-02",
+      "net": 55622
+     },
+     {
+      "date": "2026-05-26",
+      "net": 54627
+     },
+     {
+      "date": "2026-05-19",
+      "net": 50929
+     },
+     {
+      "date": "2026-05-12",
+      "net": 54525
+     },
+     {
+      "date": "2026-05-05",
+      "net": 58893
+     },
+     {
+      "date": "2026-04-28",
+      "net": 56216
+     },
+     {
+      "date": "2026-04-21",
+      "net": 57115
+     },
+     {
+      "date": "2026-04-14",
+      "net": 53765
+     },
+     {
+      "date": "2026-04-07",
+      "net": 59592
+     },
+     {
+      "date": "2026-03-31",
+      "net": 68326
+     },
+     {
+      "date": "2026-03-24",
+      "net": 69846
+     },
+     {
+      "date": "2026-03-17",
+      "net": 76595
+     },
+     {
+      "date": "2026-03-10",
+      "net": 72953
+     },
+     {
+      "date": "2026-03-03",
+      "net": 91817
+     },
+     {
+      "date": "2026-02-24",
+      "net": 98792
+     },
+     {
+      "date": "2026-02-17",
+      "net": 88742
+     },
+     {
+      "date": "2026-02-10",
+      "net": 89956
+     },
+     {
+      "date": "2026-02-03",
+      "net": 76431
+     },
+     {
+      "date": "2026-01-27",
+      "net": 79213
+     },
+     {
+      "date": "2026-01-20",
+      "net": 70780
+     },
+     {
+      "date": "2026-01-13",
+      "net": 72527
+     },
+     {
+      "date": "2026-01-06",
+      "net": 69958
+     },
+     {
+      "date": "2025-12-30",
+      "net": 73008
+     },
+     {
+      "date": "2025-12-23",
+      "net": 70809
+     },
+     {
+      "date": "2025-12-16",
+      "net": 76362
+     },
+     {
+      "date": "2025-12-09",
+      "net": 92663
+     },
+     {
+      "date": "2025-12-02",
+      "net": 102246
+     },
+     {
+      "date": "2025-11-25",
+      "net": 90947
+     },
+     {
+      "date": "2025-11-18",
+      "net": 95508
+     }
+    ]
+   },
+   "ULSD heating oil": {
+    "code": "022651",
+    "exchange": "NYMEX ULSD",
+    "report_date": "2026-10-27",
+    "net": 9671,
+    "long": 37524,
+    "short": 27853,
+    "week_change": -3357,
+    "open_interest": 251837,
+    "pct_long": 14.9,
+    "pct_short": 11.1,
+    "history": [
+     {
+      "date": "2026-10-27",
+      "net": 9671
+     },
+     {
+      "date": "2026-10-20",
+      "net": 13028
+     },
+     {
+      "date": "2026-10-13",
+      "net": 14753
+     },
+     {
+      "date": "2026-10-06",
+      "net": 10995
+     },
+     {
+      "date": "2026-09-29",
+      "net": 12091
+     },
+     {
+      "date": "2026-09-22",
+      "net": 10631
+     },
+     {
+      "date": "2026-09-15",
+      "net": 8953
+     },
+     {
+      "date": "2026-09-08",
+      "net": 11708
+     },
+     {
+      "date": "2026-09-01",
+      "net": 14079
+     },
+     {
+      "date": "2026-08-25",
+      "net": 12480
+     },
+     {
+      "date": "2026-08-18",
+      "net": 13879
+     },
+     {
+      "date": "2026-08-11",
+      "net": 13189
+     },
+     {
+      "date": "2026-08-04",
+      "net": 10895
+     },
+     {
+      "date": "2026-07-28",
+      "net": 10520
+     },
+     {
+      "date": "2026-07-21",
+      "net": 9714
+     },
+     {
+      "date": "2026-07-14",
+      "net": 8476
+     },
+     {
+      "date": "2026-07-07",
+      "net": 5262
+     },
+     {
+      "date": "2026-06-30",
+      "net": 3668
+     },
+     {
+      "date": "2026-06-23",
+      "net": -936
+     },
+     {
+      "date": "2026-06-16",
+      "net": 3916
+     },
+     {
+      "date": "2026-06-09",
+      "net": 1824
+     },
+     {
+      "date": "2026-06-02",
+      "net": 4091
+     },
+     {
+      "date": "2026-05-26",
+      "net": 2607
+     },
+     {
+      "date": "2026-05-19",
+      "net": 5643
+     },
+     {
+      "date": "2026-05-12",
+      "net": 3008
+     },
+     {
+      "date": "2026-05-05",
+      "net": 5689
+     },
+     {
+      "date": "2026-04-28",
+      "net": 3667
+     },
+     {
+      "date": "2026-04-21",
+      "net": 5454
+     },
+     {
+      "date": "2026-04-14",
+      "net": 7606
+     },
+     {
+      "date": "2026-04-07",
+      "net": 8887
+     },
+     {
+      "date": "2026-03-31",
+      "net": 10092
+     },
+     {
+      "date": "2026-03-24",
+      "net": 9567
+     },
+     {
+      "date": "2026-03-17",
+      "net": 15431
+     },
+     {
+      "date": "2026-03-10",
+      "net": 13070
+     },
+     {
+      "date": "2026-03-03",
+      "net": 17655
+     },
+     {
+      "date": "2026-02-24",
+      "net": 16831
+     },
+     {
+      "date": "2026-02-17",
+      "net": 15402
+     },
+     {
+      "date": "2026-02-10",
+      "net": 19452
+     },
+     {
+      "date": "2026-02-03",
+      "net": 25279
+     },
+     {
+      "date": "2026-01-27",
+      "net": 23835
+     },
+     {
+      "date": "2026-01-20",
+      "net": 16044
+     },
+     {
+      "date": "2026-01-13",
+      "net": 14511
+     },
+     {
+      "date": "2026-01-06",
+      "net": 18870
+     },
+     {
+      "date": "2025-12-30",
+      "net": 17650
+     },
+     {
+      "date": "2025-12-23",
+      "net": 13326
+     },
+     {
+      "date": "2025-12-16",
+      "net": 15342
+     },
+     {
+      "date": "2025-12-09",
+      "net": 20222
+     },
+     {
+      "date": "2025-12-02",
+      "net": 23508
+     },
+     {
+      "date": "2025-11-25",
+      "net": 19236
+     },
+     {
+      "date": "2025-11-18",
+      "net": 34214
+     }
+    ]
+   }
+  }
+ },
+ "news": [
+  {
+   "title": "Jaishankar warns of global energy supply disruptions, urges G20 action",
+   "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxOSHlqYmdiaXdfeS00bWo4ZTI3TlBTblExdjdxcXFxaVpoUXE1N0JFc1hwRWtrXzFDWE14TEttdjFTaEl1RmZfbDZibkpLVlItYUJmSEhib05WSzdMSUxrNTFPaVlwd1B3bU5IdTZpVjNheDVJbEJ2RVNUUVVQNk1HOFFYU01kMnBJMVdRWkJVWEZKc2NfbFJhMVhNSElTQUNuczhkWkY0MUJkclUtYU9PX1lDMnhyZ2tKb0hmUVBxaTM2ODRyWVhTbXA5cm9XNWFf0gHXAUFVX3lxTE90Mnp5TDlaVDc2SlJSanpzcUI5MlNHallFaXdFUVBSOFVGdlR1eTV1eEIzRk02dWt0UGxwRy1MRkpIRjltQmRWOXRwMTFsMVpVTXUwU19mWk5TOXdTTzhHS3ptVlBsUndsZlBoa0dNMWQ0UDgyN2hXc2F6NUY4bC1JWDN6R1ozZlJna1p2ekx5TkFIUmZpWnBGYlk0UUdiaGM0cGRTME9PTW1BZm5NVy1pdFpFcFJ2Ylpvai1TTlA5SlhyaGY3TGpsVmxBRUNGTlZNZDIzNXV3?oc=5",
+   "source": "BusinessLine",
+   "published": "2026-10-31T00:42:19+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Washington’s foreign policy scramble to lower fuel prices",
+   "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxONldVUUpQX0xzUy1LOWtzTDhKRWtGbXlSaGIzck9GeUc1cXNwa1BfMFVjMEdaUVBOVlh6Z1g3SmVZNGVvaG0zQmMxRTFURnU4MkExX1JuXzZXeDI4bzF1b1h5M2dXNHRFM2ZOaG40TUU5VTRnWmIyaUllaUNvQ1Q2WHdyaEFvS1FoRTlOYXFSTFFhdE82b2l0b0V3?oc=5",
+   "source": "Defense Priorities",
+   "published": "2026-10-31T00:33:45+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Ukraine to get $9.4 billion in EU funding next month",
+   "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOVGl4c1JodUVVZUNEcEhNU2kwVFJ6MnVmeWtqeXdYbXppZkVBUDFpRkNvSTZzRU15N2RndEZMUVFZVGJtanZ1cFFCeE5WcXNUQzFvN3RmOUNXOFM3dHdoUUtDdWk0QkZfVS02THZRZVpIU2FhalE3YUU0MDNUa3VaOElHeDFZSV9uTllDaE9Ld21JdlBZdndINXdR0gGWAUFVX3lxTE1TUjFENzNYWjlxVC1rUG8waGl6d2trV3VCeFVzSkt5ZTF5Tklpc3o5YkVsOUNmUDdSemItdFo5UTltdWdnVjEzSkVrQnV4UnFRaGh1c05jS2twclpuY2xqQVJQamhQTzZsSnZ0OW1uNE5idjRaUmVLSFlBLXlFbUlNZnN0MnRlX3NYNDNSQ19HUzVfV1VaZw?oc=5",
+   "source": "The New Voice of Ukraine",
+   "published": "2026-10-31T00:24:00+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Jaishankar flags sanctions, energy chokepoints as risks to global oil trade at G20 meet",
+   "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQZDhTU2tobXVkRUxhb3p3Y0JqYW85LVlOeUppaHRJRHl1emdKVUhaN0NHa2cwR2dRUFpqX3VXMDJibF85eGdrU1poVGhOTVRTRzhVZlJjd3RhVmJRdUp4U3ExQUFLZ3dYbmh5c05kbmxhYkxMU0FOcnhDeF9hVGZLNlJBZGcxZWJxM2RJMm1GTHRtZ1BwN3g4b01ZWEpnX1ZPZXR1UWtYSHRncmhXblU1WlpOR2EtdVJPLUZXLU5OTXNqbDBQODJOLTBEQURGMTJYRWfSAdIBQVVfeXFMUGQ4U1NraG11ZEVMYW96d2NCamFvOS1ZTnlKaWh0SUR5dXpnSlVIWjdDR2tnMEdnUVBaal91VzAyYmxfOXhna1NaaFRoTk1UU0c4VWZSY3d0YVZiUXVKeFNxMUFBS2d3WG5oeXNOZG5sYWJMTFNBTnJ4Q3hfYVRmSzZSQWRnMWVicTNkSTJtRkx0bWdQcDd4OG9NWVhKZ19WT2V0dVFrWEh0Z3JoV25VNVpaTkdhLXVSTy1GVy1OTk1zamwwUDgyTi0wREFERjEyWEVn?oc=5",
+   "source": "Moneycontrol.com",
+   "published": "2026-10-31T00:19:21+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Gas prices are falling in Wyoming. Here’s what could keep them high",
+   "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPZEFPc1UyRE5ydWVxSWV1b2lrU3FfYTNQenBLLVd1MWJBX1pLekprLXFJb0xydzhnWWgtNFpVcXF3dV95WVNOVHY2dXNtR1lBSWhIaW1QeGllbW01ekpEVzNwOThsRVJPbUY1bEMtU19TcTZzYnJ2QmFCU0pzdkJzMGJrTHJEZ2puT04xeVRFWHM5NUdoQjR5TDZZNA?oc=5",
+   "source": "Casper Star-Tribune",
+   "published": "2026-10-30T23:30:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Oil moves higher just before midterms",
+   "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxORjVmZ29CRmVXRWxqZVZCemRqQU52SWhTeVdJSWx4YTgtenBhRFdCeUVxdk1XQ2FZT3lXMFFFZTh4OWhMUW5fQnh2VURtVmlTZlpSU09RYkh1eDFoakpsRmNfVWxXTnRiTjVwTjEyTTJzajFpRk1oLUV6bDFmOXJobW5EWFEtV2lxR0VqTVNjTVNzVDlZU1ptTTdzN1VRU3hMSWtFa0QzZ2tqakM4aEE?oc=5",
+   "source": "Oil & Gas Journal",
+   "published": "2026-10-30T23:25:38+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Jaishankar urges G20 to shield energy markets from sanctions and chokepoints",
+   "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNTks3MHpEUm5zVWh2RlozY0ZUclcxQWNOZkRWTFY3UHFJZFZMc0ZoeFg0Si16U3pyMEJsX2tleFNuczV3SWNQNWY5azlaczVOdG84NFNMWXhsNm1Wc1dUTkU4UmdtbFJqQXZYdjBGcm5fT1BHbXhuSTFlRTduOVJkbTBTS2JBTnVkakVrS3JweElwaXVrd1FpM1h6cm5hamZOM2xwX2gxOWtTbEdpeDQ1Vkg2Vmw1b2JwZVItX1d4UnlMZl9lOFJZ0gHMAUFVX3lxTFBDTldxeE16MF9GX2RZSnNMZkl4aVdEbFVKaEJBYUZ1NTE1TmUzY01OdVE2cS1RU0JtdV9mN1lscU5SUHN6NVFUOXJKNk81cHQtSE8zeDgxNnRGS1RVUGRTM1k1d3J6RmtsbVdRU05tbmxWeE9xcTdnOVpOYzd1TkdfQWRFTVVyVVdkQ3lCOGJlSUttRm1iTHJtUDNDSHJvQlhXT3c5QWp4ejR3bTZkbkZBeWpIMXFVa0J3VTVYY1gzRGlXRHZqRzgxamVFZg?oc=5",
+   "source": "India Today",
+   "published": "2026-10-30T23:16:23+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Trump Briefed on Iran Attack Options Amid Missile Attacks on Kyiv and Three Oil Refineries",
+   "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNLVcyQWpoTFptRFNBSkdNdUtaeTJsREI2bmY5cnhrbzZLZlBacWNDUUxHUFUxQzJ6QVNzd241bGZ3X1Z3NXBNOURsbk5JN1o0dHgxZ1BObUNLdlNCVjZ2VW5weDJBOENOVGVWU3I2VFNHVGNweGEwdnY1b3Y5dG9uNU82T0dFc1MwMzY1emVGZlBCLWZKaTFteFM2WWozMUxIYU9aLW80cFNsdjRwcHlMbk9DNS1oOEE?oc=5",
+   "source": "Sahi",
+   "published": "2026-10-30T23:12:38+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Europe Is Now Seriously Rethinking Its Oil Refinery Phase Down",
+   "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNVU1tWFdialI2NHJJc0pJX0dhQ2ZkQ1MyMnVGN3IySmdzTllJT05Cejk3bC1WMHp0RUpZazdqZUZKMk5XcEFvUjE3UzdNNFZDTlFkUW9EV1l1T2IzQ19nQjUycE5hNkg0SzFzeTZ5c09BLWdFTEcxWVQyRnVjYWxoZ2V0Z0ZHVkM3MmlJdjlGZmV0UG05WGc5c2pSSXZGa2dfeHl6TjM1b27SAa4BQVVfeXFMTkU5RnQwLVNVVjZjaW1aSDRLeFNIQTVhOExEVmdrVXRLbXNUUjJOMUtlOG14WHN0djJxTHoxaXY0V0lwY3ZoeFpyVUVrbWlrb3dmenlqVXRoVmxCTFhKNnczXy00NXFLQ3FoYUI3U3ZNRENYeGw3NFBnaENRMTVCTHJXTV9talF1TVBnU2JYak90N3B6M2hlejEyRWswNmphWjV2UDFzbWZQNnpLNXl3?oc=5",
+   "source": "Crude Oil Prices Today | OilPrice.com",
+   "published": "2026-10-30T23:00:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "As oil heating costs soar, expensive Mass Save plan falls short",
+   "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNampDdTZqM3J3RzNzanAtNTNDYThQZVFYVF8tdnVlUHZLRG1icFdEYzNTLVFFNElGQUJIdVVWYXZxVVktRGtDbWJ0blJWY0JkQ2lsZXFHU3JzRVlfcFVUUWJWaS1ld1hjazZMdnpadkJRcFd0dEJacV9PM3c5eXdMb1dqNWFtZmdxMzlvYkpLTDk3VHhRUnAwZzEtbEtLeWo5RkE?oc=5",
+   "source": "WCVB",
+   "published": "2026-10-30T22:43:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Sinopec Third-Quarter Profit Rises 64% on Higher Oil Prices - News and Statistics",
+   "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQZDJGZlkyb2YxRy1aYWp4VmE5cFc4SVZwZ3hPTGVTSy1XOEFlSlVEbkNWMWVSYzA0S01IZWhodFFJOG80OFNvZDhySEdKSElob1J2RjhaclBzZ0QzemhSZjFyUEpYdmRRVmJVWURGVXBHbnFrU051ZlRyVHJjMlZWam5EWQ?oc=5",
+   "source": "IndexBox",
+   "published": "2026-10-30T22:42:46+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "PetroChina Q3 Profit Rises 21.6% as Iran War Lifts Oil and Gas Prices - News and Statistics",
+   "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSUxQUzRYbkQ4NmVmQUx3WnBLblZIWVhKTUlNZ1VweTVMeTAwSFBGTFVvQmZ5a3FQR20teUdfN29uTWNVcEZ1Q3JEV2ZDcWVBSU81Q2ZuS3VRZS1IaUZrMy1TeU9mNjJPbldQVFMtRkRoRDh3QWpwS1BOeE8tZTBXekZtZlRkOU1ScFJNdkVITFpRaFBRaXlwTmNtdw?oc=5",
+   "source": "IndexBox",
+   "published": "2026-10-30T22:41:28+00:00",
+   "query": "natural gas prices"
+  },
+  {
+   "title": "Pakistan seeks Saudi energy crisis support",
+   "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPQkcyNE5Dc0R4WmFjNEc1aWlzZng0NWNOLU9EaWtZMEdrMmdiRVZ5STVvWGlBXzEwTkZpMHA3c2xidlR2WU44RWNYNzhIcnh6Ykc1dktzaVRmSVZQc29lVXFiX2JFY2g0NVEyakxpenN2eUs1S1BjTzFiTFU1YmJUVDJGdkE5UdIBjgFBVV95cUxNZWRPQjJUMko4a1hUNVowSmdROUh5alk2V29oTG9oUVVnNlh6RzRFbkF6WHJJbEIxMXNHcWdLajl2b2hCOVBYd0sxai1UZ0JYQkRZN0xJalhPNnpNTmhVX0JYclZ5c3J3by01VWo2WnNyQlV1X01fWmRjWjBmTFI0Y2pNc3QzSkdfXzh5OWxn?oc=5",
+   "source": "The Express Tribune",
+   "published": "2026-10-30T22:18:45+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Gasoline Up 34% and Heating Oil Up 74% as Voters Head to the Midterms",
+   "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxObTR3Zko1ZTF2cUdQektITkFZclRMRDlRbzFQNEd2clhIcUZud25rcmFhdHQweUx3VTlySm1hcnJ2SmNLS2dHZEtvdnhGVWNMLUhpRUdUVlJFMG8taFVrM2I3WmxseEFvZDJ5N0JGZTNqWlF4b204dzViYjFjUnJuUVRYUzNRLUFrdmtlUm5nbl9UTHhHc29vdVhUYnVWbXppbUowNEFCLXhlZDFVNUxKVdIBtgFBVV95cUxPeFE1LTRPdDZRY3BGeWpoNVVmU3lTQWw5SzBvQzZ3VXpVd3hXd0l4dHJNUFdRUV9MYURMbl9rWlJzSU5tV3hQN0xnOHkzYmxFd2FfUkQwY0lrMk9HbWhOeG5yV1l0QnRhN2xfUFhiUnFoampCTFNzX1AydWhYdGJEZ2VqeXFYVXVaRkpONE1fQWp3X0VGMDY0dGs1RHNtUWJpbC1qNWhmM0RUOC1fWTdybVc1VEpQZw?oc=5",
+   "source": "Crude Oil Prices Today | OilPrice.com",
+   "published": "2026-10-30T22:00:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Swift Current Energy names Scott Koziar Chief Development Officer to lead utility-scale clean energy portfolio expansion",
+   "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9NMVZHUFFJaElGTjI4RUxsX1BQZXBmOXNwTjAtbkJUMDQyWUJHbXNaYjRGX1psVHRsQ0FUMjZEak55MVFzVGNKZ2lDU3JGVG11ZURZbklISDlXX09wWTJFYzhhSC1CblRYeFhRYW9mM0dLLVJi?oc=5",
+   "source": "Energies Media",
+   "published": "2026-10-30T21:45:29+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Banks see elevated oil prices extending into 2027 as supply risks deepen",
+   "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOWGFBTi1Nbi1vRGNWNU9UYzlDZEdiZkhzN2NUT2JsQjhXNDlwZFMzN2hEa0hUYzhUbWNnQlNYZWRzRktsMXg1bVRkUzA2WVJ2MVRWUVROdlV5WGFzajVGeXkwUlVuUzc5VTc0ZWZHdG5iazAweEpxYlFJa2NEaHEyY2MtalNTaXBFdHJILS0xQzNUSHhUM3pTamZTQ0lJTTktQS1KMQ?oc=5",
+   "source": "Oil & Gas 360",
+   "published": "2026-10-30T21:45:25+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Boeing CEO Says High Oil Prices Could Actually Boost Jet Orders — Here's Why",
+   "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOaWlDRnJOdngtNWlYZ0NnTEJOVUlESV9FaWFxTG15b1FNb2ZESm0tVW1EWVhQa0NHQl9QbWFPbW5FbGRabW1BNm9PSENFeW15cDNJZTZBQ1hRSzcyWTFxUXZ2TU05N1Q5YW1jRWo3Zk5NdjNicnl4Z0JRdmFVTHNaSldiYUdWZ1VF?oc=5",
+   "source": "Yahoo Finance",
+   "published": "2026-10-30T21:30:07+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "As gas prices soar, American oil companies report massive profit gains",
+   "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQQmtUX3dDcGZocnhzLTQzaUtuYld6ZEo2R281WXd3X3VQMnE3TXpmOWVFcDdQWjhOaURodjVmdGZLUXB5WC1fang0YWVaSkRKZmQ0ZHJYSmx3b2tWYUdrcjhBNGdBcWVPVVRwejlaTmY1X0x0MjhpSVpLazFXUG93SFpSd2ZmRTFUYWFILU9xWFM0MlU?oc=5",
+   "source": "Straight Arrow",
+   "published": "2026-10-30T21:11:58+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Exxon, Chevron Earnings Propelled by War-Driven Refining Surge",
+   "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQYUM3WnRpV01LTUwxa2p6dHNLQkMwbUVDTzdMXy1fWEY4UGlsMG5VTnlmWjJuZWJFWk1rdTNiQTdaY1g0NFh0OGQySk1TalluTzQ1ODZGWE5lX3gwZ184UGV0Y2l5SHVidXYxSUhNb1JueTJsaUNGTnNIbXNqNzgxams1ajRlblMzM1pCWmJ0N2Y2ajRhVXc?oc=5",
+   "source": "EnergyNow",
+   "published": "2026-10-30T21:01:00+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Big oil’s profits soar as Iran War keeps drivers paying more at the pump",
+   "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNSW43cENuUkJLTG9QNFFmNTU2LU84LTZoTHREUERVNDJwUFFnbzF0QkxOVndZZGRLVjd1TVJiT3VxR1h2SjZvbzl6S1VMWDRnQkdHb3g3cnBmMHFGREVwcVJlUkhPdXI2MnpXSWV6cFAxZlp4QTBLalF6Z3U3X2puX3VEQUFnYTJfRHJPMUNJSEZSZE9QQmlpUEpCaUlUcEpVMDd6WXluTWo1QUxtNHV1X0tDRmJnZlk?oc=5",
+   "source": "Scripps News",
+   "published": "2026-10-30T20:40:42+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Fuel trader Atlas Oil accused in US court filing of mixing cyanide-releasing compound into gasoline",
+   "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQOUlfMzJISzkzU0hibWZaVXRQUmdUbFdNTlBkSXhMYlJIbkQySkdIY0FzeGFVWXZkZ3dJT0U3TlpWMGc5OXNnM0J2UG9QclVSQ0RDWEVlNWJCMEFsZ2xYc2JVeGlZUWhGSGVid3JhOG9VNHNaZ0g0VWVQMnVfd2wzR3ZaT003VnR4S1M1VlBNNzNORlJ6VS1YdzVwVC1ES2M5RDNtaWVMa3FoWUxXT2ZKQ3JVaVZ5dHN4Yy11Q3JiMEFGM1VPTHh6Vjdla1E?oc=5",
+   "source": "Reuters",
+   "published": "2026-10-30T20:34:17+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Hongli Group Pursues Acquisition Of 20% Stake In Xell Energy",
+   "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPQU5HM00yRUxpU1FaRmd6TTFneE0xSEVrZDFfWUVJb01QZHNvREJDZTF1V0pjTG5qanBWNjRKRm1aNlZBT042Y2Y5MTRnbk5yU3k2N3d3RWpfYWUySjhDQlB0dWZUX2ZVcl85X2VhT2VlYXcyU3J6djlvU3cxeTB5RVJFM004Zw?oc=5",
+   "source": "Pulse 2.0",
+   "published": "2026-10-30T20:32:44+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Oil price check-in: Why there's a 'line of sight' for lower diesel prices",
+   "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQWTl3MjBuR3M0Q05NeUFSa3k3QjF5Z1YwSFd6YlN4QzR1UWVRZGxuVktZOUZuZUVvMWJaM3ZEZVNhTTVaYkdsYU14NGNmTTVjVTY1Qlp2dkczaTFTQ0M3MGFDRndjNFR3NjhieXEtSlpuX1E1aE1wdS1xdDlnYWUwcDJjV19fMTNra2Q1Z3Z5STk1RUJWcUVJLUV4a0FFeWxSclFWRE0yalRqanAtSmZMc1hvbk5RRW8?oc=5",
+   "source": "Yahoo Finance",
+   "published": "2026-10-30T20:28:51+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Oil Prices Rise as Middle East, Ukraine-Russia Conflict Fuel Supply Worries",
+   "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPUnhpZVZHQUliUnJIQUJWb3JmbVl6VV9GZ3NJN0M3X0EzZU9pa2N4SEcybGNlakZkcmxyeVNqV0E5LWRxTU1VZUM4Uk9TdGZTS0RJLU1CZ1JVVFBlM0pTcWFPd2U0b1RFTkVyV2oxSzNwZzYzMjBwVmRtbUFvWUowS1RPSEQ3eE1Qa2ZQQVJ5SExsbzVXQTQtNlZYRC1Bbnh2YmpnZ2VGaHZLQlJDRWJRZEZOU2VCZ1hPcENQcTUtYw?oc=5",
+   "source": "WSJ",
+   "published": "2026-10-30T20:19:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Pemex Posts $573 Million Loss Even as Oil Prices Have Surged",
+   "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQcGZySzhfRGtvR1pwVHc4dnkzRUJPNVNMLUtfNml1bGxlMDBmWW1XaUFndjJxRVVEenlpa2JmMWJuaE80MDJhZkh0REhCUE5SVU1sYklqN1RnQlpCZVBTRWp4OWMzcjVMczZJS0lacl9aSXZKUlpObjd0ZndpMnc4R2EyTXJ6WVFzTUFtRHIzVnhnY2pXaVZFYUtoWlI5cGptb0RjMGszM09xYTBjUzNJ?oc=5",
+   "source": "Bloomberg.com",
+   "published": "2026-10-30T20:13:50+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Gas Prices Are High Now, but for Many Americans They Were Even Higher in the Past",
+   "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxNRHJyXzdxSVhPRXVwYVdQZHhMZXhyeThlOUZNYVVaM2FYTmJEY1ZxcXB1Mmk1YmNBZEpsMXBfSGVDTU5aZWhNLWZNUWg1c0Fqd1E1ZGEwamNhQUJTSmx5ZnNoM0pPNTBPejU2S3JZSEtzbk85ampYbXZnZlVNQXN3ZldtMW1FMTNtQnpHc0JFYlB4cFZZdW03RDJKYnN6ckxOaXNNQU1aeWtYWU8yQWIybURFdlphem84Tjc4VnhmVzBpV2Nra19IYnJ5TTA?oc=5",
+   "source": "Pew Research Center",
+   "published": "2026-10-30T20:04:19+00:00",
+   "query": "natural gas prices"
+  },
+  {
+   "title": "UAE fuel prices out today: How much will petrol rise in November?",
+   "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNeVd6U3dDNnBhOVpXQ1BmQmFDcDJjaUdWVDZxTG1hcWh1QnpnYlRIbmpmWVFsc2xPT0VDMUFtcGhJR0FiLXV0LVdSWWMtam1URkNkZ04tZGQxRHQwVGphUmtIWGZ6amdONE5YTlVrRnBnYzU5TTZxV3VSMmo0ZTFzc1JGeDhoeThPTjRjdXZQYXFaY3JwT244bU5sM0NVZ3o4UVVjbDRKOXRucGlzbGVBZEcxZw?oc=5",
+   "source": "Gulf News",
+   "published": "2026-10-30T20:01:00+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Nat-Gas Prices Fall as US Weather Remains Warm",
+   "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNUHdIdDRYajdFaUtGSWlRX0QyZy1xbXZmOWV3M3FmWHpjbnRfX3BNSnFvbjVNMlhlczczcC1nbjNxMDg0aTVTaFRXUXhUTDQwNDBHTHNHcXp4MF9zRXpzLWhQMjRyWFViM3NzeDY1bGhaLVo5eDg5UGhSLURZOGxXN3BfVk1jQ3dzSnBHd2VBNmxCM284?oc=5",
+   "source": "Barchart.com",
+   "published": "2026-10-30T19:48:01+00:00",
+   "query": "natural gas prices"
+  },
+  {
+   "title": "Crude Oil Prices Rally as Concerns Continue About Possible Post-Election US Attack on Iran",
+   "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQeUNFUTBmNmdKQjk2SzBrZWJPYTE1TEVHZXdxVEhzcE9WaDF1SUJnS0wybmd6aXh2aGN4Rzk5UXpfOHJPdnR3UFBaaEowdW1jYjVqLURQR09rTGw4ZjhYMXBSb29Oa1dLTFVqZWJwdFZBQnFMci1BXzdWU3lkWmZEdUZuR3BOSUItVGNfV1NvcnN3cnNxWTFrZzI5QU0ydjMyOVhJNlc4aGJ5Ni1MWGkyWTV2MWdCTEdSbzNLMXVJU3pvallQbkRrS1VOWTFfWFU?oc=5",
+   "source": "Barchart.com",
+   "published": "2026-10-30T19:36:10+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "ATI Q3 deep dive: jet engine and specialty energy demand drive margin expansion",
+   "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxObW9abDA5RldncERLTzJDQjBwaFNNY2d6VlJqd1g1c00xMDhQMU5SLXBrbXBtQVZjUEtyeVF0NHhsb3dJTDNQUGlrQ2UyN29uQU5WSS1VWUNGYVAxRXdidHBTRWV4WUt5UEpYOVVHVGhubEJqZWo0MHBCLVF2VEZ2ekl1NVpWOTlLcHZmT2FCdElsZlZmUG16NE5KT3htMElyR3B6dzBmU0YyTjE3dXloYkk4SWNlQm5VODFnMDNTcXhqSnA0UmNDU1VlWVVpOUZtcDljblB3?oc=5",
+   "source": "StockStory",
+   "published": "2026-10-30T19:28:43+00:00",
+   "query": "energy markets"
+  }
+ ],
+ "news_error": null,
+ "notes": {
+  "nat_gas_imports": "Total U.S. natural gas imports (EIA series NG.N9100US2.M, MMCF) are fetched live by the page with its own EIA key plumbing; they are not in this file because this builder uses only no-key sources."
+ }
+}

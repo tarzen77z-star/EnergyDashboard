@@ -134,3 +134,16 @@ MIT — free to use, modify, and distribute.
 - [CFTC](https://www.cftc.gov/) — public Commitments of Traders data
 - [Chart.js](https://www.chartjs.org/) — charting library
 - [IBM Plex fonts](https://www.ibm.com/plex/) — typography
+
+## Scheduled snapshot (data/derived.json)
+
+A daily job runs `scripts/build_derived.py` (stdlib Python only, no API
+keys) and publishes `data/derived.json`:
+
+- CFTC Commitments of Traders (Socrata dataset 6dca-aqww, public): latest +
+  weekly history for WTI, natural gas, RBOB, ULSD (large speculators, net).
+- News history: public Google News RSS searches, deduped by URL.
+- The page reads derived.json for COT history, latest-COT fallback (if the
+  live Socrata fetch fails), and news history. Live EIA/Finnhub fetches are
+  unchanged. Total U.S. natural gas imports (EIA NG.N9100US2.M) are fetched
+  live by the page, not by the builder, because EIA needs a key.

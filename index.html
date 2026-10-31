@@ -133,7 +133,7 @@ footer b{color:var(--text2)}
 
   <section id="news-sec">
     <div class="sec-head"><span class="kicker">News</span><h2>What moves prices</h2><p>Latest company headlines for the majors (Finnhub). OPEC, EIA-print, outage, and weather headlines land here as the majors report them.</p></div>
-    <div id="news-list"></div>
+    <div id="news-list"></div><div id="news-history" style="margin-top:14px"></div>
   </section>
 
   <section id="research-sec">
@@ -300,10 +300,10 @@ function stockCard(lbl,rows,unit,yaIdx,note,div){
 async function loadStorage(){
   const grid=$('storage-grid');let html='';
   try{
-    const [cs60,ns60,cp,ngp,lngM,lngA,pipe,gs60,ds60]=await Promise.all([
+    const [cs60,ns60,cp,ngp,lngM,lngA,pipe,gs60,ds60,imp]=await Promise.all([
       eiaS('PET.WCESTUS1.W',60),eiaS('NG.NW2_EPG0_SWO_R48_BCF.W',60),eiaS('PET.WCRFPUS2.W',3),
       eiaS('NG.N9070US2.M',3),
-      eiaS('NG.N9133US2.M',3),eiaS('NG.N9133US2.A',3),eiaS('NG.N9102US2.M',3),eiaS('PET.WGTSTUS1.W',60),eiaS('PET.WDISTUS1.W',60)
+      eiaS('NG.N9133US2.M',3),eiaS('NG.N9133US2.A',3),eiaS('NG.N9102US2.M',3),eiaS('PET.WGTSTUS1.W',60),eiaS('PET.WDISTUS1.W',60),eiaS('NG.N9100US2.M',3)
     ]);
     html+=stockCard('U.S. commercial crude stocks',cs60,'M bbl',52,'EIA weekly petroleum status. Excludes the Strategic Petroleum Reserve.',1000);
     html+=stockCard('U.S. gasoline stocks',gs60,'M bbl',52,'EIA weekly petroleum status.',1000);
@@ -318,7 +318,7 @@ async function loadStorage(){
     const la=latest(lngA),lap=prev(lngA);
     html+=la?cardHTML('LNG exports (annual)',f2(la.v/1000,0)+' Bcf',chgCls(la.v,lap?lap.v:null),chgTxt(la.v,lap?lap.v:null),'Year '+(la.period||'')+' · EIA annual'):failCard('LNG exports (annual)','EIA annual series did not return data.');
     const pv=latest(pipe),pp=prev(pipe);
-    html+=pv?cardHTML('Pipeline exports',f2(pv.v/1000,1)+' Bcf',chgCls(pv.v,pp?pp.v:null),chgTxt(pv.v,pp?pp.v:null),'Month '+(pv.period||'')+' · EIA monthly'):failCard('Pipeline exports','EIA monthly series did not return data.');
+    html+=pv?cardHTML('Pipeline exports',f2(pv.v/1000,1)+' Bcf',chgCls(pv.v,pp?pp.v:null),chgTxt(pv.v,pp?pp.v:null),'Month '+(pv.period||'')+' · EIA monthly'):failCard('Pipeline exports','EIA monthly series did not return data.'); const iv=latest(imp),ip=prev(imp); html+=iv?cardHTML('Total nat-gas imports',f2(iv.v/1000,1)+' Bcf',chgCls(iv.v,ip?ip.v:null),chgTxt(iv.v,ip?ip.v:null),'Month '+(iv.period||'')+' · EIA monthly (MMcf ÷ 1000)'):failCard('Total nat-gas imports','EIA monthly series did not return data.');
   }catch(e){html+=failCard('Storage & production','Live EIA data failed to load. Please refresh.');}
   grid.innerHTML=html;
 }
@@ -345,8 +345,15 @@ async function loadCOT(){
     });
     if(!found)throw new Error('no COT rows');
     grid.innerHTML=html;pill('pill-cftc',true);
-  }catch(e){grid.innerHTML='<div class="fail">CFTC positioning unavailable — the public COT feed did not return data.</div>';pill('pill-cftc',false);}
+  }catch(e){ const dj=await getDerived(); if(dj&&dj.cot&&dj.cot.markets){ let h2='',found2=0; Object.keys(COTMAP).forEach(code=>{ const m=dj.cot.markets[COTMAP[code][0]]; if(!m) return; found2++; const net=m.net; h2+=cardHTML(COTMAP[code][0]+' — funds net',(net>0?'+':'')+net.toLocaleString('en-US')+' contracts',net>=0?'up':'dn',(m.week_change!=null?((m.week_change>0?'+':'')+m.week_change.toLocaleString('en-US')+' on the week'):'--'),COTMAP[code][1]+' · report '+m.report_date+' · open interest '+(m.open_interest||0).toLocaleString('en-US')+' · scheduled snapshot','Large speculators (non-commercial): '+m.long.toLocaleString('en-US')+' long / '+m.short.toLocaleString('en-US')+' short ('+(m.pct_long??'--')+'% / '+(m.pct_short??'--')+'% of open interest). Positions as of Tuesday, released Friday.'); }); if(found2){grid.innerHTML=h2;pill('pill-cftc',true);} else {grid.innerHTML='<div class="fail">CFTC positioning unavailable — the public COT feed did not return data.</div>';pill('pill-cftc',false);} } else {grid.innerHTML='<div class="fail">CFTC positioning unavailable — the public COT feed did not return data.</div>';pill('pill-cftc',false);} }
 }
+
+// ---------- scheduled snapshot (data/derived.json) ----------
+let DERIVED_P=null;
+function getDerived(){ if(!DERIVED_P) DERIVED_P=fetch('data/derived.json').then(r=>{if(!r.ok)throw 0;return r.json();}).catch(()=>null); return DERIVED_P; }
+async function loadCOTHist(){ const grid=$('cot-grid'); if(!grid) return; const dj=await getDerived(); if(!dj||!dj.cot||!dj.cot.markets){ grid.insertAdjacentHTML('afterend','<div class="fail">COT history unavailable in snapshot.</div>'); return; } let h='<div class="cot-hist"><b>Funds nets \u2014 recent weeks (newest first)</b>'; Object.keys(COTMAP).forEach(code=>{ const m=dj.cot.markets[COTMAP[code][0]]; if(!m||!m.history) return; const nets=m.history.slice(0,8).map(p=>(p.net>0?'+':'')+p.net.toLocaleString('en-US')).join(' \u00b7 '); h+='<div>'+COTMAP[code][0]+': '+nets+'</div>'; }); h+='</div>'; grid.insertAdjacentHTML('afterend',h); }
+async function loadNewsHist(){ const box=$('news-history'); if(!box) return; const dj=await getDerived(); if(!dj||!dj.news||!dj.news.length){ box.innerHTML='<div class="fail">News history unavailable in snapshot.</div>'; return; } let h='<div class="sec-head" style="margin-top:6px"><span class="kicker">Archive</span><h2 style="font-size:17px">Earlier headlines \u2014 scheduled snapshot</h2></div>'; h+=dj.news.map(a=>`<div class="news-item"><div class="src">${esc(a.source||'Wire')} \u00b7 ${esc((a.published||'').slice(0,10))}</div>${a.url?`<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.title)}</a>`:`<b>${esc(a.title)}</b>`}</div>`).join(''); box.innerHTML=h; }
+
 // ---------- equities (11 majors, eager, per-symbol resilient) ----------
 const MAJORS=[{s:'XOM',n:'ExxonMobil'},{s:'CVX',n:'Chevron'},{s:'COP',n:'ConocoPhillips'},{s:'SLB',n:'SLB'},{s:'OXY',n:'Occidental'},{s:'EOG',n:'EOG Resources'},{s:'DVN',n:'Devon Energy'},{s:'HAL',n:'Halliburton'},{s:'BKR',n:'Baker Hughes'},{s:'MPC',n:'Marathon Petroleum'},{s:'PSX',n:'Phillips 66'}];
 async function loadEquities(){
@@ -414,7 +421,7 @@ function buildTakeaway(){
 (async function init(){
   try{await loadTicker();}catch(e){}
   try{await loadTier1();}catch(e){}
-  await Promise.allSettled([loadHistory(),loadSpreads(),loadStorage(),loadCOT(),loadEquities(),loadNews()]);
+  await Promise.allSettled([loadHistory(),loadSpreads(),loadStorage(),loadCOT(),loadEquities(),loadNews(),loadCOTHist(),loadNewsHist()]);
   try{buildTakeaway();}catch(e){}
 })();
 </script>
