@@ -107,10 +107,15 @@ footer b{color:var(--text2)}
   </section>
 
   <section id="history-sec">
-    <div class="sec-head"><span class="kicker">History</span><h2>Price history</h2><p>Weekly and daily spot history — the shape of the market. EIA discontinued its futures contract series in April 2024, so no futures curve is shown; full calendar strips need CME monthly settlements (phase 2).</p></div>
+    <div class="sec-head"><span class="kicker">History</span><h2>Price history</h2><p>Weekly and daily spot history — the shape of the market. EIA discontinued its futures contract series in April 2024, so no EIA futures curve is shown; calendar strips from CME monthly settlements are in the strips section below.</p></div>
     <div class="chart-wrap"><h3>Crude history — WTI &amp; Brent, weekly $/bbl</h3><canvas id="crude-chart"></canvas></div>
     <div class="chart-wrap"><h3>Henry Hub history — daily $/MMBtu</h3><canvas id="ng-chart"></canvas></div>
     <div class="chart-wrap"><h3>Retail gasoline — U.S. average, weekly $/gal</h3><canvas id="gas-chart"></canvas></div>
+  </section>
+
+  <section id="strips-sec">
+    <div class="sec-head"><span class="kicker">CME · Monthly settlements</span><h2>Calendar strips &amp; time spreads</h2><p>Calendar strips are the mean of the 12 monthly settlements for a calendar year — only full years are shown, never interpolated. Time spreads come from the same settlements. Read daily from CME's public settlement pages (no sign-in). Brent has no public settlement table, so it stays on the existing spot proxy.</p></div>
+    <div class="grid" id="strips-grid"></div>
   </section>
 
   <section id="spreads-sec">
@@ -354,6 +359,28 @@ function getDerived(){ if(!DERIVED_P) DERIVED_P=fetch('data/derived.json').then(
 async function loadCOTHist(){ const grid=$('cot-grid'); if(!grid) return; const dj=await getDerived(); if(!dj||!dj.cot||!dj.cot.markets){ grid.insertAdjacentHTML('afterend','<div class="fail">COT history unavailable in snapshot.</div>'); return; } let h='<div class="cot-hist"><b>Funds nets \u2014 recent weeks (newest first)</b>'; Object.keys(COTMAP).forEach(code=>{ const m=dj.cot.markets[COTMAP[code][0]]; if(!m||!m.history) return; const nets=m.history.slice(0,8).map(p=>(p.net>0?'+':'')+p.net.toLocaleString('en-US')).join(' \u00b7 '); h+='<div>'+COTMAP[code][0]+': '+nets+'</div>'; }); h+='</div>'; grid.insertAdjacentHTML('afterend',h); }
 async function loadNewsHist(){ const box=$('news-history'); if(!box) return; const dj=await getDerived(); if(!dj||!dj.news||!dj.news.length){ box.innerHTML='<div class="fail">News history unavailable in snapshot.</div>'; return; } let h='<div class="sec-head" style="margin-top:6px"><span class="kicker">Archive</span><h2 style="font-size:17px">Earlier headlines \u2014 scheduled snapshot</h2></div>'; h+=dj.news.map(a=>`<div class="news-item"><div class="src">${esc(a.source||'Wire')} \u00b7 ${esc((a.published||'').slice(0,10))}</div>${a.url?`<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.title)}</a>`:`<b>${esc(a.title)}</b>`}</div>`).join(''); box.innerHTML=h; }
 
+// ---------- strips (data/strips.json, CME monthly settlements, daily) ----------
+let STRIPS_P=null;
+function getStrips(){ if(!STRIPS_P) STRIPS_P=fetch('data/strips.json').then(r=>{if(!r.ok)throw 0;return r.json();}).catch(()=>null); return STRIPS_P; }
+async function loadStrips(){
+  const grid=$('strips-grid'); if(!grid) return;
+  const dj=await getStrips();
+  if(!dj||!dj.commodities){ grid.innerHTML='<div class="fail">Strips unavailable — the scheduled strips snapshot did not return data.</div>'; return; }
+  const ORDER=[['WTI','WTI crude'],['RBOB','RBOB gasoline'],['ULSD','NY Harbor ULSD heating oil'],['NG','Henry Hub natural gas']];
+  let html='';
+  ORDER.forEach(([code,label])=>{
+    const m=dj.commodities[code];
+    if(!m){ html+=failCard(label+' — calendar strips','Strips data unavailable for this commodity.'); return; }
+    const dec=(m.decimals!=null?m.decimals:2);
+    const fmt=v=>(v!=null?('$'+Number(v).toFixed(dec)):'--');
+    const strips=(m.strips||[]).map(s=>`Cal-${s.year} ${fmt(s.value)} (${s.months} months)`).join('<br>')||'No full calendar year in table';
+    const spreads=(m.spreads||[]).map(s=>`${esc(s.label)} ${fmt(s.value)}`).join('<br>')||'Spreads unavailable';
+    html+=`<div class="card"><div class="lbl">${esc(label)} — calendar strips</div><div class="val">${strips}</div><div class="meta">Trade date ${esc(dj.trade_date||'--')} · CME monthly settlements · ${esc(m.unit||'')}</div><div class="note">Time spreads:<br>${spreads}.</div></div>`;
+  });
+  html+=`<div class="card"><div class="lbl">Brent crude</div><div class="val">Spot proxy</div><div class="note">Brent monthly settlements are not publicly available (ICE shows last prices only; its Report Center end-of-day reports are paid), so Brent stays on the existing spot proxy.</div></div>`;
+  grid.innerHTML=html;
+}
+
 // ---------- equities (11 majors, eager, per-symbol resilient) ----------
 const MAJORS=[{s:'XOM',n:'ExxonMobil'},{s:'CVX',n:'Chevron'},{s:'COP',n:'ConocoPhillips'},{s:'SLB',n:'SLB'},{s:'OXY',n:'Occidental'},{s:'EOG',n:'EOG Resources'},{s:'DVN',n:'Devon Energy'},{s:'HAL',n:'Halliburton'},{s:'BKR',n:'Baker Hughes'},{s:'MPC',n:'Marathon Petroleum'},{s:'PSX',n:'Phillips 66'}];
 async function loadEquities(){
@@ -421,7 +448,7 @@ function buildTakeaway(){
 (async function init(){
   try{await loadTicker();}catch(e){}
   try{await loadTier1();}catch(e){}
-  await Promise.allSettled([loadHistory(),loadSpreads(),loadStorage(),loadCOT(),loadEquities(),loadNews(),loadCOTHist(),loadNewsHist()]);
+  await Promise.allSettled([loadHistory(),loadSpreads(),loadStorage(),loadCOT(),loadEquities(),loadNews(),loadCOTHist(),loadNewsHist(),loadStrips()]);
   try{buildTakeaway();}catch(e){}
 })();
 </script>
