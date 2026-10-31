@@ -79,6 +79,7 @@ section{margin-top:30px}
 .news-item .src{font-family:var(--mono);font-size:11px;color:var(--text3)}
 .news-item a{color:var(--text);font-weight:500}
 .news-item a:hover{color:var(--accent2)}
+.news-item .note{color:var(--text3);font-size:12px;margin-top:6px;line-height:1.45}
 .res-grid{display:grid;grid-template-columns:1fr;gap:10px}
 @media(min-width:640px){.res-grid{grid-template-columns:1fr 1fr}}
 .res-card{display:block;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:13px 15px;color:var(--text)}
@@ -150,6 +151,11 @@ footer b{color:var(--text2)}
   <section id="news-sec">
     <div class="sec-head"><span class="kicker">News</span><h2>What moves prices</h2><p>Latest company headlines for the majors (Finnhub). OPEC, EIA-print, outage, and weather headlines land here as the majors report them.</p></div>
     <div id="news-list"></div><div id="news-history" style="margin-top:14px"></div>
+  </section>
+
+  <section id="geo-sec">
+    <div class="sec-head"><span class="kicker">Geopolitics · Supply risk</span><h2>Geopolitics and supply risk</h2><p>Stories from the page's own news feeds that could move crude: Hormuz, Iran, OPEC, sanctions, and supply disruptions. About 20 million barrels a day — roughly a fifth of global petroleum liquids use — passed through the Strait of Hormuz in 2024 (EIA), which is why a threat there moves Brent first.</p></div>
+    <div id="geo-list"></div>
   </section>
 
   <section id="research-sec">
@@ -444,6 +450,50 @@ async function loadNews(){
     list.innerHTML=items.map(a=>`<div class="news-item"><div class="src">${esc(a.sym)} · ${esc(a.source)} · ${a.dt?new Date(a.dt*1000).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : ''}</div>${a.url?`<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.headline)}</a>`:`<b>${esc(a.headline)}</b>`}</div>`).join('');
   }catch(e){list.innerHTML='<div class="fail">News unavailable — the Finnhub company-news feed did not return data.</div>';}
 }
+// ---------- geopolitics & supply risk (same feeds, keyword-filtered) ----------
+const GEO_LABELS=[
+  ['hormuz','Strait of Hormuz transit risk — watch the Brent premium'],
+  ['iran','Iran supply / sanctions risk — watch crude spreads'],
+  ['opec','OPEC supply signal — watch the crude curve'],
+  ['saudi','Saudi supply signal — watch the crude curve'],
+  ['venezuela','Venezuela supply risk — watch heavy crude'],
+  ['libya','Libya supply risk — watch light crude'],
+  ['russia','Russian oil supply risk — watch crude spreads'],
+  ['sanction','Sanctions risk — watch crude supply'],
+  ['middle east','Middle East supply risk — watch crude spreads'],
+  ['gulf','Gulf supply risk — watch crude spreads'],
+  ['disruption','Supply disruption risk — watch crude spreads'],
+  ['outage','Supply disruption risk — watch crude spreads'],
+  ['blockade','Supply disruption risk — watch crude spreads'],
+  ['closure','Supply disruption risk — watch crude spreads'],
+  ['shutdown','Supply disruption risk — watch crude spreads'],
+];
+function geoLabel(headline){
+  const h=(headline||'').toLowerCase();
+  for(const [kw,label] of GEO_LABELS){ if(h.includes(kw)) return label; }
+  return '';
+}
+async function loadGeo(){
+  const box=$('geo-list'); if(!box) return;
+  try{
+    const today=new Date(),ago=new Date(Date.now()-7*86400000);
+    const fmt=d=>d.toISOString().slice(0,10);
+    const res=await Promise.all(['XOM','CVX','COP'].map(s=>fhGet('/company-news?symbol='+s+'&from='+fmt(ago)+'&to='+fmt(today)).catch(()=>null)));
+    let items=[];
+    res.forEach((arr,sym)=>{if(Array.isArray(arr))arr.forEach(a=>{if(a&&a.headline)items.push({dt:(a.datetime||0)*1000,headline:a.headline,source:a.source||sym,url:a.url||''});});});
+    try{
+      const dj=await getDerived();
+      if(dj&&dj.news) dj.news.forEach(a=>{ if(a&&a.title) items.push({dt:Date.parse(a.published||'')||0,headline:a.title,source:a.source||'Wire',url:a.url||''}); });
+    }catch(e){}
+    items=items.filter(a=>geoLabel(a.headline));
+    items.sort((a,b)=>b.dt-a.dt);
+    const seen=new Set();
+    items=items.filter(a=>{const key=a.url?('u:'+a.url):('t:'+a.headline.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim());if(seen.has(key))return false;seen.add(key);return true;});
+    items=items.slice(0,6);
+    if(!items.length){box.innerHTML='<div class="fail">No geopolitics supply-risk items in the current feeds.</div>';return;}
+    box.innerHTML=items.map(a=>`<div class="news-item"><div class="src">${esc(a.source)} · ${a.dt?new Date(a.dt).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : ''}</div>${a.url?`<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.headline)}</a>`:`<b>${esc(a.headline)}</b>`}<div class="note">${esc(geoLabel(a.headline))}</div></div>`).join('');
+  }catch(e){box.innerHTML='<div class="fail">No geopolitics supply-risk items in the current feeds.</div>';}
+}
 // ---------- takeaway ----------
 function buildTakeaway(){
   const parts=[];
@@ -625,6 +675,16 @@ function newsText(){
   if(lines.length<=1)return '';
   return lines.join('\n');
 }
+function geoText(){
+  const sec=$('geo-sec');if(!sec)return '';
+  const lines=['Geopolitics and supply risk'];
+  sec.querySelectorAll('.news-item').forEach(it=>{
+    const t=it.innerText.replace(/\s+/g,' ').trim();
+    if(t)lines.push(t);
+  });
+  if(lines.length<=1)return '';
+  return lines.join('\n');
+}
 function addCopyButton(headEl,getText){
   if(!headEl)return;
   const b=document.createElement('button');
@@ -646,6 +706,7 @@ function initCopyButtons(){
   addCopyButton(heads('strips-sec')[0],stripsTSV);
   addCopyButton(heads('equities-sec')[0],()=>cardsToTSV(document.querySelectorAll('#eq-grid .card'),['Company','Price','Day change','Fundamentals']));
   addCopyButton(heads('news-sec')[0],newsText);
+  addCopyButton(heads('geo-sec')[0],geoText);
 }
 // ---------- init ----------
 (async function init(){
@@ -657,7 +718,7 @@ function initCopyButtons(){
   try{initCopyButtons();}catch(e){}
   try{await loadTicker();}catch(e){}
   try{await loadTier1();}catch(e){}
-  await Promise.allSettled([loadHistory(),loadSpreads(),loadStorage(),loadCOT(),loadEquities(),loadNews(),loadCOTHist(),loadNewsHist(),loadStrips()]);
+  await Promise.allSettled([loadHistory(),loadSpreads(),loadStorage(),loadCOT(),loadEquities(),loadNews(),loadCOTHist(),loadNewsHist(),loadStrips(),loadGeo()]);
   try{buildTakeaway();}catch(e){}
 })();
 </script>
