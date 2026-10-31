@@ -327,7 +327,7 @@ const COTMAP={'067651':['WTI crude','NYMEX WTI'], '023651':['Natural gas','NYMEX
 async function loadCOT(){
   const grid=$('cot-grid');
   try{
-    const q=new URLSearchParams({$select:'report_date_as_yyyy_mm_dd,cftc_contract_market_code,market_and_exchange_names,noncommercial_positions_long_all,noncommercial_positions_short_all,change_in_noncomm_long_all,change_in_noncomm_short_all,open_interest_all,pct_of_oi_noncomm_long_all,pct_of_oi_noncomm_short_all',$where:"cftc_contract_market_code in('067651','023651','111659','022651')",$order:'report_date_as_yyyy_mm_dd DESC',$limit:'200'});
+    const q=new URLSearchParams({$select:'report_date_as_yyyy_mm_dd,cftc_contract_market_code,market_and_exchange_names,noncomm_positions_long_all,noncomm_positions_short_all,change_in_noncomm_long_all,change_in_noncomm_short_all,open_interest_all,pct_of_oi_noncomm_long_all,pct_of_oi_noncomm_short_all',$where:"cftc_contract_market_code in('067651','023651','111659','022651')",$order:'report_date_as_yyyy_mm_dd DESC',$limit:'200'});
     const rows=await fetch('https://publicreporting.cftc.gov/resource/6dca-aqww.json?'+q.toString()).then(r=>{if(!r.ok)throw new Error('COT HTTP '+r.status);return r.json();});
     const by={};
     rows.forEach(r=>{(by[r.cftc_contract_market_code]=by[r.cftc_contract_market_code]||[]).push(r);});
@@ -336,10 +336,10 @@ async function loadCOT(){
       const arr=(by[code]||[]).sort((a,b)=>String(b.report_date_as_yyyy_mm_dd).localeCompare(String(a.report_date_as_yyyy_mm_dd)));
       if(arr.length<1)return;found++;
       const cur=arr[0],prv=arr[1];
-      const L=Number(cur.noncommercial_positions_long_all),S=Number(cur.noncommercial_positions_short_all);
+      const L=Number(cur.noncomm_positions_long_all),S=Number(cur.noncomm_positions_short_all);
       if(!isFinite(L)||!isFinite(S))return;
       const net=L-S;let dNet=null;
-      if(prv){const pL=Number(prv.noncommercial_positions_long_all),pS=Number(prv.noncommercial_positions_short_all);if(isFinite(pL)&&isFinite(pS))dNet=net-(pL-pS);}
+      if(prv){const pL=Number(prv.noncomm_positions_long_all),pS=Number(prv.noncomm_positions_short_all);if(isFinite(pL)&&isFinite(pS))dNet=net-(pL-pS);}
       const dt=String(cur.report_date_as_yyyy_mm_dd||'').slice(0,10);
       html+=cardHTML(COTMAP[code][0]+' — funds net', (net>0?'+':'')+net.toLocaleString('en-US')+' contracts', net>=0?'up':'dn', dNet!=null?((dNet>0?'+':'')+dNet.toLocaleString('en-US')+' on the week'):'--', COTMAP[code][1]+' · report '+dt+' · open interest '+(Number(cur.open_interest_all)||0).toLocaleString('en-US'), 'Large speculators (non-commercial): '+L.toLocaleString('en-US')+' long / '+S.toLocaleString('en-US')+' short ('+(cur.pct_of_oi_noncomm_long_all||'--')+'% / '+(cur.pct_of_oi_noncomm_short_all||'--')+'% of open interest). Positions as of Tuesday, released Friday.');
     });
@@ -391,7 +391,10 @@ async function loadNews(){
     const res=await Promise.all(['XOM','CVX','COP'].map(s=>fhGet('/company-news?symbol='+s+'&from='+fmt(ago)+'&to='+fmt(today)).catch(()=>null)));
     let items=[];
     res.forEach((arr,sym)=>{if(Array.isArray(arr))arr.forEach(a=>{if(a&&a.headline)items.push({sym,dt:a.datetime||0,headline:a.headline,source:a.source||'',url:a.url||''});});});
-    items.sort((a,b)=>b.dt-a.dt);items=items.slice(0,9);
+    items.sort((a,b)=>b.dt-a.dt);
+    const seenNews=new Set();
+    items=items.filter(a=>{const key=a.url?('u:'+a.url):('t:'+a.headline.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim());if(seenNews.has(key))return false;seenNews.add(key);return true;});
+    items=items.slice(0,9);
     if(!items.length)throw new Error('no news');
     list.innerHTML=items.map(a=>`<div class="news-item"><div class="src">${esc(a.sym)} · ${esc(a.source)} · ${a.dt?new Date(a.dt*1000).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : ''}</div>${a.url?`<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.headline)}</a>`:`<b>${esc(a.headline)}</b>`}</div>`).join('');
   }catch(e){list.innerHTML='<div class="fail">News unavailable — the Finnhub company-news feed did not return data.</div>';}
