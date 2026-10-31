@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-31T01:02:06.549092Z",
+ "generated_at": "2026-10-31T01:04:43.668989Z",
  "cot": {
   "source": "CFTC Socrata dataset 6dca-aqww (publicreporting.cftc.gov)",
   "report_date": "2026-10-27",
@@ -945,7 +945,7 @@
    "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSUxQUzRYbkQ4NmVmQUx3WnBLblZIWVhKTUlNZ1VweTVMeTAwSFBGTFVvQmZ5a3FQR20teUdfN29uTWNVcEZ1Q3JEV2ZDcWVBSU81Q2ZuS3VRZS1IaUZrMy1TeU9mNjJPbldQVFMtRkRoRDh3QWpwS1BOeE8tZTBXekZtZlRkOU1ScFJNdkVITFpRaFBRaXlwTmNtdw?oc=5",
    "source": "IndexBox",
    "published": "2026-10-30T22:41:28+00:00",
-   "query": "natural gas prices"
+   "query": "oil prices OR OPEC"
   },
   {
    "title": "Pakistan seeks Saudi energy crisis support",
