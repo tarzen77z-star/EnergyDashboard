@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-07T01:23:35.067241Z",
+ "generated_at": "2026-11-08T01:23:40.496782Z",
  "cot": {
   "source": "CFTC Socrata dataset 6dca-aqww (publicreporting.cftc.gov)",
   "report_date": "2026-11-03",
@@ -864,213 +864,213 @@
  },
  "news": [
   {
-   "title": "Stock Market Today : AI Stocks Rebound After Brutal Nasdaq Selloff, Oil prices Fall",
-   "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNNHY2MlhOMGt6cWtheDNLUHV0blZWVXo0STN2YlFqWkxhNnoyb003R25jTU1na3kybktTczljNVZ6Zl9hQnQtZ0V5elJ3djJXTDVaLVVVRm5kUjlIVXR4UmNEeTdKdERCRHNNWkpwblJqaUxaVTFnYVlBYUxEb2Rqclp4UmpBZTItZi1ENUFPVFpBRFdweDdyVmdzVDNDWmV3dVhXc3RwMGtybXQ3?oc=5",
-   "source": "Eurasia Business News",
-   "published": "2026-11-07T01:21:49+00:00",
+   "title": "Qantas Expects $2.63 Billion First-Half Fuel Bill Amid Elevated Oil Prices",
+   "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQck9VRzU4Q0VOYk4wUkR1QTVIaXpLMVJkOE41dDVMN3dNQkpReXVtRUhYcmd5d2pGY0g1cW9EMHdraGxRdXBRTGlRbUloajczNTcwclVWdXlkOXdpXzJuU3B1WDladU9vX3NOaDhONGFtbU1XNXFEcDZfMGlYeFVSUlNOZzAwS1BVMXFmZ0tpOXN4djlEWnZBUkxJVHJ2S3ZMSGF2THc1SElsX2o0Wm5aM2wtVWVHWTFVdlhaTTd3VQ?oc=5",
+   "source": "WSJ",
+   "published": "2026-11-08T01:16:05+00:00",
    "query": "oil prices OR OPEC"
   },
   {
-   "title": "POLL: If you could lock in the price of gas for $4 for a year, would you?",
-   "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQeFlyUkxWTDhYYi05clRyRS1mYVZOTkNtNEQ1em9HSmFNOTlnTGVDbkJkUHJnUkZpQXdROEtTSklwUVZsS3FkWGVWZVdNLVFvNEY4T3pybk5mMk1sLUk2MEIyRmZXQXZrR0pHUzVORVVMeEdtU2p6Q3B6dzliUGZBUDRTZ2Y1MlNhSEd3RFZlZnF5b3h6Y0k1cnkydGtyZXo3R0RLcmNR?oc=5",
-   "source": "WSTM",
-   "published": "2026-11-07T00:26:04+00:00",
-   "query": "natural gas prices"
-  },
-  {
-   "title": "Gas down 8 cents since election",
-   "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE5CZEllaFlMNEd4Z2VxdHV4c1VDSnozaDBQcXZRTkJWSUtCMmlJaUdnZHJPWk5lRDhXZXRqaHdUSm05enJoa3JfOU9zbktnVmJ6VGZvaDZhd2RWYUhybHF5V1lCM21BZVZGUkkzRzVLUTk3MmhzMVhjYVRUQQ?oc=5",
-   "source": "ABC Columbia",
-   "published": "2026-11-07T00:22:38+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "Knox County party chairs cite prices, candidates after House seat flips to Democrats",
-   "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQeTJSNU5sY2NzSHFOaVRHeWhRWHY5RFY3dzgxRzY4dF9EbGtrNjI5WFp1SS1sUUNnanpTX2VRSzVEYU44bm92S0tyU0o0OWtiNWZsZ1l5Y0FyeGxLbE1SV053VHdNTHhuTDhOcTI5VTdKNkZqVTZzRTExbmVETG5EcUZKZEJtUWlKMEFsc21ZR05nVE1CSnJ2YklNeHpfZ3VZbkpEWUliY1ZQbTE0U0ozTg?oc=5",
-   "source": "WVLT",
-   "published": "2026-11-07T00:11:00+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "Oil prices fall as mid-terms signal possible end to Iran war",
-   "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPRXlkWkZDQWhUblg3c0VWaHN4Mmp4MjgwMGFmRWRieWp3VnNHR2t1MzlSa0xsRExCVDc0WFdXOGduekR5RmlsbEFuOGFJWW5VX3hOOW1ELVY4SjhlMTZjSkRsRTFFeURyUVhaNkcxajNMalpQbEtKSHk1Y3BEYmU4em5wV05GVFZ4RlFWQUhiTjdzQmh3Mkg4UWZ6SGNYNjlMcTBxOUh1Q21VemVZQWRRcUZmdVY5aG90eGhBSkJiZmNQQTdRSXJ1UDBSU2c?oc=5",
-   "source": "Oil & Gas Journal",
-   "published": "2026-11-06T23:29:28+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "IEA forecasts renewables surge as energy security reshapes global growth",
-   "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxNdnczTng0ZnZZUmJwei1GY1Z1eDRxRDRjWF92Mjhaalk2WXFjT0duMGktQW1iWkZ6ZVZfUFZ1eTJlS2tfeTRHQzREeUlRNjg2cEJrZnBUellvcTVNYl81TzVDVl9OdGFUNGJRUEg5RUZqV2tDQ2RDbnVUUm1tR3JZbFBuNFdFU0kzRmpFRXMySVVyVHdGT2lDNlpyaE5NaDJUZFRvbkFzUlg5aUprdXZUcjYxcUVKeng2akViekFma2pub0ZxdHJVRkRya0xyTmlpTW4yeWln?oc=5",
-   "source": "INSIGHT EU MONITORING",
-   "published": "2026-11-06T23:24:40+00:00",
+   "title": "Spark Energy Completes Migration Of 445,000 Customer Equivalents To VertexOne's Integrated Energy Software Platform",
+   "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQckN3bDVqZHJrMzFnT2poaVNVU1UwUU5ESDVWblRYNDcwZGxld2YycVhFczFvUzFyQVZzbEhVT1BDMy11U1hDRUpDeHFQalRwWkxuT2l1QU0zZy1mbm15SjBPc0Y2ZHZJaXU4aHZpaEZYQlhFZUM4cFZhbnYwaGlQdzBsN0M0c2o2WVJRcVNVVFAwOTZXVDRoZ21iVUpmaG5YSWhFS0lXVDFnakI4S2hWTklOMHp0Z3c2aDNlRHFkWDZOanIxTnFRVjQ5OWRkQQ?oc=5",
+   "source": "Pulse 2.0",
+   "published": "2026-11-08T01:11:02+00:00",
    "query": "energy markets"
   },
   {
-   "title": "Election results may have pushed gas prices lower, but Arizona's still above the national average",
-   "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNZGo5ZFQ1amdmWGV0bUV3QXI0eUNvcTB6UXduX2cyak9tWTAtcUxtdmFUbjVuN2hfQ1dLTEhtbEJNZHlvZ09LOFFNRHVCT1VKai1WSUNCQVVCcUwyRGkwd051d1VDNE9XZXFvak10NG1NUHl2dVlpcW9PZmo5WHgwdGdqZXdVTC0xbWN3SUxLeHBGZXQzQlYzTVp5c3JUa2gtb09lYXdHUUM0Q3JlenBpN2hNWjRZY3R0MmpWYmRKTDI1S3E1Q1h4STZzb0VVd2JORHc?oc=5",
-   "source": "KJZZ",
-   "published": "2026-11-06T23:08:00+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "Wall Street's \"Energy Transition\" Funds Are Packed With Natural Gas",
-   "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOSDRBMW9NMUlSUFBoMXlrWVlQNUdaU0VJYzQtTHpURm5JRDlWZkNsN2x2TGpuM1dLSmZ1bFBrdVd1RTN3R0dJXzZlQlJZbzdGUGlyOFJzV3Vwc1paLXowaUlaM1NSc0w0ajMyTVBxa2gzSWhPc3JQcHVJQXlRV0NIYzVQUVVJeXJLV3NuaGducFhVTVJHSDV1Sm5rdzlZWmRhTDVmelJrRmx2NjFNUnfSAbMBQVVfeXFMTjFvMU44MWUyN3FsMFhReEZ4UDJlY0x3SURRTnZKYWNUV3c5UFR4dXRHX0Y4bHU4M3NzOVpzVXBwd0hLQ25aZjJIZGRxSGdqMS03bVVnR3hILWs4Yi1ZLWdjSHFJTzFuQ194dWx1MjBOTkhDTnJBRTdUWlNGWk9namROTnpuZGVXSWl6eUxNa1FWdnN1OTNHTnc3ZlJoUG5qejJVcDFuS04ya2s5dGNFYzFBT1U?oc=5",
-   "source": "Crude Oil Prices Today | OilPrice.com",
-   "published": "2026-11-06T23:00:00+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "Gas prices could fall, but Exxon faces a $20 billion test",
-   "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxORVRGUUcyUUIyWmx6WTZYR1ZUa1pzNEFQR2Vjdl9EX0ExOTQzSzhCTlpPOFB4S0g4Z3ktRzVIeU9EcVdVb0VnMmFHVHJ4V21WRjJhWHYtYXIzZTVjcnRTazdHZjBkS2pCY0pvSFFRWTNHeUlMMFNEWGNvTTBuTzNoM1AxLV80bHFHV2VWRWhxczZtNThZV0E?oc=5",
-   "source": "TheStreet",
-   "published": "2026-11-06T22:37:00+00:00",
-   "query": "natural gas prices"
-  },
-  {
-   "title": "Ontario gas prices fell this week, but what about this weekend?",
-   "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNM2RjUVdKMmdyOGtwOXJKTVNCaEg0alBZVVc3WE5YLU9TZXFWOGNKc0ptYVRBc0E1bl9XTmNncGNJTmNwczhZME5Ia0JLeEZlRTdWOVk1UzlzdmhyYm1GZTEtU01fVnJwT1h4M0tubi0tb2RQZnVmV0RuVW1mUXVVVjJDcG16clBwRFF0aFRmbDM5TFd1aThKaE5mTks5cFJaaGZ4Wnhsd21mZk9kMmtuS01YX1RKLVN2T0E0XzZXbzVHZw?oc=5",
-   "source": "Inside Halton",
-   "published": "2026-11-06T22:05:00+00:00",
-   "query": "natural gas prices"
-  },
-  {
-   "title": "NextEra Energy to participate in EEI Financial Conference",
-   "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxPd3JsQjNBa3BHUTF4OWg5WFZyUHFxMGo4WDB1aGNTeTExUlNubXhISXRxRFVtak0ta2VwVHNQai1qYXVYVlladWFXRzZ4MUxHZlZrSkJZTFBXYmJhdXVPWmY4cU1CdHJ4UUNmWXZRRzV1YVVhdjhUemVCdWlpTEhOd1ZlRE1lMDZQVEhWR2dUbWRtdjVrZmtlSmhMand3SFVHbElsZ1NBV24waklBNzFnelY3OVVJeWVnUXc?oc=5",
-   "source": "TradingView",
-   "published": "2026-11-06T22:00:43+00:00",
-   "query": "energy markets"
-  },
-  {
-   "title": "Physical Natural Gas Prices Power Up for Weekend",
-   "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxOZTRDSV9LUnV1UU1uNUhCVk5OWDVYai01R2o5RkxlODh6Mlh3SV85VHJqbnZ6RUVkelA2aW1qN0Jfb05VRFVMRFBZZFh0Ri1vd01UazNLV1JpRWJJWGh5U1ZnLWJRYXo2TTFMYl9PMzF2SklONDNjcmlNMkJydXozN0dKZGJBaWVTeWc?oc=5",
-   "source": "Natural Gas Intelligence",
-   "published": "2026-11-06T21:58:00+00:00",
-   "query": "natural gas prices"
-  },
-  {
-   "title": "Could Wisconsin drivers see lower gas prices by Thanksgiving?",
-   "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNRkl3V3R2WUxLbVFlbUxWdFRIMVJPUkxpTnN1bTZXUXRNbm5LQndQTTZKM3lQZ3RacUpFU2lyRFpQazZicEFLaktrUmstaG1HUHViNVlqTW80TUMzekJwTVQ5NlJkZFBkalNrUkVrV3R0M1I2Um12RXlwWkNsVEx3Snd0djhwUEg5MHVCWDdyYzZHQQ?oc=5",
-   "source": "WTMJ",
-   "published": "2026-11-06T21:55:06+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "Day two of gas wars in Fulton: How long can this last?",
-   "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNQW9QblJYVENucEU4MVRvR2RhdldNamE0a0pUdFd0Z0VfVkZmNXZnYmx1b1NwLVRBcWUzVHVvSU5EVmdGSkU3anoxZGM0d1g3MHh0UVp6dGhmWXA1Tk9GSlJsNV9DTl9qMVlITEFUMnI4QjlJek1TU2ZzZkZnMlNaa2p5aEtnS3c3SmhVN0paOA?oc=5",
-   "source": "WSTM",
-   "published": "2026-11-06T20:59:05+00:00",
-   "query": "natural gas prices"
-  },
-  {
-   "title": "U.S. Sen. Thom Tillis: high oil prices having ‘significant’ impact on inflation",
-   "url": "https://news.google.com/rss/articles/CBMia0FVX3lxTE13dFZvYWVNSDFGMnlYZ2ZLbVhwd21Zb0ZvbHZlMDRvYnBsNE9WQ09Eb0VMcGZfN1MzV2txNlpIUU9MZzIxXzVGdkwyWXctVG00TG41THZ0bmRQMEk1b1ZMdDlFZWJHaFF2dXlR?oc=5",
-   "source": "qz.com",
-   "published": "2026-11-06T20:56:36+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "Oil Declines on Signs of Moves Toward Gulf War De-Escalation",
-   "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOVXNmZnh6cENKbU1vdHBCWUxseFF6ZlpFenZlcFRxMjZjT0RveUdzRkdRZFpoMk5BWUN4SnNqRGJSbENOSGtlbHVDWFhOS1FmakR3WmJIRzhlNmVOYW5udGlCSGhVWW1rWU5zdVkxeFcwVEpfNG16SUIzQUswRDI3N2VSd3NKZnBtRmxaWmpBalZtXzFob2owdDZYUVJrbW5kMWhGd3loeERqdmpXVW00TA?oc=5",
-   "source": "Bloomberg.com",
-   "published": "2026-11-06T20:49:26+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "Connecticut gas prices trend down",
-   "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5MNEQ2Ui1OellBZkVQQjUzZnVmNmQwaFZGUnRkREgyVzN1dkRPRmFDNnl1MTZyeVV6UkM3RG93blctQkVCa185Q0FaMVQ5SW5sRUlWdlJkSW1FQjgyd2dYUjBkckZlVVFydDFQZkhMeHlybTF50gGIAUFVX3lxTFBYTTI5ejAzQmd3Y1VzS29WalRFUU1mTk1maDgwX3libk9YTVJfak5KQVR2RVRmWm51NGxDekNPOUVhODJOc0ZqczVMYlJSWHlMQXVJSnJVeGdtV0NTNTd4MUVXRVE5dFczMGZiNUx5dDRveGhkUkJ5dElxNi1SeWw4VDdnRUcyM3o?oc=5",
-   "source": "WFSB",
-   "published": "2026-11-06T20:30:00+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "Oil Traders Want U.S. to Release Sanctioned Tankers as Freight Costs Soar",
-   "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQNXVVVkQzeDBtSDc4aldaUXZKcUFOWWFnVVNic1pVejhBYS1zZWxNVklHZUxnUVo0N3ZSZkd0NU9TVkY1amVKSnpZOHRvMFdTanlmYjRnRDQ0TWJUQ3FxSnQ3SVRlMTZ0aldRaHdZQnR3THNLUVR3LUh4Vy1nNTg0R25UYnJWN0pPaG5kRldCNzh2czEtSTN4QmRnYnlXQmlTT3NoRUxCYlVNTGJJdHZDMmhhWmJ5QXk2LVI5MnQxcVg0YUxZUnfSAcsBQVVfeXFMTVBva1FYX0FPT2Q1N1dnQVY5QnhkVDRrNm1wWGthTUE0S21uNGRpVnVkNEU4T1Z0X1V0YjFBMnZocGRkWWR6MnNOd2c5bm1xeGdzSl9VNHpfTlBsUkY4d2M5SU9oOWhYOERTM0I3ZHRObzk5OVcyblNoY0t2TWZxMEZUU2ZRbzF2MVRPOXZaM0g5ZnJaRjlPcVJjaEtYV0QzWWRVWDkzcWs1dHhfcWd0Mk55Sjdrd0xtTi11cDdKdlZpVmJwc0YyX0F1Q0k?oc=5",
-   "source": "Crude Oil Prices Today | OilPrice.com",
-   "published": "2026-11-06T20:30:00+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "What the election results could mean for gas prices, groceries, and health insurance",
-   "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxNbWtqclBUcFpjQjA5a0dsSkdFbFgtM0xDRkVtbmZDRThlOGYyVFQ5R045WEthOHdMN28tTXpNaW5ZNDRzQkJhczRLZll3Q2k0bDVmdzJfM2J0U0NCWWJWcmtvckE5dWtkTzJpSHNHbmdCTHJyaVBPN3pncW1pV0UyNkk2ZC15elhoeGpuVFlIczZaU2N5cDNZajNJeGE1TlFCV3dSbDNWNnFSQ3hmY3NUcHdubWN6akozRWxoN19La0ppNU0tdXd2Z3FhQmJ3bHF1UVAxYV9KU1VDdnBCdkg4REVIRTFScVhqdmpMRg?oc=5",
-   "source": "Yahoo Finance",
-   "published": "2026-11-06T20:23:52+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "Gas was pricier on this Election Day than any before it — up almost 40% to $4.15 a gallon since the Iran war began",
-   "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNNnBFa0xvbkoxSHU2WC1OX3ZidFB2VkpWc1BVODQtcmJZZ09UZG9HaFF1S0VoVENjcTBpTzNZcGgwcE4wWmNFRXN6b2pDSzZvT1MyUkxVSDY3XzFrc0dKaURrRUNZVzZaMzROcUtEZXpoSEtNcXVoVmdndjI3UmVKN2FkbGlYQQ?oc=5",
+   "title": "So much 'liquid gold' could hit the market that the world’s top producer is withholding output",
+   "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNQnpJd2xtOGNLOUtUUXk3cWxjMjlGajYzMGQxcTNSTWdsbHU0R1o0a0RuVXRnRFdjeG0ycGxscXc0UWZuenRMY2YtaE1TUnhLRE5LSTBGcmFLR1VGdXpkSEpXVGdiNUluVGw2a1MzWjlzWUE0S2V2WkdFR2FXbTRXeUJXbm5zMHUya0FZT2Y1MU1jZ09FeHhzU0xhSnQ2eVRZWTdR?oc=5",
    "source": "Fortune",
-   "published": "2026-11-06T20:15:00+00:00",
+   "published": "2026-11-08T00:34:00+00:00",
    "query": "oil prices OR OPEC"
   },
   {
-   "title": "Crude Oil Prices Finish Higher as Global Energy Supplies Remain Tight",
-   "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOS3JpWUxXR19ycHBWWmxpdTZJOHFDMnJTNUFISDRfMEM0NUZDR1dpSEpSRXN4ZkZXREJkVjNWLXF6N3F5U21faFo2VWhOZm1qaWNGWXAyWi16Mlg0VUQtbG1HNlRUaDNRczd2aTV6Ty12UzkzdkwtcVFXM19GX1VCYkpiYV96OUsyZ2tCV3FEb0FhOERSUFFQYnpFMWs2dVg5akRxbVY1TkUydm5UaGpzek5YWQ?oc=5",
-   "source": "Barchart.com",
-   "published": "2026-11-06T20:14:35+00:00",
+   "title": "Wars May Spur Faster Electrification",
+   "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPbGQ3bEgzVHBqRER5MThfak1QRXVXWERWOGJQRElVZlo4LXdQZkhYZDNnd2ZKYnZnM1ZTbGRucTZaMTZlMWd6bTY0ZnAxWHpfdnB3UnBuV1hScHNEMUFLRnhBVm8xZlZqWEZncTZaMDl1Vjg0NkRyTldnY2VmRU4xQ1lsWjQ3ejd5WjhxY9IBkgFBVV95cUxQaDZueWFfN041R3lZVU82bGhFeVJ4STNlRC1lNGtRMkJwMkh4WUZvVkFBYzV6N3U3cEpsaEk1TVBRUDNPRnh4R0t2MEtOcm9RbVAwbGlXdjZDUWlZV0NwUHQ1eUlZaHNTTmNiN09ZWnRNOHJZOXlfN0JBY2dxNzlMWnpQTDdqNGFxTUpqMmFWSUJidw?oc=5",
+   "source": "Crude Oil Prices Today | OilPrice.com",
+   "published": "2026-11-08T00:00:00+00:00",
    "query": "oil prices OR OPEC"
   },
   {
-   "title": "Nat-Gas Prices Rise on Cool US Temps and Record LNG Exports",
-   "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNN0t2N1VCOWYxOGNsd3Q0b2ZLb001c1hXVlc5Sk9qTkhPSmFjVWloNjRJQVp0QmNxQTMtaERBcGVySG1kQ1lGdV9DeVRmN1VUTDJhZFF0UW1FNFl2RmdGRlVZWGVZaldrbnV0bHBfWnljWVJHaG1XSVVFTEVvVDFoZ3ZTMEhZWnVlZVZtMFQyeWNtTmhjaldxT1g2eEFtTFhUSUpZSC13?oc=5",
-   "source": "Barchart.com",
-   "published": "2026-11-06T20:13:03+00:00",
+   "title": "LA, Orange County Gas Prices Continue Falling",
+   "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxON2tfY0FPTnJCQ01hcGZYYjlzS0N2bDduX0FaZmk4MldjaHVDbE5IaHo4YkdMUXZBUkNiRjlZTmJhZktfSDhvbUNyV09MdmNVT0l2Vzl0bzlNR2M5d3JhQ0daTmJyTURQM0dadGZxQ015aWVnTE85M1VDV1VBSVZsV2hZWDJzT0xnRjFBOUlxQTEtSDFKMVk3TA?oc=5",
+   "source": "MyNewsLA.com",
+   "published": "2026-11-07T23:30:01+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "US natural gas prices make gains",
+   "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBKZklJakQ3V3ZkMTBTMEMtRldxZ2hJdDJrajFVMWktdmt6T3FfQXZiRUFhMVVIMzFsM0h0T05OZVE1RHFWZktHcklydU1FVWE4Q0hnMGVrZkFQcURVTHJTanBBRHA2czB3cVAyUUdUQ1lFTTdaSUczZkFaSErSAVZBVV95cUxPeUg2QWl5d0ZrRHNtY3hTeEtBdjlMSGNGR2MzZlZWUGZCbDV2VnNfVUFHUU0yQU1vVEJKTFZoWDRaTXZpb3M3R0xZUTk2QjlLa3NvSjlxdw?oc=5",
+   "source": "Business Recorder",
+   "published": "2026-11-07T21:33:12+00:00",
    "query": "natural gas prices"
   },
   {
-   "title": "AAA Texas: Gas Prices Fall as Crude Oil Prices Decline",
-   "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQaERyMWJBallRcmNZWmZtS01aRW0xV1p1QlpsUmpwbHZUeEpZWEJTOGM1TXRaZTh5UHJ5YUdjWDExdnpQMUVqdHprRGxfY2xidEF5Q3luY2ZYZE1sdDVUdDFsMk5memxfREVseEtWVXlTbGlVX1FNQWh4S3dlTk9LOUZWQlBvWnEyTzdGd3JVQkdHbTMwVUVqWUhR?oc=5",
-   "source": "The Gilmer Mirror",
-   "published": "2026-11-06T20:04:05+00:00",
-   "query": "oil prices OR OPEC"
-  },
-  {
-   "title": "Natural Gas Futures Finish Topsy-Turvy Week on High Note",
-   "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOR3NyMFJSMmh6TWFYTkZBVVUzb1RtUF91M01zeE1aQnlfYWpLeGNBM3dwa3lfeXpzQnJzeWR4RjJHOWMyZ0NSb3ktNldjLUFXTDIzMUY2ekFSbFVtQ3dKYnd1bmlwRFo2a3R3cDJGUFlkNzIwYXNoaEhHVGNTU1NIRzk2LXoyNVlMR1o1Y2M3QWd4eE5S?oc=5",
-   "source": "Natural Gas Intelligence",
-   "published": "2026-11-06T20:03:49+00:00",
+   "title": "5 Of The Biggest Gas Discounts Available Through Reward Programs Right Now",
+   "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1WZURGZzRuRlB6c0FCSlpyMDFWazJOUTRhTE55Y1FwRW14blNYa2hiM1VhVzBmVzBTUjBWSTYzdjAycXM2YlJNRmc3amhxekppZ3NzRDVnSEJZbDExaGVxOGJuMk9MSEJXelRSdVppVEJSOXd5LUp3M1E4UQ?oc=5",
+   "source": "Jalopnik",
+   "published": "2026-11-07T20:25:00+00:00",
    "query": "natural gas prices"
   },
   {
-   "title": "US natural gas prices rise 2% with LNG feedgas flows on track for daily record high",
-   "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPSlpBdWRZc3RUcW5PbHI4Xy1ZdkJVWHBmV1V6akRUMmlYSUNCbURIR1RHUjRBQTRUY2Fqd2VxNXNTRUplLTB5YXdaTjZzUmdfV01HNU5MaFpqaTFkWU5SOVplNUN5TUpLWEhrN0hfSjF6N2FZdXBrYjllQXZZUkw4Wk5jRGJWU2Q1dk9NS1hwdk5OeFNNRk84UnJBT0FkNlZid052RUFpa1FOTWVBbzRTLXQ4TUY3OFVwUU9PQkx6WUsxUkZyTzFWNGp3T1p2SWVT?oc=5",
-   "source": "marketscreener.com",
-   "published": "2026-11-06T19:57:45+00:00",
+   "title": "Egypt Eyes Billions in New Investment to Revive Oil and Gas Production",
+   "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNOHVqUGVxT0VVaUNBYS00QVhRWnAtNldLbGlZTjhyUXpCUmtjYUtjVmV1bVgtWEUzWFNRUndrd0JIR3hKZy1IZ2NkY2VyNk56VmJBZDRTWkczMG82eXV2MDd3YmtHWWMwNjVkSUF6LUF0QkRJZmYxMmxXSEtoX2h4SXNZdEV2cWItWG0zbGYyOG1SbmdQSzNtSG81Z1NBMVVfaU9YOXAzMG1kYXhjeENxTl9SeGQ4dFFNNlHSAb8BQVVfeXFMUC1HSmk1X2JoTG9PTjN1VGpXWXJGSFhoNGk2c19uUGQyYmZobmhsdVVNUE1BT3ZNeEkxdXc3b2hHS0lJZ3ladFdldGhhTkc3emFBX2h6enBaY05CS2Q2bDJld2wxTU5rQ0RXX3dCYmVycGJIQmU0R3J5WHBTblExTHE3bGpOc1AtRlhzQV9hWlljMVhsMkFTVmIybGd0bFEtb0RTZmFYTGtXSXVDQ3BMcmg4QS1mN0VSUGtzeldZZjg?oc=5",
+   "source": "Crude Oil Prices Today | OilPrice.com",
+   "published": "2026-11-07T20:00:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "3 Energy Stocks With Pricing Power as Inflation Pressures Return",
+   "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNbHVUVkdGa2RjdTA2WGROYlA5N0pCcWVseXUxbnVBTWZOcEJLdEYxRlhVMExFbjBJUDZfbWJmUG5SWjRScmgwSmh0WWZGSXB3dkFBcER6MjRRWV9mYktGVFpVZjRTNUNOVWdIdHExRE1RSjlGRklBcFAza3IyQVRoZmNaYlRCMnA1dU9CeFViTDgtSl9LbWdFOURwSm1XWWNobWt4cUdxVmJQcWJZU0RZZ2h1X3Y2d0dySFFmNUJMZGVRdkl1eHfSAcsBQVVfeXFMUERlcmdMMDY2bmltTWR2WGFOTFpja21iUExUdWRXdERBdGdMX2NOc0ZqNE1lNkxsMFBvV2N3cGs1cHIxMXJFcGVWcGQ5OGdacTJsMHVHNEhqLUVocnpScHBlNXBickhDTlNMNDdYczJCYmMwdlNQSWFPSWxpZFNNQlktdmYtVmZzZGtBQXNxWmFQZzhNMVJYMmJud3RtMmw5YTdxTF9hZU8tV1pMNzh3LUkwQjB6TTlqWWwxTkV5VjNxbTNxZ0l2SjBXN1E?oc=5",
+   "source": "Simply Wall St",
+   "published": "2026-11-07T19:27:36+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Oil prices tumble after midterm election blowout, putting Alaska’s windfall in question",
+   "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOcjZpNHVkVnBXS0RqNXhxMEJMdy0wT0owaHFvMVhyNlRzMnY4YWFUMUNESUdqNTBjRHBCWWRWTUFDcXZyTDdvc3hmcFBVajkwMXhvcVpoOUV4YjM3b3p2V3NjT1I2eWxkaF8yRk9MRmRTTmxKNjhEcF9pMzhSYVVjRDJCNkh0NVJfQ1dlcU5IU29QZUFLQnp0TUY3YVkzQm5ldTFqRHo4MjVVX1JnN3VYUkl3NA?oc=5",
+   "source": "Alaska Story",
+   "published": "2026-11-07T19:10:59+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "‘A lot more bang for your buck’: Used electric vehicles find second wind in Florida amid volatile gas prices",
+   "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPdU16OHNJLVcwVVRJTElhVndYX1VCSTZFYzF3VlZyeEc4dnBneksteHIwczFDMVc2dTljdDVUOWEzcDRXdEZhVEVSUkNveERhbXRjR2I4VVNIRi1oMXdKaWl3b3lkREExdGhhbk4tMDUycXlpRGFrU0FXWU5zLTRuMTNxQlg0NVB3c2JRTXRnQXMtb2xNTFpKNXowdGZxM2c5eG1oemJEbXRKMGpCRkQzSDRfTWtNTjdIb3dFZ3lVN3Rwc19UVkxMbXBNWlQ3bjl4aEtRUXVJQ18tWjB5QjdTbg?oc=5",
+   "source": "The Independent Florida Alligator",
+   "published": "2026-11-07T18:33:00+00:00",
    "query": "natural gas prices"
   },
   {
-   "title": "Here's why hybrids are flying off car lots as gas tops $4 a gallon",
-   "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNVE5EM0t5eUtjamhOU0JDY2U2bVdqRUs1WDUzYzZpV2JpMDdaZjhHS2UwaFdRRTFQRHBCUmtOeENUSUhIeHE2WXB1LVFKbVpCck1XWjZZM1EtZzBQSGZqUzQ0UnFVM3gxTFA1MEh4cHBfSlk1bzZpOEtESkZDZjRjdC16dWNWU1phR3pRMEZ4V0JQdVduZ1lSRzNXRWhxMWM2RkFSaFNUU2dsT1JCVUs1Tl9pemFrYWs?oc=5",
-   "source": "USA Today",
-   "published": "2026-11-06T19:55:00+00:00",
+   "title": "Guyana’s opposition demands explanation for rising prices despite oil revenues — The Rio Times",
+   "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNLWJzZVJWa0VFS2hpVU9KeFhpUGNKdWIyYWkxajhXaHZ3eFVNLWZ2SE1OVnJWd1A2cFBjWXQ1bkpfMUMwZnNGeFNBTmVQejRtQXAwYVRnMHZ0MlJselo5TlRPU3d0RUtkWnZtWEQtNmgwQnM3MFE5RG82Yko3Wm5hWk9KOGJ4QlZKMmVrdTI5dUUwVUdaQWFlLVVzazZUamtwRktTaXNBWHV5QXFrYU42NWdYWkNPbjRCTEZSeEV3?oc=5",
+   "source": "UA.NEWS",
+   "published": "2026-11-07T18:30:30+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Trump-Backed Trade Corridor Advances Despite Geopolitical Resistance",
+   "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNNld0QXZUbGxFTGlfWkxKZFhWRnRfRks0ZmY5LTZYclJTZXowZldpMGNWNkxKd0xvVkZubFdPTEQtSDlwbEJTbHVQci1VakRwRENnMGZuVkZtRjFOU05EZ0V3WS01VTdJOHh1allrQkNPVW5UWld1WDdIS1FMeFo3SFJDYXl5eXJESHN3ZlhVb0hSeEI3RTNOdGpwbUNEUzUzcE9jdU54VkZrRVBHR09QaNIBtgFBVV95cUxPeGR4Q3lzc0VtY2dLbjhtRG5VVGxCXzBoN3pUMHNQb0ViZ3NWdTUtVlJlRHVJbWhpdGpadVdHaTJTejJBaWNIWTZiSE4tSWRXYzMtaWtOT1JDYXVEaGVjVi0ya2t5dlh3N0dIbDlNMk4xcjdYMzZHMWZncVBBTlgzbFJGM0wzVDBhZVBPT2tLTm55SFM2QnB2N0U2cUJoUXlQWmN3Z1drR2huXzBwdG9DYXh3OVJvUQ?oc=5",
+   "source": "Crude Oil Prices Today | OilPrice.com",
+   "published": "2026-11-07T18:00:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Anas Alhajji: Hormuz crisis expected to reshape energy markets toward higher costs and diversification",
+   "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPUWhmVVk0czhvYnF2aGxZN1NfUF9fTkNpWFZoUjZRXzM2cmpGVGV6NW9jd2s3VndQQXRESGRfTHAwd1Y1dFdaUWhSUkZjeXNGVGIzSnByVFdIZUhKMEVONW1UeEt4MUY5WHQ4Y3JXZ3EwM1dTcWF1aG5URUl3MkFLS0t4cUVMeFIxbkdoWkJTTWQ?oc=5",
+   "source": "Traders Union",
+   "published": "2026-11-07T17:50:34+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Riverside County Gas Prices at Lowest Amount Since Aug. 30",
+   "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPMmdmYTJ1Qk1kcmgzMkx0THcwZGJ0VzQ0YlpONWhOU1ZLOTMzNmk3eGQybHN6NHIwa0MweGVkcWtFVVItbVdRY1prWWp3SEFZN2ZrZG5acGNzYWdMUWlnRnVPOTJtTXdlQkdHRjVUbm02U2prMVNpLV9fcVAzWUhHazZ4WTVod3NMOU41eEZqeHBJM0dCT1ByRnlFSnI2VkxCRHc?oc=5",
+   "source": "MyNewsLA.com",
+   "published": "2026-11-07T17:42:02+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Average gas prices in northeast Wisconsin dip below $4/gallon for first time in months",
+   "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxQd1JtZERQUmYzOU4xRE9wVEhSTnRaNjJuWlgweFN3cHpMZU5zY0NfSkQ4enRnYTltdFpoODlHYWpmcWhlSDR2dTg5WGJQWW5rcDliQnI1U2xoUWxYQ0JaNlB2LUdJSmF0OGlKMHEzT2JDSjZUOWlQMFRTS0ZXWUh1VlUtMGRvV2xia2fSAY8BQVVfeXFMTUR6dmcxUkhfQWlhWGd6T3UzanA5cV9KcXNIeUlCc2c4VEtPeFhjR3g2WFg5cnFQdVhlcF85NWJTLUhNN2tIY0tEQmxmOExyeXpGbHdyVVRFeVFSMzYzQVlFQk9qNXFkQlJYcWhWWHM0ZDZuaHZ6UElPT2JVQkJMbHRKalJoQWI0bFpBQlZsWkE?oc=5",
+   "source": "WFRV Local 5",
+   "published": "2026-11-07T17:28:22+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "How are gas prices in Fountain Hills?",
+   "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE84TFpIaVNDUDVRTHEtWnFyVkk1NHRRUS1QSXJfaUd1S09UTUlUX0s4aGVUSFdYYmNvaW1yTHZxSDJ6RWZNSUtiTHJYMEdkRkVEdkdubTg2ZFk2blBvWXpVcXhYUk1wVHpuMUFrT2ptZjRCMmV2dUVMOUg0TmQyVE0?oc=5",
+   "source": "Fountain Hills Times Independent",
+   "published": "2026-11-07T17:00:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Global Oil Market Shifts Towards Oversupply as Demand Fears Fade",
+   "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNVG5xZ2JPRXZ1cWhac2p2XzhIMExXMTU5WE5yNElOLW5QRTc5ZUhJSjhTa3JUdDl2LXBONzZwcjBHVlRYVEtjd2hPUGIxenozREFUbEhxMVVNZzlBNGxRSkp2X1hPYS1EaU5jZklNRHNEMXB4dkRWdE5WRDczMU9jOWRUNEJTQjJIWDZHTzc0MHJYaS02NzRRZWY4dEhXNHJz?oc=5",
+   "source": "Head Topics",
+   "published": "2026-11-07T15:56:00+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Gas prices drop a second day in a row in Nova Scotia",
+   "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQWGUwWGEtTEdjVS03WElaOG5rN3FOb1duajAzd3FSNHhQa0FjR1RCZHR6azVScGNOMHRMMVdBMHkyOTNaUGh2ODItdWw0T05RMXF5ZGtkb0tUU3U1NHhfbkpKUnBFTXcyNW52RDc4cTVwRkUyelhaZmRTcXJlWHp1dFlLekVvM2hYU0RWSEc4Z2d1a0NFNkUw?oc=5",
+   "source": "CityNews Halifax",
+   "published": "2026-11-07T15:49:46+00:00",
    "query": "natural gas prices"
   },
   {
-   "title": "Energy Stocks Rose Even As Oil Prices Slipped",
-   "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNSTRhT2Z6R1FSdHBrSlRNRjdQbUpyTHNEaGtVbzgzVXJoZUxIVHpONDdEcWNrbHlab1QzbGdNY1hMMndXY2dIVHYzeGdXT204Y0xXSkcwNk1abFFmV0xSQm50R1pzRjZrRFBDb2pzcUhxYWlTNjREaExxRUVrR2FNS0p3?oc=5",
-   "source": "Finimize",
-   "published": "2026-11-06T19:54:02+00:00",
+   "title": "Gas prices fall across U.S. following midterm elections",
+   "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPb3BkeGlWakc3c3ZaV1R4dHFWeG5PZ19xR0ptRUdrN3JvYmR4YWQ4bTN1cXJIWmEzakVxcnJ0M2hFelpkamxRampqZlZYTXJ0Q21zX0JiVkNiUmsxcWhtZk02d19JVzBNOTJRUHh4OVloUW51VDRYNTdXVkpCbFpWbXFvV2FBZXFSdUhlMkczSTlveHRjRzNzREVYTkMxUVcwWkszYU5qQ1RvdDZQdDAxU2pwc3B2Z3BrUHVPYmtWNzF1cWcyRVVyUWl0TmNxblltX3c0?oc=5",
+   "source": "WHAS11",
+   "published": "2026-11-07T15:36:00+00:00",
    "query": "oil prices OR OPEC"
   },
   {
-   "title": "Strait of Hormuz disruption ‘to keep oil prices high’",
-   "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQTHZWMGltMHdVelNuSG9yWG9VdDV5czg2Y01HUk42WUwyWlRkejZsbVQ0c3dwRzdfQ3RqR2M1SUxQY1l5THdRTENwVUFZczNNbWFsRDEtOXRtdG9BdnVXOXd4d3pkYkNtMWgtSHlELUtvZ19DV3NDVHpxQzNDYXNFcy1TMFZGdklJbW1EejNjZndKUGl2M1RPaDZ0VTJ5S3Q0?oc=5",
-   "source": "The Times",
-   "published": "2026-11-06T19:45:00+00:00",
+   "title": "FAO Food Price Index edges down in October, with commodity price indices easing except for sugar and vegetable oils",
+   "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPZWo3Vll6dEE0SHRjYVBWcU9XTEZ5NXVqS3AxZ3FtQ1U5Z05wMTMtY3Utay1wZVZ0RERBeUhtZ3p6R3FQS21vaDk3a1N6SHJqUU4tVThrYjJNUUpvQWlmQ3NhMG5Ld2VXVGRVSzlBSTZNczJ3dmZwbmFWNm9wb2RkYm9qMHZzcXZnTmNYbjBqZUp5M0g2ejlKdGNoWWFKazJQNkNxdVp6V3F0MHlkQkljNjJrTXhycUFyQk1rdWJJSFU?oc=5",
+   "source": "PotatoPro",
+   "published": "2026-11-07T15:23:21+00:00",
    "query": "oil prices OR OPEC"
   },
   {
-   "title": "Oil Traders in Talks With US to Get Sanctioned Ships Back to Sea",
-   "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPcFlpVkgzUmhYWWdtSmxqUno4YlpTM0l0aWZ1bENHbk1FMHNLRDVxVXJqYzJ3Z3BpWk0wbmlMQ0RXMkd6QkxxVUozQXlJUVBISklfS2F5blp5aW5yUmVvbFdyMHlNbnFQbmg3MV9weXh2ZFJsN3JnMjRfREJoSDNpaWZVWGlXZ0p6aExRaWN0MGZULUFFSW05UC12MGY2Q21mWktpSGhCYWJFeVE2dEE5LWhYSUcwQQ?oc=5",
-   "source": "Bloomberg.com",
-   "published": "2026-11-06T19:41:07+00:00",
+   "title": "See the cheapest gas in Scottsdale",
+   "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQVU5zQUMzN0NsdlctZ3drNTFyQzNHRUZFZHNrdS13ck9XTEQ4cFBWRDRwT2g2ME9jRmZld0dwOG1hOXlGWjRRblpQS1hIdmhmTTBLUS0xTjdTYkdhSktTaGVicEh0dVptdWJzMlJtM0xMcDF5VzZ3d0RjRDJSVGJMcXRaLXlmUURBeUV6OUJPRjZtTTg5MHR4RlVia3UwWWxua3daeTJjQTFpVWdPay16UTFsMm5rZzMxZTFtZEduc3E?oc=5",
+   "source": "Your Valley",
+   "published": "2026-11-07T15:00:00+00:00",
    "query": "oil prices OR OPEC"
   },
   {
-   "title": "Interrupter clause to be invoked for gas prices in Nova Scotia, but not diesel",
-   "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPRFkwckNNTHI3Q2VpN0o3cUplaG8tMHlaMlZURDZxeTNrR1BIVXNzd1A1Q2xiWkR3a1NkbUtaNWhlbWNWcm5tYWZKWVpLVWVwOXRXNXMxMUJEY0hpTE55cXhjQWk1a3NQZ3ZpdWNkSWJtOEFUNXRmS2UyTTNJWW1wUTFKa04wLTdHVTNkdnBkWVJuOTBjMW1BSzM4ZVlfeWxmSlplQktnT1JkRXhPQzBn?oc=5",
-   "source": "PNI Atlantic News",
-   "published": "2026-11-06T19:31:40+00:00",
+   "title": "Gas prices for 11/07/26: Average now under $4 per gallon in 26 states",
+   "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNS2p6UVNxZVVGb0Vkd0tPQkU0dy1qa0pGV2pCMWNuSmdJb1pXYXNvdjF0SFBzVXN3UmE2NVlzaDJCNWkwVGZMRjJYM21wNXhEVDh0b0tnMk9uQlY3cHVDLVdZd1VPNlhSQS1POGtKaks4cEFRN0ZndjFaUHdPUUEtSTJVQ21lVXlLTFNNZVoyRVdhU3R1eWVQa3IwRDZ5TWgwUEdvVtIBuAFBVV95cUxNTTVmeDhLS0VrZXZlYkh4Q2NHNVpKZ3ZRb1FPZHZQSm1NemRqT2pqOGlQMkRGWTJQUk90Tml0SEVYcU45UVF0cEQtYXVFdzlQWmVCMkRCNTNkLXJjRTlWR2xaR0RmQ3dUUHU1RzVTWXFIOEhFVGlJSUVVY254RnpjMkVPUktrb1NLNTlpeWs1STBHNFZpLWUtX2dZZGUyWDV0ZVdtbGhnQWdVLTVVdXk1UFVwUmxyZWU1?oc=5",
+   "source": "AL.com",
+   "published": "2026-11-07T14:55:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Hoping for a rapid drop in gas prices after the midterms? It’s probably not going to happen",
+   "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNU2cwNDh2WmRwc21xbUZveEVtRWk2a1gtQW5QUzdxMXRWOTFYc0J0bTBSbmRGaWlMVW43YnFEZEs2YVpKVTZvQ0MyVC0wUE9YS1JQVnRzcFlpVVg4UWlGblowcDd5Nk5PRFdxay1HcTRpT1dSQXRncHV5cEFRX2NTbzBsWkFqbzhGS3FMVDk2WXo?oc=5",
+   "source": "The Independent",
+   "published": "2026-11-07T14:47:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "What midterm election blue wave rebuke of Trump means for renewable energy",
+   "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPUGhqVms1N0laV2g0enlDUzZiZzFPeC1acEdOdnpCQ21meEx6OURXb3FFc2dUY1ViOFpCWXZtd1lQYkRsSkZSZ3pxU3lIa3oyd0VnU1RnM1gyVUJPTzFmYU1RbHJsMHRaWG44dUtYYVAyazlERms2cWFNbzdVNzNWVUxCR0RGOC1vQVcyMHF0SQ?oc=5",
+   "source": "CNBC",
+   "published": "2026-11-07T14:24:38+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "How the Iran war is changing the renewables landscape",
+   "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5Iem9JYmdZTmJNdzczTC16d2lZb0xjalZ2elM4Z0FTOG8wdlZpWm9QYVYxTFNNRkVSMXdQS2NjM1VvTWFqUm10MG4ySkllbjZRRmZFUnM0QWk4c0FYTlV2ZFRaUFgtR1JtTUoxTWRESGY?oc=5",
+   "source": "Axios",
+   "published": "2026-11-07T13:38:44+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Spot market electricity prices for Sunday, Nov. 8",
+   "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPd09xN0hwTW5WU1ItWmZxRHl1WDZDcVJTUTFrSE1XZWNyMmViVE16ZmozQkxaakw2eFpoWnI5aHVvZFZ6UEJpeEhJMDVCX2RFZmF6cW5saWJvMHUzSzFZVndXZGhvbEluZHNld2djWkJyNzJVaVcxX2RlOEhMdVpwUlJ3Q2YtejdVSUh4dHZRWGw1REtvNXRKNFB0RnRYZw?oc=5",
+   "source": "Anadolu Ajansı",
+   "published": "2026-11-07T13:04:42+00:00",
+   "query": "energy markets"
+  },
+  {
+   "title": "Risk of Iran war escalation remains high despite Democratic sweep in U.S. midterm elections",
+   "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQMWQ5c2RBN2lVLVVlYWRjNS03cFo4RkpVQXgzZUhWN2lyaS0tUHA1SXJ2Vm56MDQ4R0JCNlFubmt2bEhEZG5maGpLV0J6M3JRWm1iUHVWb0dXUnJWN19fU1dLS2tTY2lRNmI3YzNKM1ZPb2RHSE1pb19kWE9mS0RNRlNjZWU?oc=5",
+   "source": "CNBC",
+   "published": "2026-11-07T13:03:12+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Big Oil is making billions from Iran war prices. Here how they're spending it.",
+   "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOdXl6QVNPNmJ1REtfbkhQSmJpTXpPYlRSYU9DcER3S3BGT2x4VUZBRFBFQmwySDUyMEdnOEdjN2g4MGdOTGNlTTRJZjlKREdOMWluY3AzVDE4RmtBWHoxZVQxY3ZhQWQzV0FORXQ4TTktYkhSeXZKVENSbnJ5YmpNcHl0OHUzcTlwSW9DZzhB?oc=5",
+   "source": "Yahoo Finance",
+   "published": "2026-11-07T13:00:00+00:00",
+   "query": "oil prices OR OPEC"
+  },
+  {
+   "title": "Spot market natural gas prices for Friday, Nov. 6",
+   "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxNaGJDdzdvbDM4NDlVRVhFWjBudHBZRzNrZDhkc0FiNW9lY0ZrY2VkdFJHLVZyZHViakVFcE10WmxFb0l5eHVHRXpsT2NGVWR3S3VEbUZFNVEyU3BzM0lFenY2b2hwRmtjQWdITm40MDREMmxpbnZBalpFVjJGSm1ETUtlMTdLRzlrbG0tSHktTkRBb2htZ0RZUG5LSFFoUQ?oc=5",
+   "source": "Anadolu Ajansı",
+   "published": "2026-11-07T12:50:17+00:00",
    "query": "natural gas prices"
   }
  ],
